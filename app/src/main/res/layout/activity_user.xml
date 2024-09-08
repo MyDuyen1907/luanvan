@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.UserActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_back_user"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                android:text="Cá nhân"
+                android:textSize="10dp"
+                android:textColor="#3C3C3E"
+                android:textStyle="bold" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_morning"
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/img_ca_nhan" />
+
+                <TextView
+                    android:id="@+id/txv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:text="MD"
+                    android:textColor="@color/black_word"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@+id/img_morning"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/green_main"
+                android:elevation="10dp"
+                app:cardCornerRadius="15dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="157dp"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="Lượng calo hàng ngày (kcal): "
+                        android:textColor="@color/white_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints"
+                        tools:layout_editor_absoluteY="6dp" />
+
+                    <TextView
+                        android:id="@+id/txv_max_calories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1467"
+                        android:textColor="@color/white_word"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/tv3"
+                        tools:ignore="MissingConstraints"
+                        tools:layout_editor_absoluteY="6dp" />
+
+                    <TextView
+                        android:id="@+id/tv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Lượng nước hàng ngày (ml): "
+                        android:textColor="@color/white_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv3" />
+
+                    <TextView
+                        android:id="@+id/txv_max_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="1950"
+                        android:textColor="@color/white_word"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/tv4"
+                        app:layout_constraintTop_toBottomOf="@+id/tv3" />
+
+                    <TextView
+                        android:id="@+id/tv5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="BMI: "
+                        android:textColor="@color/white_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv4" />
+
+                    <TextView
+                        android:id="@+id/txv_bmi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="26.67"
+                        android:textColor="@color/white_word"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/tv5"
+                        app:layout_constraintTop_toBottomOf="@+id/tv4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:gravity="center"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BMI là gì?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <ToggleButton
+                            android:id="@+id/carret"
+                            android:layout_width="10dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/toggle_caret"
+                            android:padding="5dp"
+                            android:textOff=""
+                            android:textOn="" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txv_bmi123"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chỉ số BMI còn được gọi là chỉ số khối lượng cơ thể (Body Mass Index). Dựa vào chỉ số BMI của một người có thể biết được người đó béo, gầy hay có cân nặng lý tưởng."
+                        android:textColor="@color/black_word"
+                        android:layout_marginTop="15dp"
+                        android:visibility="gone"
+                        />
+                    <ImageView
+                        android:id="@+id/imv_bmi123"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bmi_info"
+                        android:layout_marginTop="15dp"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    app:cardCornerRadius="15dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="25dp">
+
+                        <TextView
+                            android:id="@+id/tvi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thông tin cá nhân"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txv4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Tuổi: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvi" />
+
+                        <TextView
+                            android:id="@+id/txv_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="1950"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv4"
+                            app:layout_constraintTop_toBottomOf="@+id/tvi" />
+
+                        <TextView
+                            android:id="@+id/txv5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Giới tính: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv4" />
+
+                        <TextView
+                            android:id="@+id/txv_gender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Nam"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv5"
+                            app:layout_constraintTop_toBottomOf="@+id/txv4" />
+
+                        <TextView
+                            android:id="@+id/txv6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Chiều cao (cm): "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv5" />
+
+                        <TextView
+                            android:id="@+id/txv_height"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="160"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv6"
+                            app:layout_constraintTop_toBottomOf="@+id/txv5" />
+
+                        <TextView
+                            android:id="@+id/tv7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Cân nặng (kg): "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv6" />
+
+                        <TextView
+                            android:id="@+id/txv_weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="60"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/tv7"
+                            app:layout_constraintTop_toBottomOf="@+id/txv6" />
+                        <!-- Tiền sử bệnh tật -->
+                        <TextView
+                            android:id="@+id/txv8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Tiền sử bệnh tật: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv_weight" />
+
+                        <TextView
+                            android:id="@+id/txv_disease_history"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Gan"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv8"
+                            app:layout_constraintTop_toBottomOf="@+id/txv_weight" />
+
+                        <!-- Các bệnh mãn tính -->
+                        <TextView
+                            android:id="@+id/txv9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Bệnh mãn tính: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv8" />
+
+                        <TextView
+                            android:id="@+id/txv_chronic_diseases"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Dị ứng"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv9"
+                            app:layout_constraintTop_toBottomOf="@+id/txv8" />
+
+                        <!-- Lịch sử tiêm chủng -->
+                        <TextView
+                            android:id="@+id/txv10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Lịch sử tiêm chủng: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv9" />
+
+                        <TextView
+                            android:id="@+id/txv_vaccination_history"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Vaccin 1"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv10"
+                            app:layout_constraintTop_toBottomOf="@+id/txv9" />
+
+                        <!-- Các can thiệp y tế -->
+                        <TextView
+                            android:id="@+id/txv11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Can thiệp y tế: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv10" />
+
+                        <TextView
+                            android:id="@+id/txv_medical_interventions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Chích ngừa: Không có"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv11"
+                            app:layout_constraintTop_toBottomOf="@+id/txv10" />
+
+                        <!-- Nhịp tim -->
+                        <TextView
+                            android:id="@+id/txv12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Nhịp tim: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv11" />
+
+                        <TextView
+                            android:id="@+id/txv_heart_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="60 BPM"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv12"
+                            app:layout_constraintTop_toBottomOf="@+id/txv11" />
+
+                        <!-- Huyết áp -->
+                        <TextView
+                            android:id="@+id/txv13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Huyết áp: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv12" />
+
+                        <TextView
+                            android:id="@+id/txv_blood_pressure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="120/80 mmHg"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv13"
+                            app:layout_constraintTop_toBottomOf="@+id/txv12" />
+
+                        <!-- Chỉ số đường huyết -->
+                        <TextView
+                            android:id="@+id/txv14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Chỉ số đường huyết: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv13" />
+
+                        <TextView
+                            android:id="@+id/txv_blood_sugar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="13 mmol/L"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv14"
+                            app:layout_constraintTop_toBottomOf="@+id/txv13" />
+
+                        <!-- Mức cholesterol -->
+                        <TextView
+                            android:id="@+id/txv15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Mức cholesterol: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txv14" />
+
+                        <TextView
+                            android:id="@+id/txv_cholesterol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="200 mg/dL"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv15"
+                            app:layout_constraintTop_toBottomOf="@+id/txv14" />
+                        <TextView
+                            android:id="@+id/txv16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Mức độ vận động: "
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txv15" />
+                        <TextView
+                            android:id="@+id/txv_exercise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Vận động nhẹ (1-3 ngày/tuần)"
+                            android:textColor="@color/black_word"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@+id/txv16"
+                            app:layout_constraintTop_toBottomOf="@+id/txv15" />
+
+                        <!-- Cập nhật Button -->
+                        <Button
+                            android:id="@+id/btn_update"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginBottom="25dp"
+                            android:background="@drawable/button_background"
+                            android:text="Cập nhật"
+                            android:textColor="@color/white_word"
+                            app:layout_constraintTop_toBottomOf="@id/txv16" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.core.widget.NestedScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

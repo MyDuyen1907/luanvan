@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center|top"
+    android:padding="10dp"
+    tools:context=".activity.basicinfo.MedicalHistoryActivity">
+
+    <!-- ProgressBar để theo dõi tiến trình (nếu cần) -->
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progress="75"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp" />
+
+    <!-- LinearLayout để chứa các trường nhập liệu -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:weightSum="2"
+        android:layout_weight="1"
+        android:gravity="center|top"
+        android:padding="@dimen/marginBase">
+
+        <!-- Tiêu đề hướng dẫn -->
+        <TextView
+            android:textColor="@color/black_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hãy điền lịch sử y tế của bạn"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Trường nhập Tiền sử bệnh tật -->
+        <EditText
+            android:id="@+id/edtMedicalHistory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Tiền sử bệnh tật"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black_word"
+            android:layout_marginTop="20dp"
+            android:inputType="text"/>
+
+        <!-- Trường nhập Bệnh mãn tính -->
+        <EditText
+            android:id="@+id/edtChronicDisease"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Bệnh mãn tính"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black_word"
+            android:inputType="text"/>
+
+        <!-- Trường nhập Lịch sử tiêm chủng -->
+        <EditText
+            android:id="@+id/edtVaccinationHistory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Lịch sử tiêm chủng"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black_word"
+            android:inputType="text"/>
+
+        <!-- Trường nhập Can thiệp y tế đã thực hiện -->
+        <EditText
+            android:id="@+id/edtMedicalInterventions"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Các can thiệp y tế đã thực hiện"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black_word"
+            android:inputType="text"/>
+    </LinearLayout>
+
+    <!-- Button để tiếp tục -->
+    <Button
+        android:id="@+id/btnTiepTuc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tiếp tục"
+        android:background="@drawable/button_background"
+        android:textColor="@color/white_word"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/marginBase" />
+</LinearLayout>

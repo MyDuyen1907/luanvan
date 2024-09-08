@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".fragment.HomeFragment">
+
+    <ScrollView
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="120dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/logo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xin chào, " />
+
+                <TextView
+                    android:id="@+id/txvHello"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/dr_1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingTop="30dp"
+                app:columnCount="4"
+                app:rowCount="2">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_ca_nhan" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:text="Cá nhân" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_control_calories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_kiem_soat_calories" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kiểm soát" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_suggestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="34dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_goi_y_mon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gợi ý món" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_dish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="3"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_mon_an" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Món ăn" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_control_water"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_uong_nuoc" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Uống nước" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_exercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_vandong" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Vận động" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvIngre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_nguyen_lieu" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nguyên liệu" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="3"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1"
+                    app:layout_rowWeight="1">
+                </androidx.cardview.widget.CardView>
+            </androidx.gridlayout.widget.GridLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DCDADA" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mua sắm"
+                android:textSize="16dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="25dp"
+                android:textStyle="bold" />
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/dr_2"
+                app:columnCount="4"
+                app:rowCount="1"
+                android:paddingBottom="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_nutrition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/img_thuc_pham" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dinh dưỡng" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_sleep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/ngu3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Theo dõi giấc ngủ" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_medical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0"
+                    app:layout_rowWeight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp"
+                            app:layout_column="0"
+                            app:layout_row="0"
+                            app:srcCompat="@drawable/thuoc" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Theo dõi thuốc"  />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.gridlayout.widget.GridLayout>
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DCDADA" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CẨM NANG SỨC KHỎE"
+                android:textColor="@color/green_main"
+                android:textSize="16dp"
+                android:paddingTop="15dp"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingLeft="25dp"
+                android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

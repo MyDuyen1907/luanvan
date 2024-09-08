@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Project</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_history">Lịch sử</string>
+    <string name="nav_account">Tài khoản</string>
+    <string name="contactfragment">ContactFragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="manage_fragment">Manage Fragment</string>
+    <string name="notification_fragment">Notification Fragment</string>
+</resources>

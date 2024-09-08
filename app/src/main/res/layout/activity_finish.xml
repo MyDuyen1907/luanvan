@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center|bottom"
+    android:padding="10dp"
+    tools:context=".activity.basicinfo.FinishActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/img_hoan_thanh" />
+
+
+    <TextView
+        android:text="Sức khỏe trong tầm tay - Quản lý mỗi ngày!"
+        android:layout_width="320dp"
+        android:textColor="@color/black_word"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="Theo dõi - Dinh dưỡng – Tập Luyện "
+        android:gravity="center_horizontal"
+        android:layout_width="320dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:textColor="@color/green_main"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnHoanThanh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hoàn thành"
+        android:background="@drawable/button_background"
+        android:textColor="@color/white_word"
+        android:layout_marginBottom="@dimen/marginBase"
+        />
+</LinearLayout>
