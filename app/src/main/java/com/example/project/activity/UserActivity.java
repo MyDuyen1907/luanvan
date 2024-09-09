@@ -37,7 +37,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    TextView id,name,maxCalories,exerciseFrequency, maxWater, bmi, age, gender, height, weight, heart, bloodpressure, bloodsugar, cholesterol, medicalhistory, choricdisease,vaccination, medicalite, txv_bmi;
+    TextView id,name, age, gender, height, weight,
+            heart, bloodpressure, bloodsugar, cholesterol,
+            medicalhistory, choricdisease,vaccination, medicalite
+            ,maxCalories,maxWater,bmi,exerciseFrequency,txv_bmi,ttde;
+    ;
     ImageView imv_bmi;
     Button btnBackUser,btnUpdate ;
     FirebaseUser user;
@@ -57,6 +61,7 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         maxWater = findViewById(R.id.txv_max_water);
         bmi = findViewById(R.id.txv_bmi);
         age = findViewById(R.id.txv_age);
+        ttde = findViewById(R.id.txv_ttde);
         gender = findViewById(R.id.txv_gender);
         height = findViewById(R.id.txv_height);
         weight = findViewById(R.id.txv_weight);
@@ -109,58 +114,61 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void setInfoUser() {
+        db = FirebaseFirestore.getInstance();
         Log.e(TAG, currentUser.getUid());
         db.collection("user").document(currentUser.getUid()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                User user = document.toObject(User.class);
-                                if (user != null) {
-                                    // Set text views with the user data
-                                    name.setText(user.getName());
-                                    age.setText(String.valueOf(user.getAge()));
-                                    height.setText(String.valueOf(user.getHeight()));
-                                    weight.setText(String.valueOf(user.getWeight()));
-                                    bmi.setText(String.valueOf(user.BMICal())); // Use BMICal method
-                                    maxWater.setText(String.valueOf(user.WaterCal())); // Use WaterCal method
-                                    medicalhistory.setText(user.getMedical_history());
-                                    choricdisease.setText(user.getChronic_disease());
-                                    vaccination.setText(user.getVaccination());
-                                    medicalite.setText(user.getMedical_interventions());
-                                    heart.setText(String.valueOf(user.getHeart_rate()));
-                                    bloodpressure.setText(String.valueOf(user.getBlood_pressure()));
-                                    bloodsugar.setText(String.valueOf(user.getBlood_sugar()));
-                                    cholesterol.setText(String.valueOf(user.getCholesterol()));
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if (documentSnapshot != null) {
+                                p = documentSnapshot.toObject(User.class);
+                                // Set text views with the user data
+                                name.setText(p.getName());
+                                age.setText(String.valueOf(p.getAge()));
+                                height.setText(String.valueOf(p.getHeight()));
+                                weight.setText(String.valueOf(p.getWeight()));
+                                ttde.setText(String.valueOf(p.TTDECal()));
+                                bmi.setText(String.valueOf(p.BMICal())); // Use BMICal method
+                                maxWater.setText(String.valueOf(p.WaterCal())); // Use WaterCal method
+                                medicalhistory.setText(p.getMedical_history());
+                                choricdisease.setText(p.getChronic_disease());
+                                vaccination.setText(p.getVaccination());
+                                medicalite.setText(p.getMedical_interventions());
+                                heart.setText(String.valueOf(p.getHeart_rate()));
+                                bloodpressure.setText(String.valueOf(p.getBlood_pressure()));
+                                bloodsugar.setText(String.valueOf(p.getBlood_sugar()));
+                                cholesterol.setText(String.valueOf(p.getCholesterol()));
 
-                                    // Gender
-                                    gender.setText(user.getGender() == 0 ? "Nữ" : "Nam");
-
-                                    // Exercise Frequency
-                                    switch (user.getExerciseFrequency()) {
-                                        case 0:
-                                            exerciseFrequency.setText("Không vận động");
-                                            break;
-                                        case 1:
-                                            exerciseFrequency.setText("Vận động nhẹ (1-3 ngày/tuần)");
-                                            break;
-                                        case 2:
-                                            exerciseFrequency.setText("Vận động vừa (4-5 ngày/tuần)");
-                                            break;
-                                        case 3:
-                                            exerciseFrequency.setText("Vận động nặng (6-7 ngày/tuần)");
-                                            break;
-                                    }
+                                // Gender
+                                switch (p.getGender()) {
+                                    case 0:
+                                        gender.setText("Nữ");
+                                        break;
+                                    case 1:
+                                        gender.setText("Nam");
+                                        break;
                                 }
-                            } else {
-                                Log.d(TAG, "No such document exists!");
+
+                                // Exercise Frequency
+                                switch (p.getExerciseFrequency()) {
+                                    case 0:
+                                        exerciseFrequency.setText("Không vận động");
+                                        break;
+                                    case 1:
+                                        exerciseFrequency.setText("Vận động nhẹ (1-3 ngày/tuần)");
+                                        break;
+                                    case 2:
+                                        exerciseFrequency.setText("Vận động vừa (4-5 ngày/tuần)");
+                                        break;
+                                    case 3:
+                                        exerciseFrequency.setText("Vận động nặng (6-7 ngày/tuần)");
+                                        break;
+                                }
                             }
-                        } else {
-                            Log.d(TAG, "Failed to get user information: ", task.getException());
+                            }
                         }
-                    }
                 });
     }
 
@@ -211,12 +219,16 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         rdgActivityFrequency.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case 0: rdKhong.setChecked(true); break;
-                    case 1: rdNhe.setChecked(true); break;
-                    case 2: rdVua.setChecked(true); break;
-                    case 3: rdNang.setChecked(true); break;
+                if (checkedId == R.id.rd_khong) {
+                    updateUser.setExerciseFrequency(0);
+                } else if (checkedId == R.id.rd_nhe) {
+                    updateUser.setExerciseFrequency(1);
+                } else if (checkedId == R.id.rd_vua) {
+                    updateUser.setExerciseFrequency(2);
+                } else if (checkedId == R.id.rd_nang) {
+                    updateUser.setExerciseFrequency(3);
                 }
+
             }
         });
         rdgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

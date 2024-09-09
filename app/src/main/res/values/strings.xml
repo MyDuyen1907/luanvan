@@ -9,4 +9,8 @@
     <string name="home_fragment">Home Fragment</string>
     <string name="manage_fragment">Manage Fragment</string>
     <string name="notification_fragment">Notification Fragment</string>
+    <string name="kh_ng_v_n_ng">Không vận động</string>
+    <string name="v_n_ng_nh_1_3_ng_y_tu_n">Vận động nhẹ (1-3 ngày/tuần)</string>
+    <string name="v_n_ng_v_a_4_5_ng_y_tu_n">Vận động vừa (4-5 ngày/tuần)</string>
+    <string name="v_n_ng_n_ng_6_7_ng_y_tu_n">Vận động nặng (6-7 ngày/tuần)</string>
 </resources>

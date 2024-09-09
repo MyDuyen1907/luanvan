@@ -105,24 +105,24 @@
                 android:id="@+id/rd_khong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Không vận động" />
+                android:text="@string/kh_ng_v_n_ng" />
 
             <RadioButton
                 android:id="@+id/rd_nhe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vận động nhẹ (1-3 ngày/tuần)" />
+                android:text="@string/v_n_ng_nh_1_3_ng_y_tu_n" />
 
             <RadioButton
                 android:id="@+id/rd_vua"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vận động vừa (4-5 ngày/tuần)" />
+                android:text="@string/v_n_ng_v_a_4_5_ng_y_tu_n" />
             <RadioButton
                 android:id="@+id/rd_nang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vận động nặng (6-7 ngày/tuần)" />
+                android:text="@string/v_n_ng_n_ng_6_7_ng_y_tu_n" />
         </RadioGroup>
 
     </LinearLayout>
