@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.project.R;
 
-public class ExerciseTimerActivity extends AppCompatActivity {
+public class SleepReportActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise_timer);
+        setContentView(R.layout.activity_sleep_report);
     }
 }
