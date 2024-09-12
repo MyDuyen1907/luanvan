@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -17,23 +18,47 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ControlCaloriesActivity"
+            android:name=".activity.SleepReportActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.SleepTrackerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.NotificationReceiver"
             android:exported="false" />
+        <activity
+            android:name=".activity.DetailAlarmActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AlarmActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.WaterChartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ControlWaterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ControlCaloriesActivity"
+            android:exported="true" />
         <activity
             android:name=".activity.CaloriesChart"
             android:exported="false" />
         <activity
             android:name=".activity.basicinfo.ExerciseFrequentActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.UserActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.ContactDoctorActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.ChangePasswordActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true">
@@ -45,19 +70,19 @@
         </activity>
         <activity
             android:name=".activity.basicinfo.GenderActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.basicinfo.FinishActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.basicinfo.CurrenthealthActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.basicinfo.MedicalHistoryActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.basicinfo.AgeHeightWeightActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.AdminActivity"
             android:exported="false" />

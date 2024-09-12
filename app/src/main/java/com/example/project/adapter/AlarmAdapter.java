@@ -1,4 +1,4 @@
-package com.example.tim.Adapter;
+package com.example.project.adapter;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -17,11 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tim.Activity.DetailAlarmActivity;
-
-import com.example.tim.Model.Alarm;
-
-import com.example.tim.R;
+import com.example.project.activity.DetailAlarmActivity;
+import com.example.project.model.Alarm;
+import com.example.project.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -58,7 +56,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public AlarmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_alarm_view, parent,false);
-        return new AlarmAdapter.AlarmViewHolder(view);
+        return new AlarmViewHolder(view);
     }
 
     @Override

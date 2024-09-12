@@ -1,4 +1,4 @@
-package com.example.tim.Model;
+package com.example.project.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Alarm implements Serializable {
     private boolean status;
     private ArrayList<Boolean> day;
 
-    public Alarm(String id, String name ,String userId, String hour, String minute, boolean status, ArrayList<Boolean> day) {
+    public Alarm(String id, String name , String userId, String hour, String minute, boolean status, ArrayList<Boolean> day) {
         this.id = id;
         this.name = name;
         this.userId = userId;

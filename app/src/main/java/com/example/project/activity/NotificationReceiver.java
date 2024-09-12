@@ -1,4 +1,4 @@
-package com.example.tim.Activity;
+package com.example.project.activity;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.tim.R;
+import com.example.project.R;
 
 public class NotificationReceiver extends BroadcastReceiver {
     @Override

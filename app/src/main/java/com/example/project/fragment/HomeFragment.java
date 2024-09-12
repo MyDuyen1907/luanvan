@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
+import com.example.project.activity.ControlWaterActivity;
+import com.example.project.activity.SleepTrackerActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeFragment extends Fragment {
-    private CardView cvUser, controlCaloriesCardView;
+    private CardView cvUser, controlCaloriesCardView, controlWaterCardView, cv_sleep;
     private TextView txvHello;
     private FirebaseFirestore db;
 
@@ -39,6 +41,9 @@ public class HomeFragment extends Fragment {
         cvUser = view.findViewById(R.id.cv_user);
         txvHello = view.findViewById(R.id.txvHello);
         controlCaloriesCardView = view.findViewById(R.id.cv_control_calories);
+        controlWaterCardView= view.findViewById(R.id.cv_control_water);
+        cv_sleep = view.findViewById(R.id.cv_sleep);
+
 
         // Fetch user data from Firestore and set the greeting text
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,6 +74,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ControlCaloriesActivity.class);
+                startActivity(intent);
+            }
+        });
+        controlWaterCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), ControlWaterActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_sleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SleepTrackerActivity.class);
                 startActivity(intent);
             }
         });

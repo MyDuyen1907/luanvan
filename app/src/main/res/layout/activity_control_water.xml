@@ -6,4 +6,307 @@
     android:layout_height="match_parent"
     tools:context=".activity.ControlWaterActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/na"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_back_control_water"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                    android:fontFamily="sans-serif"
+                    android:text="Uống nước"
+                    android:textColor="#3C3C3E"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/img_cart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/img_thong_ke" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp">
+                <TextView
+                    android:id="@+id/txvDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14-09-2003"
+                    android:textColor="@color/blue_water"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/waterWaveView"
+                    app:layout_constraintEnd_toStartOf="@id/imvNextDay" />
+
+                <ImageView
+                    android:id="@+id/imvPreviousDay"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@drawable/arrow_elft"
+                    app:layout_constraintEnd_toStartOf="@id/txvDay"
+                    app:layout_constraintBottom_toTopOf="@id/waterWaveView"/>
+                <ImageView
+                    android:id="@+id/imvNextDay"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@drawable/arrow_blue_right"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginRight="20dp"
+                    app:layout_constraintBottom_toTopOf="@id/waterWaveView"
+                    />
+                <com.orbitalsonic.waterwave.WaterWaveView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/waterWaveView"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    app:animatorEnable="true"
+                    app:textHidden="false"
+                    app:shapeType="circle"
+                    app:frontColor="#80c5fc"
+                    app:behideColor="#90cbf9"
+                    app:borderColor="@color/blue_water"
+                    app:borderWidthSize="4dp"
+                    app:textColor="#018786"
+                    app:max="100"
+                    app:progress="100"
+                    app:strong="50"
+                    app:shapePadding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/waterWaveView">
+                    <TextView
+                        android:id="@+id/progress"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+                    <TextView
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/" />
+                    <TextView
+                        android:id="@+id/max"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2000" />
+                    <TextView
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ml" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_minus50"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="#EC1919"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="-100" />
+                <Button
+                    android:id="@+id/btn_50"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white_word"
+                    android:backgroundTint="@color/blue_water"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+50" />
+                <Button
+                    android:id="@+id/btn_100"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white_word"
+                    android:backgroundTint="@color/blue_water"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+200" />
+                <Button
+                    android:id="@+id/btn_200"
+                    android:textColor="@color/white_word"
+                    android:backgroundTint="@color/blue_water"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+500" />
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_water"
+                android:layout_width="match_parent"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10dp"
+                android:layout_height="100dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/img_water"
+                        android:layout_width="35dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="15dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/img_uong_nuoc" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Uống nước"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/img_water"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/plus1"
+                        android:text="+"
+                        android:textColor="@color/gray_word"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintLeft_toRightOf="@+id/textView1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/inf_water"
+                        android:text="0"
+                        android:textColor="@color/gray_word"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintLeft_toRightOf="@+id/plus1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/edit_water"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_margin="15dp"
+                        android:background="#F2F2F2"
+                        android:hint="Thêm số Calories"
+                        android:paddingLeft="10dp"
+                        android:textSize="11dp"
+                        android:inputType="number"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:layout_editor_absoluteX="0dp" />
+
+                    <Button
+                        android:id="@+id/btn_add_water"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:backgroundTint="@color/green_main"
+                        android:text="Thêm"
+                        android:background="@drawable/button_background"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_notify"
+                app:cardCornerRadius="10dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="55dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/img_alarm"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="5dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/txv_notify"
+                        app:srcCompat="@drawable/img_alarm" />
+
+                    <TextView
+                        android:id="@+id/txv_notify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Bật nhắc nhở uống nước"
+                        android:textColor="#FFC000"
+                        android:textSize="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
