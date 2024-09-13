@@ -1,7 +1,9 @@
 package com.example.project.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,9 +18,10 @@ public class SleepTrackerActivity extends AppCompatActivity {
 
     EditText startSleepTime, wakeUpTime, awakenings, sleepCycles;
     Spinner sleepQuality;
-    Button btnSaveSleepData, btnSleepData;
+    Button btnSaveSleepData, btnSleepData, btnBackSleep;
     FirebaseFirestore db;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,8 @@ public class SleepTrackerActivity extends AppCompatActivity {
         sleepCycles = findViewById(R.id.sleepCycles);
         btnSaveSleepData = findViewById(R.id.btnSaveSleepData);
         btnSleepData = findViewById(R.id.btnSleepData);
+        btnBackSleep = findViewById(R.id.sleep);
+
 
         // Khởi tạo Firestore
         db = FirebaseFirestore.getInstance();
@@ -41,6 +46,15 @@ public class SleepTrackerActivity extends AppCompatActivity {
 
         // Xử lý sự kiện xem dữ liệu giấc ngủ
         btnSleepData.setOnClickListener(v -> viewSleepData());
+
+        btnBackSleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     // Hàm lưu dữ liệu giấc ngủ

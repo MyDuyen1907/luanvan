@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".activity.PrescriptionManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ExerciseTimerActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.SleepReportActivity"
             android:exported="true" />
         <activity

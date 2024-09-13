@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
+import com.example.project.activity.ExerciseTimerActivity;
+import com.example.project.activity.PrescriptionManagementActivity;
 import com.example.project.activity.SleepTrackerActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
@@ -24,7 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeFragment extends Fragment {
-    private CardView cvUser, controlCaloriesCardView, controlWaterCardView, cv_sleep;
+    private CardView cvUser, controlCaloriesCardView, controlWaterCardView, cv_sleep, cv_exercise, cv_medical;
     private TextView txvHello;
     private FirebaseFirestore db;
 
@@ -43,6 +46,8 @@ public class HomeFragment extends Fragment {
         controlCaloriesCardView = view.findViewById(R.id.cv_control_calories);
         controlWaterCardView= view.findViewById(R.id.cv_control_water);
         cv_sleep = view.findViewById(R.id.cv_sleep);
+        cv_exercise = view.findViewById(R.id.cv_exercise);
+        cv_medical = view.findViewById(R.id.cv_medical);
 
 
         // Fetch user data from Firestore and set the greeting text
@@ -88,6 +93,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SleepTrackerActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_exercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ExerciseTimerActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_medical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PrescriptionManagementActivity.class);
                 startActivity(intent);
             }
         });
