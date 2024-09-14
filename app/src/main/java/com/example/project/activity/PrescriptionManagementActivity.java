@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -40,6 +42,10 @@ public class PrescriptionManagementActivity extends AppCompatActivity {
     private SideEffectAdapter sideEffectAdapter;
     private List<SideEffect> sideEffectList = new ArrayList<>();
     private FirebaseFirestore db;
+    private String getCurrentUserId() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return user != null ? user.getUid() : null; // Handle the case where the user is not logged in
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,27 +104,27 @@ public class PrescriptionManagementActivity extends AppCompatActivity {
         String dosage = edtDosage.getText().toString();
         String frequency = edtFrequency.getText().toString();
         String time = edtTime.getText().toString();
+        String userId = getCurrentUserId(); // Implement this method to get the current user ID
 
         if (medicineName.isEmpty() || dosage.isEmpty() || frequency.isEmpty() || time.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Tạo dữ liệu đơn thuốc
         Map<String, Object> prescription = new HashMap<>();
         prescription.put("medicineName", medicineName);
         prescription.put("dosage", dosage);
         prescription.put("frequency", frequency);
         prescription.put("time", time);
+        prescription.put("userId", userId);
 
-        // Lưu dữ liệu lên Firebase Firestore
         db.collection("prescriptions")
                 .add(prescription)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(PrescriptionManagementActivity.this, "Lưu đơn thuốc thành công", Toast.LENGTH_SHORT).show();
-                        scheduleMedicationReminder(time); // Thiết lập thông báo nhắc nhở
+                        scheduleMedicationReminder(time);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -128,6 +134,7 @@ public class PrescriptionManagementActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private void showRecordSideEffectDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -142,24 +149,39 @@ public class PrescriptionManagementActivity extends AppCompatActivity {
                 .setPositiveButton("Lưu", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String sideEffect = edtSideEffect.getText().toString();
-                        if (!sideEffect.isEmpty()) {
-                            saveSideEffect(sideEffect);
-                        } else {
+                        String sideEffectDescription = edtSideEffect.getText().toString();
+                        String userId = getCurrentUserId(); // Implement this method to get the current user ID
+
+                        if (sideEffectDescription.isEmpty()) {
                             Toast.makeText(PrescriptionManagementActivity.this, "Vui lòng nhập tác dụng phụ", Toast.LENGTH_SHORT).show();
+                            return;
                         }
+
+                        Map<String, Object> sideEffect = new HashMap<>();
+                        sideEffect.put("description", sideEffectDescription);
+                        sideEffect.put("userId", userId);
+
+                        db.collection("sideEffects")
+                                .add(sideEffect)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Toast.makeText(PrescriptionManagementActivity.this, "Ghi nhận tác dụng phụ thành công", Toast.LENGTH_SHORT).show();
+                                        loadSideEffects(); // Reload side effects
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(PrescriptionManagementActivity.this, "Ghi nhận tác dụng phụ thất bại", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }
                 })
-                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+                .setNegativeButton("Hủy", null)
+                .show();
     }
+
 
     private void saveSideEffect(String sideEffect) {
         Map<String, Object> data = new HashMap<>();
@@ -184,8 +206,10 @@ public class PrescriptionManagementActivity extends AppCompatActivity {
     }
 
     private void loadSideEffects() {
+        String userId = getCurrentUserId(); // Implement this method to get the current user ID
+
         db.collection("sideEffects")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .whereEqualTo("userId", userId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -198,11 +222,12 @@ public class PrescriptionManagementActivity extends AppCompatActivity {
                             }
                             sideEffectAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(PrescriptionManagementActivity.this, "Không thể tải tác dụng phụ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PrescriptionManagementActivity.this, "Lấy danh sách tác dụng phụ thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
 
     private void scheduleMedicationReminder(String time) {
         // Implement scheduling reminders with Firebase Cloud Messaging (FCM) here
