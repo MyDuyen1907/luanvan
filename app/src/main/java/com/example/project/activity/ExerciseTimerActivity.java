@@ -29,6 +29,7 @@ public class ExerciseTimerActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ExerciseAdapter adapter;
     ArrayList<Exercise> list = new ArrayList<>();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +37,15 @@ public class ExerciseTimerActivity extends AppCompatActivity {
 
         findView();
 
-        readData(list ->{
-            adapter.setList(list);
-            recyclerView.setAdapter(adapter);
-        });
+//        createExercise("1", "Chạy bộ", 400);
+//        createExercise("2", "Đạp xe", 700);
+//        createExercise("3", "Bóng chuyền", 600);
+//        createExercise("4", "Đi bộ", 300);
+//        createExercise("5", "Bóng đá", 600);
+//        createExercise("6", "Bóng rỗ", 800);
+//        createExercise("7", "Nhảy dây", 900);
 
+        loadExercises();
 
 
         btnBackToHome.setOnClickListener(new View.OnClickListener() {
@@ -52,35 +57,42 @@ public class ExerciseTimerActivity extends AppCompatActivity {
         });
     }
 
-    private void readData(FireStoreCallBack callBack){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private void loadExercises() {
         db.collection("exercise").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Exercise exercise = document.toObject(Exercise.class);
-                                list.add(exercise);
-                                //System.out.println(exercise.getCaloriesPerHour() + exercise.getName() + exercise.getImg());
-                            }
-                            callBack.onCallBack(list);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Exercise exercise = document.toObject(Exercise.class);
+                            list.add(exercise);
                         }
-                        else {
-                            Log.e(TAG, "Cannot get exercise data", task.getException());
-                        }
+                        adapter.notifyDataSetChanged(); // Cập nhật adapter khi dữ liệu đã được tải
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
     }
-    private interface FireStoreCallBack{
-        void onCallBack(ArrayList<Exercise> list);
+
+
+    private void createExercise(String id, String name, int caloriesPerHour) {
+        // Tạo document với ID và các trường theo model
+        Exercise exercise = new Exercise();
+        exercise.setId(id);
+        exercise.setName(name);
+        exercise.setCaloriesPerHour(caloriesPerHour);
+        exercise.setImg(""); // Đặt img là rỗng
+
+        db.collection("exercise").document(id).set(exercise)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
     }
+
 
     private void findView() {
         btnBackToHome = findViewById(R.id.btnBackVanDong);
         recyclerView = findViewById(R.id.rcExercise);
-        adapter = new ExerciseAdapter(this);
+        adapter = new ExerciseAdapter(this, list);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // Sử dụng 'this' thay vì 'getApplicationContext()'
+        recyclerView.setAdapter(adapter);
     }
 }
