@@ -26,7 +26,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtMedicineName"
+            android:id="@+id/et_medicine_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -41,7 +41,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDosage"
+            android:id="@+id/et_dosage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -49,20 +49,6 @@
             android:background="@drawable/edit_text_background"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tần suất"
-        app:hintEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtFrequency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:padding="8dp"
-            android:background="@drawable/edit_text_background"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -72,7 +58,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtTime"
+            android:id="@+id/et_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="time"
@@ -88,7 +74,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnSavePrescription"
+            android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -99,22 +85,11 @@
             android:text="Lưu đơn thuốc"
             android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/btnRecordSideEffect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:background="@color/green_main"
-            android:padding="12dp"
-            android:layout_marginLeft="20dp"
-            android:text="Ghi nhận tác dụng phụ"
-            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSideEffects"
+        android:id="@+id/rv_medications"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"

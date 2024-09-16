@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
 import com.example.project.activity.ExerciseTimerActivity;
-import com.example.project.activity.PrescriptionManagementActivity;
+import com.example.project.activity.MainActivity;
+import com.example.project.activity.MedicationNotesApp;
 import com.example.project.activity.SleepTrackerActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         cv_medical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PrescriptionManagementActivity.class);
+                Intent intent = new Intent(getActivity(), MedicationNotesApp.class);
                 startActivity(intent);
             }
         });
