@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Tài khoản"
+        android:id="@+id/navAccount"
+        android:icon="@drawable/contact"/>
+
+
+    <item android:title="Quản lý "
+        android:id="@+id/navManageAdmin"
+        android:icon="@drawable/menu"/>
+
+</menu>

@@ -17,7 +17,8 @@ public class User implements Serializable {
     private String chronic_disease;
     private String vaccination;
     private String medical_interventions;
-    private int exerciseFrequency; // 0:Khong 1:Nhe 2:Vua 3:Nang
+    private int exerciseFrequency;// 0:Khong 1:Nhe 2:Vua 3:Nang
+    private String email;
 
     public User() {
         this.id = "";
@@ -35,8 +36,13 @@ public class User implements Serializable {
         this.vaccination = "";
         this.medical_interventions = "";
         this.exerciseFrequency = 0;
+        this.email = "";
     }
-    public User(String id, String name, int gender, int age, int height,int exerciseFrequency, int weight, int heart_rate, int blood_pressure, int blood_sugar, int cholesterol,String medical_history, String chronic_disease, String vaccination, String medical_interventions) {
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+    public User(String id, String email, String name, int gender, int age, int height,int exerciseFrequency, int weight, int heart_rate, int blood_pressure, int blood_sugar, int cholesterol,String medical_history, String chronic_disease, String vaccination, String medical_interventions) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -52,7 +58,9 @@ public class User implements Serializable {
         this.vaccination = vaccination;
         this.medical_interventions = medical_interventions;
         this.exerciseFrequency = exerciseFrequency;
+        this.email = email;
     }
+
 
     public String getId() {
         return id;
@@ -60,6 +68,13 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -208,6 +223,7 @@ public class User implements Serializable {
                 ", vaccination='" + vaccination + '\'' +
                 ", Medical_interventions='" + medical_interventions + '\'' +
                 ", exerciseFrequency=" + exerciseFrequency +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

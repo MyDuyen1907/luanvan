@@ -15,10 +15,14 @@ import androidx.fragment.app.Fragment;
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
+import com.example.project.activity.DishActivity;
 import com.example.project.activity.ExerciseTimerActivity;
+import com.example.project.activity.IngredientActivity;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.MedicationNotesApp;
+import com.example.project.activity.MentalHealthTrackingActivity;
 import com.example.project.activity.SleepTrackerActivity;
+import com.example.project.activity.SuggestionActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +31,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeFragment extends Fragment {
-    private CardView cvUser, controlCaloriesCardView, controlWaterCardView, cv_sleep, cv_exercise, cv_medical;
+    private CardView cvUser, controlCaloriesCardView, controlWaterCardView, cv_sleep, cv_exercise, cv_medical, cv_suggestion, cv_dish, cv_Ingre,
+    cv_mentality;
     private TextView txvHello;
     private FirebaseFirestore db;
 
@@ -48,6 +53,10 @@ public class HomeFragment extends Fragment {
         cv_sleep = view.findViewById(R.id.cv_sleep);
         cv_exercise = view.findViewById(R.id.cv_exercise);
         cv_medical = view.findViewById(R.id.cv_medical);
+        cv_suggestion = view.findViewById(R.id.cv_suggestion);
+        cv_dish = view.findViewById(R.id.cv_dish);
+        cv_Ingre= view.findViewById(R.id.cvIngre);
+        cv_mentality = view.findViewById(R.id.cv_mentality);
 
 
         // Fetch user data from Firestore and set the greeting text
@@ -107,6 +116,34 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MedicationNotesApp.class);
+                startActivity(intent);
+            }
+        });
+        cv_suggestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SuggestionActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_dish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), DishActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_Ingre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), IngredientActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_mentality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MentalHealthTrackingActivity.class);
                 startActivity(intent);
             }
         });

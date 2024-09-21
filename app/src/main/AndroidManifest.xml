@@ -18,6 +18,33 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".activity.MentalHealthTrackingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LikedDishActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DishDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DishActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.IngredientDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DetailProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.IngredientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SuggestionActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MedicationNotesApp"
             android:exported="true" />
         <activity
@@ -91,7 +118,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.AdminActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true" />

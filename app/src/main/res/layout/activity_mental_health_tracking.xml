@@ -1,0 +1,64 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Phần ghi nhận cảm xúc hàng ngày -->
+    <TextView
+        android:id="@+id/emotion_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cảm xúc hôm nay"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/emotion_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập cảm xúc của bạn"/>
+
+    <Button
+        android:id="@+id/save_emotion_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lưu cảm xúc"
+        android:layout_gravity="center"/>
+
+    <!-- Phần đánh giá stress và lo âu -->
+    <TextView
+        android:id="@+id/stress_assessment_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đánh giá stress và lo âu"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/start_assessment_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bắt đầu đánh giá"
+        android:layout_gravity="center"/>
+
+    <!-- Phần hướng dẫn thiền và thư giãn -->
+    <TextView
+        android:id="@+id/meditation_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hướng dẫn thiền và thư giãn"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/start_meditation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bắt đầu thiền"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
