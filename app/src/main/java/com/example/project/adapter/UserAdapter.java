@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +16,6 @@ import com.example.project.model.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
-
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -46,7 +44,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.btnDeleteUser.setOnClickListener(v -> {
             deleteUser(user);
         });
-
     }
 
     @Override
@@ -66,10 +63,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
     }
 
-    // Hàm xóa người dùng từ Firestore
+    // Hàm xóa người dùng từ Firestore dựa trên userID
     private void deleteUser(User user) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        firestore.collection("account").document(user.getEmail())
+        // Thay vì sử dụng email, ta sử dụng userID để xác định tài liệu
+        firestore.collection("account").document(user.getUserID())
                 .delete()
                 .addOnSuccessListener(aVoid -> {
                     // Xóa thành công, cập nhật danh sách
@@ -81,6 +79,4 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     Toast.makeText(context, "Lỗi khi xóa người dùng.", Toast.LENGTH_SHORT).show();
                 });
     }
-
-
 }

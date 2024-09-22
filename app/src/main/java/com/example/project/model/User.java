@@ -38,9 +38,10 @@ public class User implements Serializable {
         this.exerciseFrequency = 0;
         this.email = "";
     }
-    public User(String name, String email) {
+    public User(String name, String email,String UserID){
         this.name = name;
         this.email = email;
+        this.id = UserID;
     }
     public User(String id, String email, String name, int gender, int age, int height,int exerciseFrequency, int weight, int heart_rate, int blood_pressure, int blood_sugar, int cholesterol,String medical_history, String chronic_disease, String vaccination, String medical_interventions) {
         this.id = id;
@@ -62,6 +63,12 @@ public class User implements Serializable {
     }
 
 
+    public String getUserID() {
+        return id;
+    }
+    public void setUserID(String userId) {
+        this.id = userId;
+    }
     public String getId() {
         return id;
     }
