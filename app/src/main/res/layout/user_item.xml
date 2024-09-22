@@ -70,19 +70,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnEdit"
+            <ImageButton
+                android:id="@+id/btnDeleteUser"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sửa" />
-
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Xóa" />
+                android:background="@color/white"
+                android:layout_marginLeft="280dp"
+                android:src="@drawable/ic_delete"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

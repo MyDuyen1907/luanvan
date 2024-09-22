@@ -9,16 +9,18 @@
         android:id="@+id/etUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_green_background"
         android:hint="Tên người dùng:"
+        android:padding="8dp"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etUserEmail"
         android:layout_width="match_parent"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_green_background"
         android:layout_height="wrap_content"
         android:hint="Email:"
+        android:padding="8dp"
         android:inputType="textEmailAddress" />
 
 </LinearLayout>
