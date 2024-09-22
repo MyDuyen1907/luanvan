@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,25 +46,17 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     @Override
     public void onBindViewHolder(@NonNull MedicationViewHolder holder, int position) {
         Medication medication = medicationList.get(position);
+
+        // Gán giá trị cho các TextView từ đối tượng Medication
         holder.tvMedicineName.setText(medication.getmedicineName());
         holder.tvDosage.setText(medication.getDosage());
         holder.tvTime.setText(medication.getTime());
 
-        holder.itemView.setOnLongClickListener(view -> {
-            // Show options for Edit/Delete
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Tùy chọn");
-            builder.setItems(new CharSequence[]{"Chỉnh sửa", "Xóa"}, (dialog, which) -> {
-                if (which == 0) {
-                    showEditDialog(medication);
-                } else if (which == 1) {
-                    // Delete medication
-                    deleteMedication(medication);
-                }
-            });
-            builder.show();
-            return true;
-        });
+        // Xử lý sự kiện nút "Chỉnh sửa"
+        holder.btnEdit.setOnClickListener(v -> showEditDialog(medication));
+
+        // Xử lý sự kiện nút "Xóa"
+        holder.btnDelete.setOnClickListener(v -> deleteMedication(medication));
     }
 
     @Override
@@ -71,20 +64,26 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         return medicationList.size();
     }
 
+    // MedicationViewHolder class để ánh xạ với các view trong layout
     public static class MedicationViewHolder extends RecyclerView.ViewHolder {
         TextView tvMedicineName, tvDosage, tvTime;
+        ImageButton btnEdit, btnDelete;
 
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
+            // Ánh xạ các TextView và ImageButton
             tvMedicineName = itemView.findViewById(R.id.et_medicine_name);
             tvDosage = itemView.findViewById(R.id.et_dosage);
             tvTime = itemView.findViewById(R.id.et_time);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 
+    // Hàm xóa medication
     private void deleteMedication(Medication medication) {
         if (currentUser != null) {
-            String medicationId = medication.getUserId(); // Get the ID of the medication to delete
+            String medicationId = medication.getUserId(); // Lấy ID của đơn thuốc cần xóa
 
             db.collection("medications")
                     .document(medicationId)
@@ -101,57 +100,61 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         }
     }
 
+    // Hiển thị hộp thoại chỉnh sửa medication
     private void showEditDialog(Medication medication) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Chỉnh sửa đơn thuốc");
 
-        // Inflate the dialog layout
+        // Inflate layout cho hộp thoại
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.dialog_edit_medication, null);
         builder.setView(dialogView);
 
-        // Initialize input fields
+        // Ánh xạ các trường nhập liệu
         TextInputEditText etMedicineName = dialogView.findViewById(R.id.et_medicine_name);
         TextInputEditText etDosage = dialogView.findViewById(R.id.et_dosage);
         TextInputEditText etTime = dialogView.findViewById(R.id.et_time);
 
-        // Set current values to inputs
+        // Hiển thị giá trị hiện tại vào các trường
         etMedicineName.setText(medication.getmedicineName());
         etDosage.setText(medication.getDosage());
         etTime.setText(medication.getTime());
 
+        // Nút "Lưu" khi chỉnh sửa
         builder.setPositiveButton("Lưu", (dialog, which) -> {
-            // Retrieve updated values
+            // Lấy giá trị mới từ người dùng
             String newMedicineName = etMedicineName.getText().toString();
             String newDosage = etDosage.getText().toString();
             String newTime = etTime.getText().toString();
 
-            // Check if any value has changed
+            // Kiểm tra thay đổi
             boolean hasChanges = !newMedicineName.equals(medication.getmedicineName()) ||
                     !newDosage.equals(medication.getDosage()) ||
                     !newTime.equals(medication.getTime());
 
             if (hasChanges) {
-                // Update medication object
+                // Cập nhật đối tượng medication
                 medication.setmedicineName(newMedicineName);
                 medication.setDosage(newDosage);
                 medication.setTime(newTime);
 
-                // Update Firestore
+                // Cập nhật Firestore
                 updateMedication(medication);
             } else {
                 Toast.makeText(context, "Không có thay đổi", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Nút "Hủy" trong hộp thoại
         builder.setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());
 
         builder.show();
     }
 
+    // Cập nhật đơn thuốc trong Firestore
     private void updateMedication(Medication medication) {
         if (currentUser != null) {
-            String medicationId = medication.getUserId(); // Use the existing ID to update
+            String medicationId = medication.getUserId(); // Lấy ID của đơn thuốc để cập nhật
 
             db.collection("medications")
                     .document(medicationId)
@@ -159,7 +162,6 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(context, "Đã cập nhật đơn thuốc", Toast.LENGTH_SHORT).show();
-                            // Optionally, you can refresh the RecyclerView here
                             notifyDataSetChanged();
                         } else {
                             Toast.makeText(context, "Cập nhật không thành công", Toast.LENGTH_SHORT).show();
@@ -168,3 +170,4 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         }
     }
 }
+
