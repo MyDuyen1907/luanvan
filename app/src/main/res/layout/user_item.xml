@@ -17,10 +17,10 @@
         android:padding="10dp">
 
         <ImageButton
-            android:id="@+id/btnOption"
+            android:id="@+id/btnOptionUser"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="314dp"
+            android:layout_marginLeft="300dp"
             android:background="@color/white"
             android:src="@drawable/ic_more" />
 

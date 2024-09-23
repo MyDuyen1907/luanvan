@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.R;
@@ -45,6 +46,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.tvUserRole.setText(user.getRole());
 
         holder.btnDeleteUser.setOnClickListener(v -> deleteUser(user));
+        holder.btnOptionUser.setOnClickListener(v -> {
+            showRoleChangeDialog(user);
+        });
     }
 
     @Override
@@ -54,7 +58,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName, tvUserEmail, tvUserRole;
-        ImageButton btnDeleteUser;
+        ImageButton btnDeleteUser,btnOptionUser;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +66,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             tvUserEmail = itemView.findViewById(R.id.tvUserEmail);
             tvUserRole = itemView.findViewById(R.id.tvUserRole);
             btnDeleteUser = itemView.findViewById(R.id.btnDeleteUser);
+            btnOptionUser = itemView.findViewById(R.id.btnOptionUser);
         }
     }
 
@@ -97,5 +102,50 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     Toast.makeText(context, "Lỗi khi xóa người dùng.", Toast.LENGTH_SHORT).show();
                 });
     }
+    private void showRoleChangeDialog(User user) {
+        // Tạo dialog với các tùy chọn thay đổi role
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thay đổi phân quyền");
+
+        // Kiểm tra role hiện tại để hiển thị tùy chọn phù hợp
+        String[] options;
+        if (user.getRole().equals("user")) {
+            options = new String[]{"Phân quyền Admin"};
+        } else {
+            options = new String[]{"Phân quyền User"};
+        }
+
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                // Thực hiện thay đổi role
+                if (user.getRole().equals("user")) {
+                    updateRoleInFirestore(user, "admin");
+                } else {
+                    updateRoleInFirestore(user, "user");
+                }
+            }
+        });
+
+        builder.setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());
+        builder.create().show();
+    }
+    private void updateRoleInFirestore(User user, String newRole) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        // Cập nhật trường role trong Firestore
+        firestore.collection("account").document(user.getUserID())
+                .update("role", newRole)
+                .addOnSuccessListener(aVoid -> {
+                    // Cập nhật role trong danh sách và thông báo cho adapter
+                    user.setRole(newRole);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "Phân quyền đã được cập nhật.", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Lỗi khi cập nhật phân quyền.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+
 }
 

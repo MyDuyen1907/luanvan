@@ -49,7 +49,6 @@ public class AccountAdminFragment extends Fragment {
         setupSearchView();
 
         loadUsersFromFirestore();
-
         searchViewUser.setOnClickListener(v -> searchViewUser.setIconified(false));
         return view;
     }
