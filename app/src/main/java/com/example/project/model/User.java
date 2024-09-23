@@ -19,6 +19,7 @@ public class User implements Serializable {
     private String medical_interventions;
     private int exerciseFrequency;// 0:Khong 1:Nhe 2:Vua 3:Nang
     private String email;
+    private String role;
 
     public User() {
         this.id = "";
@@ -38,10 +39,12 @@ public class User implements Serializable {
         this.exerciseFrequency = 0;
         this.email = "";
     }
-    public User(String name, String email,String UserID){
+    public User(String name, String email,String UserID, String role){
         this.name = name;
         this.email = email;
         this.id = UserID;
+        this.role = role;
+
     }
     public User(String id, String email, String name, int gender, int age, int height,int exerciseFrequency, int weight, int heart_rate, int blood_pressure, int blood_sugar, int cholesterol,String medical_history, String chronic_disease, String vaccination, String medical_interventions) {
         this.id = id;
@@ -61,8 +64,12 @@ public class User implements Serializable {
         this.exerciseFrequency = exerciseFrequency;
         this.email = email;
     }
-
-
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
     public String getUserID() {
         return id;
     }

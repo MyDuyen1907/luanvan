@@ -1,19 +1,22 @@
-
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@color/white"
     app:cardElevation="4dp"
     app:cardCornerRadius="8dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
         android:padding="30dp">
+
+        <!-- User Name -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,11 +36,13 @@
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên người dùng:"
+                android:text="Tên người dùng"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
         </LinearLayout>
+
+        <!-- User Email -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,13 +63,40 @@
                 android:id="@+id/tvUserEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email:"
+                android:text="Email"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
         </LinearLayout>
 
-        <!-- Nút để xóa và chỉnh sửa người dùng -->
+        <!-- User Role -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            tools:ignore="ExtraText">
+
+            <TextView
+                android:id="@+id/tvUserRole_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Role:"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/green_main"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/tvUserRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User/admin"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <!-- Buttons for deleting and editing user -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,5 +111,6 @@
                 android:layout_marginLeft="280dp"
                 android:src="@drawable/ic_delete"/>
         </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

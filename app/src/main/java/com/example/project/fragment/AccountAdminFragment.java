@@ -65,9 +65,10 @@ public class AccountAdminFragment extends Fragment {
                             String name = document.getString("userName");
                             String email = document.getString("email");
                             String userID = document.getId();
+                            String role = document.getString("role");
 
                             // Tạo đối tượng User và thêm vào danh sách
-                            User user = new User(name, email, userID);
+                            User user = new User(name, email, userID, role);
                             userList.add(user);
                         }
 

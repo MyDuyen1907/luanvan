@@ -39,6 +39,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         User user = userList.get(position);
         holder.tvUserName.setText(user.getName());
         holder.tvUserEmail.setText(user.getEmail());
+        holder.tvUserRole.setText(user.getRole());
+
 
         // Xử lý khi nhấn nút "Xóa"
         holder.btnDeleteUser.setOnClickListener(v -> {
@@ -52,7 +54,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUserName, tvUserEmail;
+        TextView tvUserName, tvUserEmail,tvUserRole;
         ImageButton btnDeleteUser;
 
         public UserViewHolder(@NonNull View itemView) {
@@ -60,6 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             tvUserName = itemView.findViewById(R.id.tvUserName);
             tvUserEmail = itemView.findViewById(R.id.tvUserEmail);
             btnDeleteUser = itemView.findViewById(R.id.btnDeleteUser);
+            tvUserRole = itemView.findViewById(R.id.tvUserRole);
         }
     }
 
