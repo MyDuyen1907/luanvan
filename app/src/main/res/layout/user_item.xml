@@ -14,7 +14,16 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/btnOption"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="314dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_more" />
+
 
         <!-- User Name -->
         <LinearLayout

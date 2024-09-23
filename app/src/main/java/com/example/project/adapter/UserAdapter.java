@@ -15,15 +15,18 @@ import com.example.project.R;
 import com.example.project.model.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    private List<User> userList;
+    private List<User> userList;             // Danh sách gốc
+    private List<User> filteredUserList;     // Danh sách lọc
     private Context context;
 
     public UserAdapter(List<User> userList, Context context) {
         this.userList = userList;
+        this.filteredUserList = new ArrayList<>(userList); // Khởi tạo danh sách lọc
         this.context = context;
     }
 
@@ -36,45 +39,57 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User user = userList.get(position);
+        User user = filteredUserList.get(position); // Sử dụng danh sách lọc
         holder.tvUserName.setText(user.getName());
         holder.tvUserEmail.setText(user.getEmail());
         holder.tvUserRole.setText(user.getRole());
 
-
-        // Xử lý khi nhấn nút "Xóa"
-        holder.btnDeleteUser.setOnClickListener(v -> {
-            deleteUser(user);
-        });
+        holder.btnDeleteUser.setOnClickListener(v -> deleteUser(user));
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return filteredUserList.size(); // Trả về kích thước của danh sách lọc
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUserName, tvUserEmail,tvUserRole;
+        TextView tvUserName, tvUserEmail, tvUserRole;
         ImageButton btnDeleteUser;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             tvUserEmail = itemView.findViewById(R.id.tvUserEmail);
-            btnDeleteUser = itemView.findViewById(R.id.btnDeleteUser);
             tvUserRole = itemView.findViewById(R.id.tvUserRole);
+            btnDeleteUser = itemView.findViewById(R.id.btnDeleteUser);
         }
     }
 
-    // Hàm xóa người dùng từ Firestore dựa trên userID
+    public void filter(String query) {
+        filteredUserList.clear(); // Xóa danh sách lọc hiện tại
+
+        if (query.isEmpty()) {
+            filteredUserList.addAll(userList); // Khôi phục danh sách gốc
+        } else {
+            query = query.toLowerCase(); // Chuyển đổi từ khóa thành chữ thường
+            for (User user : userList) {
+                if (user.getName().toLowerCase().contains(query) ||
+                        user.getEmail().toLowerCase().contains(query)
+                        || user.getRole().toLowerCase().contains(query)){
+                    filteredUserList.add(user); // Thêm vào danh sách lọc nếu phù hợp
+                }
+            }
+        }
+        notifyDataSetChanged(); // Cập nhật RecyclerView
+    }
+
     private void deleteUser(User user) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        // Thay vì sử dụng email, ta sử dụng userID để xác định tài liệu
         firestore.collection("account").document(user.getUserID())
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    // Xóa thành công, cập nhật danh sách
                     userList.remove(user);
+                    filteredUserList.remove(user); // Cập nhật danh sách lọc khi xóa
                     notifyDataSetChanged();
                     Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT).show();
                 })
@@ -83,3 +98,4 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 });
     }
 }
+
