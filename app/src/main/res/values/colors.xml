@@ -14,6 +14,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_orange">#FF9800</color>
     <color name="yellow">#FFD700</color>
     <color name="bgFilter">#EFEBE9</color>
     <color name="colorPrimaryDark">#5D4037</color>
@@ -24,7 +25,6 @@
     <color name="bgBottomNavigation">#fe485a</color>
     <color name="momo_color">#E0078C</color>
     <color name="btn_selected">#7d004c</color>
-
     <color name="orange">#FF7245</color>
 
 </resources>

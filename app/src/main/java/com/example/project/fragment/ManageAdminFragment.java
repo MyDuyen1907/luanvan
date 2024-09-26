@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.project.activity.ChangePasswordActivity;
-import com.example.project.activity.ContactDoctorActivity;
 import com.example.project.activity.LoginActivity;
 import com.example.project.R;
 import com.google.firebase.auth.FirebaseAuth;

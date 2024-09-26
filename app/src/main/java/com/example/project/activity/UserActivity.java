@@ -38,9 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     TextView id,name, age, gender, height, weight,
-            heart, bloodpressure, bloodsugar, cholesterol,
-            medicalhistory, choricdisease,vaccination, medicalite
-            ,maxCalories,maxWater,bmi,exerciseFrequency,txv_bmi,ttde;
+            exerciseFrequency,txv_bmi,ttde,bmi,maxWater,maxCalories;
     ;
     ImageView imv_bmi;
     Button btnBackUser,btnUpdate ;
@@ -65,14 +63,6 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         gender = findViewById(R.id.txv_gender);
         height = findViewById(R.id.txv_height);
         weight = findViewById(R.id.txv_weight);
-        medicalhistory = findViewById(R.id.txv_disease_history);
-        choricdisease = findViewById(R.id.txv_chronic_diseases);
-        vaccination = findViewById(R.id.txv_vaccination_history);
-        medicalite = findViewById(R.id.txv_medical_interventions);
-        heart = findViewById(R.id.txv_heart_rate);
-        bloodpressure = findViewById(R.id.txv_blood_pressure);
-        bloodsugar = findViewById(R.id.txv_blood_sugar);
-        cholesterol = findViewById(R.id.txv_cholesterol);
         btnBackUser = findViewById(R.id.btn_back_user);
         txv_bmi = findViewById(R.id.txv_bmi123);
         imv_bmi = findViewById(R.id.imv_bmi123);
@@ -132,14 +122,6 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                 ttde.setText(String.valueOf(p.TTDECal()));
                                 bmi.setText(String.valueOf(p.BMICal())); // Use BMICal method
                                 maxWater.setText(String.valueOf(p.WaterCal())); // Use WaterCal method
-                                medicalhistory.setText(p.getMedical_history());
-                                choricdisease.setText(p.getChronic_disease());
-                                vaccination.setText(p.getVaccination());
-                                medicalite.setText(p.getMedical_interventions());
-                                heart.setText(String.valueOf(p.getHeart_rate()));
-                                bloodpressure.setText(String.valueOf(p.getBlood_pressure()));
-                                bloodsugar.setText(String.valueOf(p.getBlood_sugar()));
-                                cholesterol.setText(String.valueOf(p.getCholesterol()));
 
                                 // Gender
                                 switch (p.getGender()) {
@@ -167,8 +149,8 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                         break;
                                 }
                             }
-                            }
                         }
+                    }
                 });
     }
 
@@ -276,4 +258,5 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public boolean onMenuItemClick(MenuItem item) {
         return false;
     }
+
 }

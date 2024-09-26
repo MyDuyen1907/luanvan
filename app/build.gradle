@@ -60,6 +60,10 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+    //    lottie
+    implementation 'com.airbnb.android:lottie:6.0.0'
+//    circularprogressbar
+    implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
 
 
 }

@@ -6,13 +6,13 @@
         android:title="Trang chủ"
         />
 
-    <item android:title="Liên hệ"
-        android:id="@+id/navContact"
-        android:icon="@drawable/contact"/>
+    <item android:title="Kế hoạch"
+        android:id="@+id/navplans"
+        android:icon="@drawable/plans"/>
 
-    <item android:title="Thông báo"
-        android:id="@+id/navNotification"
-        android:icon="@drawable/notifications"/>
+    <item android:title="Theo dõi"
+        android:id="@+id/navhealth"
+        android:icon="@drawable/health"/>
 
     <item android:title="Quản lý"
         android:id="@+id/navManage"

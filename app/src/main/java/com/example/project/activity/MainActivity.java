@@ -8,11 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import com.example.project.fragment.ContactFragment;
+import com.example.project.fragment.HealthFragment;
 import com.example.project.fragment.HomeFragment;
 import com.example.project.fragment.ManageFragment;
-import com.example.project.fragment.NotificationFragment;
 import com.example.project.R;
+import com.example.project.fragment.plansFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
             if (itemId == R.id.navHome) {
                 loadFragment(new HomeFragment(), false);
-            } else if (itemId == R.id.navContact) {
-                loadFragment(new ContactFragment(), false);
-            } else if (itemId == R.id.navNotification) {
-                loadFragment(new NotificationFragment(), false);
+            } else if (itemId == R.id.navplans) {
+                loadFragment(new plansFragment(), false);
+            } else if (itemId == R.id.navhealth) {
+                loadFragment(new HealthFragment(), false);
             } else if (itemId == R.id.navManage) {
                 loadFragment(new ManageFragment(), false);
             }

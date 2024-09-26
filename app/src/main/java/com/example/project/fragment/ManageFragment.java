@@ -12,14 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.project.activity.ChangePasswordActivity;
-import com.example.project.activity.ContactDoctorActivity;
 import com.example.project.activity.LoginActivity;
 import com.example.project.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ManageFragment extends Fragment {
 
-    private LinearLayout layoutChangePassword, layoutContact, layoutSignOut;
+    private LinearLayout layoutChangePassword, layoutSignOut;
     private FirebaseAuth mAuth;
 
     @Nullable
@@ -33,7 +32,6 @@ public class ManageFragment extends Fragment {
 
         // Liên kết các view với mã Java
         layoutChangePassword = view.findViewById(R.id.layout_change_password);
-        layoutContact = view.findViewById(R.id.layout_contact);
         layoutSignOut = view.findViewById(R.id.layout_sign_out);
 
         // Xử lý sự kiện nhấn cho từng mục
@@ -46,14 +44,6 @@ public class ManageFragment extends Fragment {
             }
         });
 
-        layoutContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Chuyển hướng sang trang liên hệ bác sĩ
-                Intent intent = new Intent(getActivity(), ContactDoctorActivity.class);
-                startActivity(intent);
-            }
-        });
 
         layoutSignOut.setOnClickListener(new View.OnClickListener() {
             @Override

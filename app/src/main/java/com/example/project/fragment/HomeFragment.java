@@ -2,27 +2,22 @@ package com.example.project.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
-import com.example.project.activity.DishActivity;
 import com.example.project.activity.ExerciseTimerActivity;
-import com.example.project.activity.IngredientActivity;
-import com.example.project.activity.MainActivity;
 import com.example.project.activity.MedicationNotesApp;
-import com.example.project.activity.MentalHealthTrackingActivity;
-import com.example.project.activity.SleepTrackerActivity;
-import com.example.project.activity.SuggestionActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,8 +26,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeFragment extends Fragment {
-    private CardView cvUser, controlCaloriesCardView, controlWaterCardView, cv_sleep, cv_exercise, cv_medical, cv_suggestion, cv_dish, cv_Ingre,
-    cv_mentality;
+    private CardView cvUser,cv_control_calories,cv_medical,cv_control_water,cv_exercise;
     private TextView txvHello;
     private FirebaseFirestore db;
 
@@ -46,23 +40,17 @@ public class HomeFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         // Link views with their corresponding IDs
+        cv_exercise = view.findViewById(R.id.cv_exercise);
+        cv_control_water = view.findViewById(R.id.cv_control_water);
+        cv_medical = view.findViewById(R.id.cv_medical);
+        cv_control_calories = view.findViewById(R.id.cv_control_calories);
         cvUser = view.findViewById(R.id.cv_user);
         txvHello = view.findViewById(R.id.txvHello);
-        controlCaloriesCardView = view.findViewById(R.id.cv_control_calories);
-        controlWaterCardView= view.findViewById(R.id.cv_control_water);
-        cv_sleep = view.findViewById(R.id.cv_sleep);
-        cv_exercise = view.findViewById(R.id.cv_exercise);
-        cv_medical = view.findViewById(R.id.cv_medical);
-        cv_suggestion = view.findViewById(R.id.cv_suggestion);
-        cv_dish = view.findViewById(R.id.cv_dish);
-        cv_Ingre= view.findViewById(R.id.cvIngre);
-        cv_mentality = view.findViewById(R.id.cv_mentality);
-
 
         // Fetch user data from Firestore and set the greeting text
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
         String user_id = u.getUid();
-        db.collection("user").document(user_id) // Replace "user_id" with the actual user ID
+        db.collection("user").document(user_id)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -84,31 +72,10 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        controlCaloriesCardView.setOnClickListener(new View.OnClickListener() {
+        cv_control_calories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ControlCaloriesActivity.class);
-                startActivity(intent);
-            }
-        });
-        controlWaterCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), ControlWaterActivity.class);
-                startActivity(intent);
-            }
-        });
-        cv_sleep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SleepTrackerActivity.class);
-                startActivity(intent);
-            }
-        });
-        cv_exercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ExerciseTimerActivity.class);
                 startActivity(intent);
             }
         });
@@ -119,35 +86,21 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        cv_suggestion.setOnClickListener(new View.OnClickListener() {
+        cv_control_water.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SuggestionActivity.class);
+                Intent intent = new Intent(getActivity(), ControlWaterActivity.class);
                 startActivity(intent);
             }
         });
-        cv_dish.setOnClickListener(new View.OnClickListener() {
+        cv_exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), DishActivity.class);
-                startActivity(intent);
-            }
-        });
-        cv_Ingre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), IngredientActivity.class);
-                startActivity(intent);
-            }
-        });
-        cv_mentality.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MentalHealthTrackingActivity.class);
+                Intent intent = new Intent(getActivity(), ExerciseTimerActivity.class);
                 startActivity(intent);
             }
         });
 
-        return view;
+        return view; // Make sure to return the view at the end of onCreateView
     }
 }

@@ -46,7 +46,7 @@ public class ExerciseFrequentActivity extends AppCompatActivity {
 
                 user.setExerciseFrequency(position);
 
-                Intent intent = new Intent(getApplicationContext(), MedicalHistoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FinishActivity.class);
                 intent.putExtra("user", user);
                 startActivity(intent);
             }
