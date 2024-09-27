@@ -1,5 +1,6 @@
 package com.example.project.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +15,28 @@ import com.example.project.model.Plan;
 import java.util.List;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder> {
-    private List<Plan> planList;
 
-    public PlanAdapter(List<Plan> planList) {
+    private List<Plan> planList;
+    private Context context;
+
+    public PlanAdapter(List<Plan> planList, Context context) {
         this.planList = planList;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public PlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_plan, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_plan, parent, false);
         return new PlanViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PlanViewHolder holder, int position) {
         Plan plan = planList.get(position);
-        holder.description.setText(plan.getDescription());
-        holder.start.setText(plan.getStart());
-        holder.end.setText(plan.getEnd());
+        holder.tvDescription.setText(plan.getDescription());
+        holder.tvTime.setText(plan.getStartTime() + " - " + plan.getEndTime());
+        holder.tvDate.setText(plan.getStartDate() + " - " + plan.getEndDate());
     }
 
     @Override
@@ -41,13 +45,14 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
     }
 
     public static class PlanViewHolder extends RecyclerView.ViewHolder {
-        TextView description, start, end;
+
+        TextView tvDescription, tvTime, tvDate;
 
         public PlanViewHolder(@NonNull View itemView) {
             super(itemView);
-            description = itemView.findViewById(R.id.plan_description);
-            start = itemView.findViewById(R.id.plan_start);
-            end = itemView.findViewById(R.id.plan_end);
+            tvDescription = itemView.findViewById(R.id.tv_description);
+            tvTime = itemView.findViewById(R.id.tv_time);
+            tvDate = itemView.findViewById(R.id.tv_date);
         }
     }
 }

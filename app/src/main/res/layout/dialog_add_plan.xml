@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Nhập mô tả kế hoạch -->
+    <EditText
+        android:id="@+id/et_plan_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mô tả kế hoạch"
+        android:inputType="text" />
+
+    <!-- Nhập thời gian bắt đầu -->
+    <EditText
+        android:id="@+id/et_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Thời gian bắt đầu (HH:mm)"
+        android:inputType="time" />
+
+    <!-- Nhập thời gian kết thúc -->
+    <EditText
+        android:id="@+id/et_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Thời gian kết thúc (HH:mm)"
+        android:inputType="time" />
+
+    <!-- Nhập ngày bắt đầu -->
+    <EditText
+        android:id="@+id/et_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày bắt đầu (dd/MM/yyyy)"
+        android:inputType="date" />
+
+    <!-- Nhập ngày kết thúc -->
+    <EditText
+        android:id="@+id/et_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày kết thúc (dd/MM/yyyy)"
+        android:inputType="date" />
+
+    <!-- Nút thêm kế hoạch -->
+    <Button
+        android:id="@+id/btn_add_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm kế hoạch"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+</LinearLayout>

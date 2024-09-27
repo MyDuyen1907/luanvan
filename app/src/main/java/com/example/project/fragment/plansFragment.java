@@ -1,6 +1,5 @@
 package com.example.project.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,85 +9,164 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.project.R;
 import com.example.project.adapter.PlanAdapter;
 import com.example.project.model.Plan;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class plansFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView rvPlans;
+    private Button btnAddPlan;
     private PlanAdapter planAdapter;
-    private List<Plan> planList; // Danh sách lưu kế hoạch
-    private LinearLayout addPlanButton;
+    private ArrayList<Plan> planList = new ArrayList<>();
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plans, container, false);
 
-        // Khởi tạo các thành phần
-        recyclerView = view.findViewById(R.id.todolist);
-        addPlanButton = view.findViewById(R.id.add_plan);
+        // Khởi tạo Firebase Auth và Firestore
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        // Khởi tạo danh sách kế hoạch và adapter
-        planList = new ArrayList<>();
-        planAdapter = new PlanAdapter(planList); // Bạn cần tạo PlanAdapter để hiển thị kế hoạch
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(planAdapter);
+        // Liên kết RecyclerView và nút Add
+        rvPlans = view.findViewById(R.id.rv_plans);
+        btnAddPlan = view.findViewById(R.id.btn_add_plan);
 
-        // Thiết lập sự kiện cho nút thêm kế hoạch
-        addPlanButton.setOnClickListener(new View.OnClickListener() {
+        // Thiết lập RecyclerView
+        rvPlans.setLayoutManager(new LinearLayoutManager(getContext()));
+        planAdapter = new PlanAdapter(planList, getContext());
+        rvPlans.setAdapter(planAdapter);
+
+        // Nút "Add" để mở Dialog thêm kế hoạch
+        btnAddPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPlanInputDialog();
+                showAddPlanDialog();
             }
         });
+
+        // Load dữ liệu kế hoạch từ Firestore
+        loadPlans();
 
         return view;
     }
 
-    private void showPlanInputDialog() {
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_plan_input, null);
+    // Hiển thị dialog thêm kế hoạch
+    private void showAddPlanDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_plan, null);
+        builder.setView(dialogView);
 
-        EditText planDescription = dialogView.findViewById(R.id.et_plan_description);
-        EditText startDate = dialogView.findViewById(R.id.et_start_date);
-        EditText endDate = dialogView.findViewById(R.id.et_end_date);
-        EditText startTime = dialogView.findViewById(R.id.et_start_time);
-        EditText endTime = dialogView.findViewById(R.id.et_end_time);
+        EditText etPlanDescription = dialogView.findViewById(R.id.et_plan_description);
+        EditText etStartTime = dialogView.findViewById(R.id.et_start_time);
+        EditText etEndTime = dialogView.findViewById(R.id.et_end_time);
+        EditText etStartDate = dialogView.findViewById(R.id.et_start_date);
+        EditText etEndDate = dialogView.findViewById(R.id.et_end_date);
+        Button btnAddPlanDialog = dialogView.findViewById(R.id.btn_add_plan);
 
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("Nhập thông tin kế hoạch")
-                .setView(dialogView)
-                .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String description = planDescription.getText().toString();
-                        String start = startDate.getText().toString() + " " + startTime.getText().toString();
-                        String end = endDate.getText().toString() + " " + endTime.getText().toString();
-
-                        // Thêm kế hoạch vào danh sách và cập nhật adapter
-                        addPlanToTodoList(description, start, end);
-                    }
-                })
-                .setNegativeButton("Hủy", null)
-                .create();
-
+        AlertDialog dialog = builder.create();
         dialog.show();
+
+        btnAddPlanDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String description = etPlanDescription.getText().toString().trim();
+                String startTime = etStartTime.getText().toString().trim();
+                String endTime = etEndTime.getText().toString().trim();
+                String startDate = etStartDate.getText().toString().trim();
+                String endDate = etEndDate.getText().toString().trim();
+
+                if (TextUtils.isEmpty(description) || TextUtils.isEmpty(startTime) || TextUtils.isEmpty(endTime) ||
+                        TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate)) {
+                    Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Lưu kế hoạch vào Firestore
+                savePlan(description, startTime, endTime, startDate, endDate);
+                dialog.dismiss();
+            }
+        });
     }
 
-    private void addPlanToTodoList(String description, String start, String end) {
-        // Tạo đối tượng Plan mới và thêm vào danh sách
-        Plan newPlan = new Plan(description, start, end);
-        planList.add(newPlan);
-        planAdapter.notifyItemInserted(planList.size() - 1); // Cập nhật RecyclerView
+    // Lưu kế hoạch vào Firestore
+    private void savePlan(String description, String startTime, String endTime, String startDate, String endDate) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+
+            Map<String, Object> plan = new HashMap<>();
+            plan.put("description", description);
+            plan.put("startTime", startTime);
+            plan.put("endTime", endTime);
+            plan.put("startDate", startDate);
+            plan.put("endDate", endDate);
+            plan.put("userId", userId);
+
+            db.collection("plans")
+                    .add(plan)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Kế hoạch đã được thêm", Toast.LENGTH_SHORT).show();
+                                loadPlans(); // Tải lại danh sách kế hoạch
+                            } else {
+                                Toast.makeText(getContext(), "Thêm kế hoạch không thành công", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    // Load kế hoạch từ Firestore
+    private void loadPlans() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            db.collection("plans")
+                    .whereEqualTo("userId", userId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                planList.clear();
+                                for (DocumentSnapshot document : task.getResult()) {
+                                    Plan plan = document.toObject(Plan.class);
+                                    planList.add(plan);
+                                }
+                                planAdapter.notifyDataSetChanged();
+                            } else {
+                                Toast.makeText(getContext(), "Không thể tải dữ liệu", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
 }
