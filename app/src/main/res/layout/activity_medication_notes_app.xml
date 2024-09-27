@@ -54,7 +54,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Thời gian dùng thuốc (HH:mm)"
-        android:layout_marginBottom="20dp"
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -65,6 +64,31 @@
             android:padding="8dp"
             android:background="@drawable/edit_text_background"/>
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Thời gian nhắc dùng thuốc (HH:mm)"
+        android:layout_marginBottom="20dp"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:padding="8dp"
+            android:background="@drawable/edit_text_background"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Switch
+        android:id="@+id/switch_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bật nhắc nhở dùng thuốc"
+        android:layout_marginBottom="20dp"
+        android:checked="true"
+        android:textColor="#3C3C3E"/>
+
 
     <LinearLayout
         android:layout_width="377dp"

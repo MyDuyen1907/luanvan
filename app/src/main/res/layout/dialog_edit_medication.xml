@@ -46,5 +46,18 @@
             android:layout_height="wrap_content"
             android:inputType="time" />
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Thời gian nhắc dùng thuốc (HH:mm)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_reminder"
+            android:padding="8dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="time" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

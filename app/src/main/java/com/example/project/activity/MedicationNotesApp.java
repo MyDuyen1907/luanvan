@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.project.R;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 public class MedicationNotesApp extends AppCompatActivity {
 
-    private EditText etMedicineName, etDosage, etTime;
+    private EditText etMedicineName, etDosage, etTime, etReminder;
     private Button btnSave, medical;
     private RecyclerView rvMedications;
     private FirebaseAuth mAuth;
@@ -62,6 +63,7 @@ public class MedicationNotesApp extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_save);
         medical = findViewById(R.id.btnmedical);
         rvMedications = findViewById(R.id.rv_medications);
+        etReminder = findViewById(R.id.et_reminder);
 
         // Set up RecyclerView
         rvMedications.setLayoutManager(new LinearLayoutManager(this));
@@ -86,14 +88,15 @@ public class MedicationNotesApp extends AppCompatActivity {
                 String medicineName = etMedicineName.getText().toString().trim();
                 String dosage = etDosage.getText().toString().trim();
                 String time = etTime.getText().toString().trim();
+                String reminder = etReminder.getText().toString().trim();
 
-                if (TextUtils.isEmpty(medicineName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(time)) {
+                if (TextUtils.isEmpty(medicineName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(time) || TextUtils.isEmpty(reminder)) {
                     Toast.makeText(MedicationNotesApp.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Save medication to Firestore
-                saveMedication(medicineName, dosage, time);
+                saveMedication(medicineName, dosage, time, reminder);
             }
         });
     }
@@ -123,7 +126,7 @@ public class MedicationNotesApp extends AppCompatActivity {
         }
     }
 
-    private void saveMedication(String medicineName, String dosage, String time) {
+    private void saveMedication(String medicineName, String dosage, String time, String reminder) {
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
@@ -131,7 +134,8 @@ public class MedicationNotesApp extends AppCompatActivity {
             medication.put("medicineName", medicineName);
             medication.put("dosage", dosage);
             medication.put("time", time);
-            medication.put("userId", userId); // Store user ID
+            medication.put("userId", userId);// Store user ID
+            medication.put("reminder",reminder);
 
             db.collection("medications")
                     .add(medication)
@@ -154,5 +158,6 @@ public class MedicationNotesApp extends AppCompatActivity {
         etMedicineName.setText("");
         etDosage.setText("");
         etTime.setText("");
+        etReminder.setText("");
     }
 }

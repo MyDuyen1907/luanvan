@@ -4,16 +4,18 @@ public class Medication {
     private String medicineName;
     private String dosage;
     private String time;
+    private String reminder;
     private String userId;
 
     public Medication() {
     }
 
-    public Medication( String medicineName, String dosage, String time, String userId) {
+    public Medication( String medicineName, String dosage, String time, String userId, String reminder) {
         this.medicineName = medicineName;
         this.dosage = dosage;
         this.time = time;
         this.userId = userId;
+        this.reminder = reminder;
     }
 
 
@@ -46,6 +48,12 @@ public class Medication {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+    public String getReminder() {
+        return reminder;
+    }
+    public void setReminder(String reminder) {
+        this.reminder = reminder;
+    }
 
     @Override
     public String toString() {
@@ -54,6 +62,7 @@ public class Medication {
                 ", dosage='" + dosage + '\'' +
                 ", time='" + time + '\'' +
                 ", userId='" + userId + '\'' +
+                ", reminder='" + reminder + '\'' +
                 '}';
     }
 }
