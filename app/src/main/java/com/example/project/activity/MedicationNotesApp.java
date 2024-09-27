@@ -44,7 +44,7 @@ import java.util.Map;
 
 public class MedicationNotesApp extends AppCompatActivity {
 
-    private EditText etMedicineName, etDosage, etTime, etReminder;
+    private EditText etMedicineName, etDosage, etTime, etReminder,etnote;
     private Button btnSave, medical;
     private RecyclerView rvMedications;
     private FirebaseAuth mAuth;
@@ -75,6 +75,7 @@ public class MedicationNotesApp extends AppCompatActivity {
         rvMedications = findViewById(R.id.rv_medications);
         etReminder = findViewById(R.id.et_reminder);
         switchReminder = findViewById(R.id.switch_reminder);
+        etnote = findViewById(R.id.et_note);
 
         // Set up RecyclerView
         rvMedications.setLayoutManager(new LinearLayoutManager(this));
@@ -100,14 +101,15 @@ public class MedicationNotesApp extends AppCompatActivity {
                 String dosage = etDosage.getText().toString().trim();
                 String time = etTime.getText().toString().trim();
                 String reminder = etReminder.getText().toString().trim();
+                String note = etnote.getText().toString().trim();
 
-                if (TextUtils.isEmpty(medicineName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(time) || TextUtils.isEmpty(reminder)) {
+                if (TextUtils.isEmpty(medicineName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(time) || TextUtils.isEmpty(reminder) || TextUtils.isEmpty(note)) {
                     Toast.makeText(MedicationNotesApp.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Save medication to Firestore
-                saveMedication(medicineName, dosage, time, reminder);
+                saveMedication(medicineName, dosage, time, reminder,note);
                 // Đặt nhắc nhở nếu Switch được bật
                 if (switchReminder.isChecked()) {
                     setReminder(medicineName, dosage, time, reminder);
@@ -122,8 +124,21 @@ public class MedicationNotesApp extends AppCompatActivity {
         try {
             Date date = sdf.parse(reminder);
             if (date != null) {
-                calendar.setTime(date);
-                calendar.set(Calendar.SECOND, 0);  // Đặt giây bằng 0
+                // Lấy giờ và phút từ thời gian người dùng nhập
+                Calendar reminderTime = Calendar.getInstance();
+                reminderTime.setTime(date);
+                int reminderHour = reminderTime.get(Calendar.HOUR_OF_DAY);
+                int reminderMinute = reminderTime.get(Calendar.MINUTE);
+
+                // Thiết lập giờ và phút vào Calendar cho nhắc nhở
+                calendar.set(Calendar.HOUR_OF_DAY, reminderHour);
+                calendar.set(Calendar.MINUTE, reminderMinute);
+                calendar.set(Calendar.SECOND, 0);  // Đặt giây về 0
+
+                // Nếu thời gian nhắc nhở đã trôi qua trong ngày hôm nay, chuyển sang ngày hôm sau
+                if (calendar.before(Calendar.getInstance())) {
+                    calendar.add(Calendar.DATE, 1);  // Cộng thêm 1 ngày
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -141,9 +156,18 @@ public class MedicationNotesApp extends AppCompatActivity {
         // Đặt báo thức
         if (alarmManager != null) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            Toast.makeText(this, "Đã đặt nhắc nhở", Toast.LENGTH_SHORT).show();
+
+            // Hiển thị thời gian nhắc nhở trong Toast
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+
+            Toast.makeText(this, "Đã đặt nhắc nhở vào lúc " + formattedTime, Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 
     private void loadMedications() {
         if (currentUser != null) {
@@ -170,7 +194,7 @@ public class MedicationNotesApp extends AppCompatActivity {
         }
     }
 
-    private void saveMedication(String medicineName, String dosage, String time, String reminder) {
+    private void saveMedication(String medicineName, String dosage, String time, String reminder,String note){
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
@@ -180,6 +204,7 @@ public class MedicationNotesApp extends AppCompatActivity {
             medication.put("time", time);
             medication.put("userId", userId);// Store user ID
             medication.put("reminder",reminder);
+            medication.put("note",note);
 
             db.collection("medications")
                     .add(medication)
@@ -203,5 +228,6 @@ public class MedicationNotesApp extends AppCompatActivity {
         etDosage.setText("");
         etTime.setText("");
         etReminder.setText("");
+        etnote.setText("");
     }
 }

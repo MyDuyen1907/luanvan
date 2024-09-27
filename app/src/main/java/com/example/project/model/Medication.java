@@ -6,16 +6,18 @@ public class Medication {
     private String time;
     private String reminder;
     private String userId;
+    private String note;
 
     public Medication() {
     }
 
-    public Medication( String medicineName, String dosage, String time, String userId, String reminder) {
+    public Medication( String medicineName, String dosage, String time, String userId, String reminder, String note) {
         this.medicineName = medicineName;
         this.dosage = dosage;
         this.time = time;
         this.userId = userId;
         this.reminder = reminder;
+        this.note = note;
     }
 
 
@@ -54,6 +56,12 @@ public class Medication {
     public void setReminder(String reminder) {
         this.reminder = reminder;
     }
+    public String getNote() {
+        return note;
+    }
+    public void setNote (String note) {
+        this.note = note;
+    }
 
     @Override
     public String toString() {
@@ -63,6 +71,7 @@ public class Medication {
                 ", time='" + time + '\'' +
                 ", userId='" + userId + '\'' +
                 ", reminder='" + reminder + '\'' +
+                ", note='" + note + '\'' +
                 '}';
     }
 }

@@ -52,6 +52,8 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.tvDosage.setText(medication.getDosage());
         holder.tvTime.setText(medication.getTime());
         holder.tvReminder.setText(medication.getReminder());
+        holder.tvnote.setText(medication.getNote());
+
 
 
         // Xử lý sự kiện nút "Chỉnh sửa"
@@ -68,7 +70,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
     // MedicationViewHolder class để ánh xạ với các view trong layout
     public static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        TextView tvMedicineName, tvDosage, tvTime, tvReminder;
+        TextView tvMedicineName, tvDosage, tvTime, tvReminder, tvnote;
         ImageButton btnEdit, btnDelete;
 
         public MedicationViewHolder(@NonNull View itemView) {
@@ -80,6 +82,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             tvReminder = itemView.findViewById(R.id.et_reminder);
+            tvnote = itemView.findViewById(R.id.et_note);
         }
     }
 
@@ -118,12 +121,14 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         TextInputEditText etDosage = dialogView.findViewById(R.id.et_dosage);
         TextInputEditText etTime = dialogView.findViewById(R.id.et_time);
         TextInputEditText etReminder = dialogView.findViewById(R.id.et_reminder);
+        TextInputEditText etNote = dialogView.findViewById(R.id.et_note);
 
         // Hiển thị giá trị hiện tại vào các trường
         etMedicineName.setText(medication.getmedicineName());
         etDosage.setText(medication.getDosage());
         etTime.setText(medication.getTime());
         etReminder.setText(medication.getReminder());
+        etNote.setText(medication.getNote());
 
         // Nút "Lưu" khi chỉnh sửa
         builder.setPositiveButton("Lưu", (dialog, which) -> {
@@ -132,12 +137,15 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             String newDosage = etDosage.getText().toString();
             String newTime = etTime.getText().toString();
             String newReminder = etReminder.getText().toString();
+            String newNote = etNote.getText().toString();
 
             // Kiểm tra thay đổi
             boolean hasChanges = !newMedicineName.equals(medication.getmedicineName()) ||
                     !newDosage.equals(medication.getDosage()) ||
                     !newTime.equals(medication.getTime()) ||
-                    !newReminder.equals(medication.getReminder());
+                    !newReminder.equals(medication.getReminder()) ||
+                    !newNote.equals(medication.getNote());
+
 
             if (hasChanges) {
                 // Cập nhật đối tượng medication
@@ -145,6 +153,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
                 medication.setDosage(newDosage);
                 medication.setTime(newTime);
                 medication.setReminder(newReminder);
+                medication.setNote (newNote);
 
                 // Cập nhật Firestore
                 updateMedication(medication);
