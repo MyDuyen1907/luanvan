@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -30,9 +32,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MedicationNotesApp extends AppCompatActivity {
@@ -45,6 +52,9 @@ public class MedicationNotesApp extends AppCompatActivity {
     private FirebaseFirestore db;
     private MedicationAdapter adapter;
     private ArrayList<Medication> medicationList = new ArrayList<>();
+    private Switch switchReminder;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,7 @@ public class MedicationNotesApp extends AppCompatActivity {
         medical = findViewById(R.id.btnmedical);
         rvMedications = findViewById(R.id.rv_medications);
         etReminder = findViewById(R.id.et_reminder);
+        switchReminder = findViewById(R.id.switch_reminder);
 
         // Set up RecyclerView
         rvMedications.setLayoutManager(new LinearLayoutManager(this));
@@ -97,8 +108,41 @@ public class MedicationNotesApp extends AppCompatActivity {
 
                 // Save medication to Firestore
                 saveMedication(medicineName, dosage, time, reminder);
+                // Đặt nhắc nhở nếu Switch được bật
+                if (switchReminder.isChecked()) {
+                    setReminder(medicineName, dosage, time, reminder);
+                }
             }
         });
+    }
+    private void setReminder(String medicineName, String dosage, String time, String reminder) {
+        // Chuyển đổi thời gian nhắc nhở từ string thành Calendar
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        try {
+            Date date = sdf.parse(reminder);
+            if (date != null) {
+                calendar.setTime(date);
+                calendar.set(Calendar.SECOND, 0);  // Đặt giây bằng 0
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Thiết lập AlarmManager để gửi thông báo
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, ReminderReceiver.class);
+        intent.putExtra("medicineName", medicineName);
+        intent.putExtra("dosage", dosage);
+        intent.putExtra("time", time);
+
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Đặt báo thức
+        if (alarmManager != null) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            Toast.makeText(this, "Đã đặt nhắc nhở", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadMedications() {
