@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <!-- Nhập mô tả kế hoạch -->
     <EditText
@@ -11,39 +12,76 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mô tả kế hoạch"
-        android:inputType="text" />
+        android:inputType="text"
+        android:background="@drawable/custom_edit_text"
+        android:padding="35dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black" />
 
-    <!-- Nhập thời gian bắt đầu -->
-    <EditText
-        android:id="@+id/et_start_time"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Thời gian bắt đầu (HH:mm)"
-        android:inputType="time" />
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
-    <!-- Nhập thời gian kết thúc -->
-    <EditText
-        android:id="@+id/et_end_time"
+        <!-- Nhập thời gian bắt đầu -->
+        <EditText
+            android:id="@+id/et_start_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Thời gian bắt đầu"
+            android:inputType="time"
+            android:background="@drawable/custom_edit_text"
+            android:padding="12dp"
+            android:textColor="@color/black"
+             />
+
+        <!-- Nhập thời gian kết thúc -->
+        <EditText
+            android:id="@+id/et_end_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Thời gian kết thúc"
+            android:inputType="time"
+            android:background="@drawable/custom_edit_text"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="16dp" /> <!-- Khoảng cách giữa hai khung -->
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Thời gian kết thúc (HH:mm)"
-        android:inputType="time" />
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
-    <!-- Nhập ngày bắt đầu -->
-    <EditText
-        android:id="@+id/et_start_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ngày bắt đầu (dd/MM/yyyy)"
-        android:inputType="date" />
+        <!-- Nhập ngày bắt đầu -->
+        <EditText
+            android:id="@+id/et_start_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Ngày bắt đầu"
+            android:inputType="date"
+            android:background="@drawable/custom_edit_text"
+            android:padding="12dp"
+            android:textColor="@color/black" />
 
-    <!-- Nhập ngày kết thúc -->
-    <EditText
-        android:id="@+id/et_end_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ngày kết thúc (dd/MM/yyyy)"
-        android:inputType="date" />
+        <!-- Nhập ngày kết thúc -->
+        <EditText
+            android:id="@+id/et_end_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Ngày kết thúc"
+            android:inputType="date"
+            android:background="@drawable/custom_edit_text"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="16dp" /> <!-- Khoảng cách giữa hai khung -->
+    </LinearLayout>
 
     <!-- Nút thêm kế hoạch -->
     <Button
@@ -52,5 +90,10 @@
         android:layout_height="wrap_content"
         android:text="Thêm kế hoạch"
         android:layout_gravity="center_horizontal"
-        android:padding="8dp" />
+        android:padding="12dp"
+        android:backgroundTint="@color/green_main"
+        android:textColor="@color/white"
+        android:elevation="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
 </LinearLayout>

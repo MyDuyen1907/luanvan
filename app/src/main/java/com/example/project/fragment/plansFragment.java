@@ -1,5 +1,6 @@
 package com.example.project.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.project.R;
+import com.example.project.activity.MainActivity;
 import com.example.project.adapter.PlanAdapter;
 import com.example.project.model.Plan;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,21 +42,21 @@ import java.util.Map;
 public class plansFragment extends Fragment {
 
     private RecyclerView rvPlans;
-    private Button btnAddPlan;
+    private ImageButton btnAddPlan;
+    private Button btnbackmain;
     private PlanAdapter planAdapter;
     private ArrayList<Plan> planList = new ArrayList<>();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plans, container, false);
-
         // Khởi tạo Firebase Auth và Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+       btnbackmain = view.findViewById(R.id.btn_back_main);
         // Liên kết RecyclerView và nút Add
         rvPlans = view.findViewById(R.id.rv_plans);
         btnAddPlan = view.findViewById(R.id.btn_add_plan);
@@ -69,12 +73,20 @@ public class plansFragment extends Fragment {
                 showAddPlanDialog();
             }
         });
+        btnbackmain.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            getActivity().finish();
+        });
+
 
         // Load dữ liệu kế hoạch từ Firestore
         loadPlans();
 
         return view;
     }
+
 
     // Hiển thị dialog thêm kế hoạch
     private void showAddPlanDialog() {

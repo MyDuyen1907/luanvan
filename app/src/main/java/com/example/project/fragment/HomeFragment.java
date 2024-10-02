@@ -18,6 +18,7 @@ import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
 import com.example.project.activity.ExerciseTimerActivity;
 import com.example.project.activity.MedicationNotesApp;
+import com.example.project.activity.SleepTrackerActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeFragment extends Fragment {
-    private CardView cvUser,cv_control_calories,cv_medical,cv_control_water,cv_exercise;
+    private CardView cvUser,cv_control_calories,cv_medical,cv_control_water,cv_exercise,cv_sleep;
     private TextView txvHello;
     private FirebaseFirestore db;
 
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment {
         cv_control_calories = view.findViewById(R.id.cv_control_calories);
         cvUser = view.findViewById(R.id.cv_user);
         txvHello = view.findViewById(R.id.txvHello);
+        cv_sleep = view.findViewById(R.id.cv_sleep);
 
         // Fetch user data from Firestore and set the greeting text
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
@@ -97,6 +99,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ExerciseTimerActivity.class);
+                startActivity(intent);
+            }
+        });
+        cv_sleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Navigate to the SleepDataActivity
+                Intent intent = new Intent(getActivity(), SleepTrackerActivity.class);
                 startActivity(intent);
             }
         });
