@@ -20,12 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.SleepActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".activity.ReminderReceiver"
             android:enabled="true"
-            android:exported="true">
-
-        </receiver>
+            android:exported="true"></receiver>
 
         <activity
             android:name=".activity.MedicationNotesApp"

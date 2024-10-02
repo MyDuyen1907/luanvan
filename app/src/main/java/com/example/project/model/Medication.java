@@ -7,17 +7,19 @@ public class Medication {
     private String reminder;
     private String userId;
     private String note;
+    private String Id;
 
     public Medication() {
     }
 
-    public Medication( String medicineName, String dosage, String time, String userId, String reminder, String note) {
+    public Medication( String medicineName, String dosage, String time, String userId, String reminder, String note,String Id) {
         this.medicineName = medicineName;
         this.dosage = dosage;
         this.time = time;
         this.userId = userId;
         this.reminder = reminder;
         this.note = note;
+        this.Id = Id;
     }
 
 
@@ -62,6 +64,12 @@ public class Medication {
     public void setNote (String note) {
         this.note = note;
     }
+    public String getId() {
+        return Id;
+    }
+    public void setId(String Id) {
+        this.Id = Id;
+    }
 
     @Override
     public String toString() {
@@ -72,6 +80,7 @@ public class Medication {
                 ", userId='" + userId + '\'' +
                 ", reminder='" + reminder + '\'' +
                 ", note='" + note + '\'' +
+                ", Id='" + Id + '\'' +
                 '}';
     }
 }

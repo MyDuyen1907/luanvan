@@ -6,17 +6,21 @@ public class Plan {
     private String endTime;
     private String startDate;
     private String endDate;
+    private String userId;
+    private String Id;
 
     // Constructor rỗng cho Firestore
     public Plan() {}
 
     // Constructor đầy đủ
-    public Plan(String description, String startTime, String endTime, String startDate, String endDate) {
+    public Plan(String description, String startTime, String endTime, String startDate, String endDate, String userId, String Id) {
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
         this.startDate = startDate;
         this.endDate = endDate;
+        this .userId = userId;
+        this.Id = Id;
     }
 
     // Getter và Setter
@@ -58,5 +62,29 @@ public class Plan {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    public String getId() {
+        return Id;
+    }
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+    @Override
+    public String toString() {
+        return "Plan{" +
+                "description='" + description + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", userId='" + userId + '\'' +
+                ", Id='" + Id + '\'' +
+                '}';
     }
 }

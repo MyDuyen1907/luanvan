@@ -1,5 +1,4 @@
 package com.example.project.activity;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog; // Thêm import cho TimePickerDialog
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -44,7 +44,7 @@ import java.util.Map;
 
 public class MedicationNotesApp extends AppCompatActivity {
 
-    private EditText etMedicineName, etDosage, etTime, etReminder,etnote;
+    private EditText etMedicineName, etDosage, etTime, etReminder, etNote; // Sửa lại tên biến
     private Button btnSave, medical;
     private RecyclerView rvMedications;
     private FirebaseAuth mAuth;
@@ -75,7 +75,7 @@ public class MedicationNotesApp extends AppCompatActivity {
         rvMedications = findViewById(R.id.rv_medications);
         etReminder = findViewById(R.id.et_reminder);
         switchReminder = findViewById(R.id.switch_reminder);
-        etnote = findViewById(R.id.et_note);
+        etNote = findViewById(R.id.et_note);
 
         // Set up RecyclerView
         rvMedications.setLayoutManager(new LinearLayoutManager(this));
@@ -90,6 +90,7 @@ public class MedicationNotesApp extends AppCompatActivity {
                 finish();
             }
         });
+
         // Load medications from Firestore
         loadMedications();
 
@@ -101,7 +102,7 @@ public class MedicationNotesApp extends AppCompatActivity {
                 String dosage = etDosage.getText().toString().trim();
                 String time = etTime.getText().toString().trim();
                 String reminder = etReminder.getText().toString().trim();
-                String note = etnote.getText().toString().trim();
+                String note = etNote.getText().toString().trim();
 
                 if (TextUtils.isEmpty(medicineName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(time) || TextUtils.isEmpty(reminder) || TextUtils.isEmpty(note)) {
                     Toast.makeText(MedicationNotesApp.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
@@ -109,14 +110,46 @@ public class MedicationNotesApp extends AppCompatActivity {
                 }
 
                 // Save medication to Firestore
-                saveMedication(medicineName, dosage, time, reminder,note);
+                saveMedication(medicineName, dosage, time, reminder, note);
                 // Đặt nhắc nhở nếu Switch được bật
                 if (switchReminder.isChecked()) {
                     setReminder(medicineName, dosage, time, reminder);
                 }
             }
         });
+
+        // Sự kiện nhấn cho ô nhập thời gian
+        etTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(etTime);
+            }
+        });
+
+        // Sự kiện nhấn cho ô nhập thời gian nhắc nhở
+        etReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(etReminder);
+            }
+        });
     }
+
+    private void showTimePickerDialog(EditText editText) {
+        // Lấy giờ và phút hiện tại
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // Hiển thị TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (timePicker, selectedHour, selectedMinute) -> {
+            // Cập nhật ô nhập với giờ và phút đã chọn
+            editText.setText(String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute));
+        }, hour, minute, true);
+
+        timePickerDialog.show();
+    }
+
     private void setReminder(String medicineName, String dosage, String time, String reminder) {
         // Chuyển đổi thời gian nhắc nhở từ string thành Calendar
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -166,9 +199,6 @@ public class MedicationNotesApp extends AppCompatActivity {
         }
     }
 
-
-
-
     private void loadMedications() {
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -194,29 +224,37 @@ public class MedicationNotesApp extends AppCompatActivity {
         }
     }
 
-    private void saveMedication(String medicineName, String dosage, String time, String reminder,String note){
+    private void saveMedication(String medicineName, String dosage, String time, String reminder, String note) {
         if (currentUser != null) {
             String userId = currentUser.getUid();
+
+            // Tạo ID cho tài liệu
+            String medicationId = db.collection("medications").document().getId(); // Tạo ID mới
 
             Map<String, Object> medication = new HashMap<>();
             medication.put("medicineName", medicineName);
             medication.put("dosage", dosage);
             medication.put("time", time);
-            medication.put("userId", userId);// Store user ID
-            medication.put("reminder",reminder);
-            medication.put("note",note);
+            medication.put("userId", userId); // Store user ID
+            medication.put("reminder", reminder);
+            medication.put("note", note);
+            medication.put("Id", medicationId); // Set an empty ID
 
             db.collection("medications")
-                    .add(medication)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    .document(medicationId) // Sử dụng ID đã tạo
+                    .set(medication) // Sử dụng set thay vì add
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                        public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(MedicationNotesApp.this, "Đã lưu đơn thuốc", Toast.LENGTH_SHORT).show();
-                                loadMedications(); // Refresh the list
-                                clearInputs();
+                                // Cập nhật Id vào mô hình
+                                medication.put("Id", medicationId); // Cập nhật Id trong HashMap nếu cần
+
+                                Toast.makeText(MedicationNotesApp.this, "Kế hoạch đã được thêm", Toast.LENGTH_SHORT).show(); // Thay đổi getContext() thành MedicationNotesApp.this
+                                loadMedications(); // Tải lại danh sách kế hoạch
+                                clearInputs(); // Gọi hàm để xóa các ô nhập sau khi lưu thành công
                             } else {
-                                Toast.makeText(MedicationNotesApp.this, "Lưu không thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MedicationNotesApp.this, "Thêm kế hoạch không thành công", Toast.LENGTH_SHORT).show(); // Thay đổi getContext() thành MedicationNotesApp.this
                             }
                         }
                     });
@@ -228,6 +266,6 @@ public class MedicationNotesApp extends AppCompatActivity {
         etDosage.setText("");
         etTime.setText("");
         etReminder.setText("");
-        etnote.setText("");
+        etNote.setText("");
     }
 }
