@@ -41,6 +41,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    implementation 'androidx.viewpager2:viewpager2:1.1.0'
     //add library
     def appcompat_version = "1.6.1"
     implementation "androidx.cardview:cardview:1.0.0"
@@ -64,6 +65,11 @@ dependencies {
     implementation 'com.airbnb.android:lottie:6.0.0'
 //    circularprogressbar
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
+// biểu đồ đường
+    implementation 'com.robinhood.spark:spark:1.2.0'
+    implementation 'com.github.majorkik:SparkLineLayout:1.0.1'
+
+
 
 
 }

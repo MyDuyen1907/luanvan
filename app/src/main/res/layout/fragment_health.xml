@@ -1,18 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HealthFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/notification_fragment"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="16sp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/book_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thống kê sức khỏe"
+            android:textColor="@color/green_main"
+            android:layout_gravity="center"
+            android:textSize="35sp"
+            android:paddingStart="10dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.099"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginIllustration"
+            tools:ignore="HardcodedText" />
 
-    </TextView>
 
-</FrameLayout>
+
+        <!-- Nhập huyết áp -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Huyết áp tâm thu/mmHg "
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+        <EditText
+            android:id="@+id/inputBloodPressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:hint="Duới 120 mmHg đến ≥ 180 mmHg "
+            android:inputType="text" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Huyết áp tâm trương/mmHg "
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+        <EditText
+            android:id="@+id/inputBloodPressurePP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:hint="Dưới 80 mmHg đến > 120 mmHg "
+            android:inputType="text" />
+
+        <!-- Biểu đồ cột cho huyết áp -->
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartBloodPressure"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+        <!-- Nhập đường huyết lúc đói -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đường huyết lúc đói (mg/dL)"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="24dp"/>
+        <EditText
+            android:id="@+id/inputBloodSugar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:hint="từ nhỏ hơn 100 đến ≥ 126"
+            android:inputType="numberDecimal" />
+
+        <!-- Biểu đồ đường cho đường huyết -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChartBloodSugar"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+        <!-- Nhập đường huyết lúc đói -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đường huyết lúc no (mg/dL)"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="24dp"/>
+        <EditText
+            android:id="@+id/inputBloodSugarPP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:hint="từ nhỏ hơn 140 đến ≥ 200 "
+            android:inputType="numberDecimal" />
+
+        <!-- Biểu đồ đường cho đường huyết -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChartBloodSugarPP"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+        <!-- Nhập cholesterol -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cholesterol (mg/dL)"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="24dp"/>
+        <EditText
+            android:id="@+id/inputCholesterol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="từ nhỏ hơn 200 đến ≥ 240"
+            android:background="@drawable/edit_text_background"
+            android:padding="15dp"
+            android:inputType="numberDecimal" />
+
+        <!-- Biểu đồ mạng nhện cho cholesterol -->
+        <com.github.mikephil.charting.charts.RadarChart
+            android:id="@+id/radarChartCholesterol"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnSaveData"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Lưu dữ liệu"
+                android:background="@drawable/button_background"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnViewReport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Xem báo cáo"
+                android:background="@drawable/button_background"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+
+        <!-- Cảnh báo trạng thái sức khỏe -->
+        <TextView
+            android:id="@+id/alertText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trạng thái sức khỏe"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>
