@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
 import com.example.project.activity.ExerciseTimerActivity;
+import com.example.project.activity.FoodNutritionActivity;
 import com.example.project.activity.MedicationNotesApp;
 import com.example.project.activity.SleepTrackerActivity;
 import com.example.project.activity.UserActivity;
@@ -30,6 +32,7 @@ public class HomeFragment extends Fragment {
     private CardView cvUser,cv_control_calories,cv_medical,cv_control_water,cv_exercise,cv_sleep;
     private TextView txvHello;
     private FirebaseFirestore db;
+    private ImageView food_nut;
 
     @Nullable
     @Override
@@ -48,6 +51,7 @@ public class HomeFragment extends Fragment {
         cvUser = view.findViewById(R.id.cv_user);
         txvHello = view.findViewById(R.id.txvHello);
         cv_sleep = view.findViewById(R.id.cv_sleep);
+        food_nut = view.findViewById(R.id.food_nut);
 
         // Fetch user data from Firestore and set the greeting text
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
@@ -107,6 +111,14 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 // Navigate to the SleepDataActivity
                 Intent intent = new Intent(getActivity(), SleepTrackerActivity.class);
+                startActivity(intent);
+            }
+        });
+        food_nut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Navigate to the FoodNutritionActivity
+                Intent intent = new Intent(getActivity(), FoodNutritionActivity.class);
                 startActivity(intent);
             }
         });
