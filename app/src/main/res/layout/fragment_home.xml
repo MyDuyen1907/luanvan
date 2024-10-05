@@ -261,39 +261,10 @@
                                 app:layout_constraintStart_toEndOf="@id/cal_meter"
                                 app:layout_constraintTop_toTopOf="parent">
 
-                                <TextView
-                                    android:id="@+id/calorie"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:layout_marginRight="5dp"
-                                    android:text="0.0"
-                                    android:textSize="20sp" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="2dp"
-                                    android:textSize="20sp"
-                                    android:text="of" />
-                                <TextView
-                                    android:id="@+id/target_cal"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
-                                    android:layout_marginLeft="5dp"
-                                    android:text="500"
-                                    android:textSize="20sp" />
+
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="Meal calories"
-                                android:textSize="17sp"
-                                app:layout_constraintEnd_toEndOf="@+id/cal_lin"
-                                app:layout_constraintStart_toStartOf="@+id/cal_lin"
-                                app:layout_constraintTop_toBottomOf="@+id/cal_lin" />
+
 
                             <ImageView
                                 android:id="@+id/food_nut"
@@ -302,9 +273,22 @@
                                 android:src="@drawable/bar_chart"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/add_food"
-                                app:layout_constraintHorizontal_bias="0.786"
+                                app:layout_constraintHorizontal_bias="0.361"
                                 app:layout_constraintStart_toEndOf="@+id/cal_lin"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.451" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Thông tin dinh dưỡng"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="1.0" />
 
                             <ImageButton
                                 android:id="@+id/add_food"

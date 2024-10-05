@@ -23,9 +23,6 @@
         <activity
             android:name=".activity.FoodNutritionActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity.SleepActivity"
-            android:exported="false" />
 
         <receiver
             android:name=".activity.ReminderReceiver"
