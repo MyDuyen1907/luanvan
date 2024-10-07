@@ -36,8 +36,7 @@ public class HealthFragment extends Fragment {
     private EditText inputBloodPressure, inputBloodPressurePP; // Tâm thu và tâm trương
     private EditText inputBloodSugar, inputBloodSugarPP; // Đường huyết lúc đói và lúc no
     private EditText inputCholesterol; // Cholesterol
-    private BarChart barChartBloodPressure;
-    private LineChart lineChartBloodSugar, lineChartBloodSugarPP;
+    private BarChart barChartBloodPressure, barChartBloodSugar;
     private RadarChart radarChartCholesterol;
     private TextView alertText;
 
@@ -52,8 +51,7 @@ public class HealthFragment extends Fragment {
         inputBloodSugarPP = view.findViewById(R.id.inputBloodSugarPP);
         inputCholesterol = view.findViewById(R.id.inputCholesterol);
         barChartBloodPressure = view.findViewById(R.id.barChartBloodPressure);
-        lineChartBloodSugar = view.findViewById(R.id.lineChartBloodSugar);
-        lineChartBloodSugarPP = view.findViewById(R.id.lineChartBloodSugarPP);
+        barChartBloodSugar = view.findViewById(R.id. barChartBloodSugar);
         radarChartCholesterol = view.findViewById(R.id.radarChartCholesterol);
         alertText = view.findViewById(R.id.alertText);
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
@@ -91,6 +89,8 @@ public class HealthFragment extends Fragment {
         updateBloodPressureChart(systolic, diastolic);
 
         // Cập nhật biểu đồ đường huyết
+
+
         updateBloodSugarCharts(bloodSugar, bloodSugarPP);
 
         // Cập nhật biểu đồ cholesterol
@@ -124,26 +124,34 @@ public class HealthFragment extends Fragment {
         // Đặt dữ liệu vào biểu đồ và làm mới
         barChartBloodPressure.setData(data);
         barChartBloodPressure.invalidate(); // Refresh biểu đồ
+        barChartBloodPressure.getDescription().setEnabled(false);
     }
 
 
 
-    private void updateBloodSugarCharts(float bloodSugar, float bloodSugarPP) {
-        ArrayList<Entry> lineEntries1 = new ArrayList<>();
-        lineEntries1.add(new Entry(0, bloodSugar));
+    private void updateBloodSugarCharts(float systolic, float diastolic) {
+        ArrayList<BarEntry> systolicEntries = new ArrayList<>();
+        ArrayList<BarEntry> diastolicEntries = new ArrayList<>();
 
-        LineDataSet lineDataSet1 = new LineDataSet(lineEntries1, "Đường huyết lúc đói");
-        LineData lineData = new LineData(lineDataSet1);
-        lineChartBloodSugar.setData(lineData);
-        lineChartBloodSugar.invalidate(); // Refresh biểu đồ
+        systolicEntries.add(new BarEntry(0, systolic));
+        diastolicEntries.add(new BarEntry(1, diastolic));
 
-        ArrayList<Entry> lineEntries2 = new ArrayList<>();
-        lineEntries2.add(new Entry(0, bloodSugarPP));
 
-        LineDataSet lineDataSet2 = new LineDataSet(lineEntries2, "Đường huyết lúc no");
-        LineData lineChartDataPP = new LineData(lineDataSet2);
-        lineChartBloodSugarPP.setData(lineChartDataPP);
-        lineChartBloodSugarPP.invalidate(); // Refresh biểu đồ
+        BarDataSet systolicDataSet = new BarDataSet(systolicEntries, "Đường huyết lúc đói");
+        systolicDataSet.setColor(getResources().getColor(R.color.green_main));
+        systolicDataSet.setValueTextColor(getResources().getColor(R.color.black));
+
+        BarDataSet diastolicDataSet = new BarDataSet(diastolicEntries, "Đường huyết lúc no");
+        diastolicDataSet.setColor(getResources().getColor(R.color.orange));
+        diastolicDataSet.setValueTextColor(getResources().getColor(R.color.black));
+
+        // Kết hợp hai DataSet vào BarData
+        BarData data = new BarData(systolicDataSet, diastolicDataSet);
+
+        // Đặt dữ liệu vào biểu đồ và làm mới
+        barChartBloodSugar.setData(data);
+        barChartBloodSugar.invalidate(); // Refresh biểu đồ
+        barChartBloodSugar.getDescription().setEnabled(false);
     }
 
     private void updateCholesterolChart(float cholesterol) {
@@ -157,6 +165,7 @@ public class HealthFragment extends Fragment {
         RadarData radarData = new RadarData(radarDataSet);
         radarChartCholesterol.setData(radarData);
         radarChartCholesterol.invalidate(); // Refresh biểu đồ
+        radarChartCholesterol.getDescription().setEnabled(false);
     }
     private void viewReport() {
         // Chuyển đến Activity hoặc Fragment hiển thị báo cáo

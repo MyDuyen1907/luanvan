@@ -45,7 +45,6 @@ public class plansFragment extends Fragment {
 
     private RecyclerView rvPlans;
     private ImageButton btnAddPlan;
-    private Button btnBackMain;
     private PlanAdapter planAdapter;
     private ArrayList<Plan> planList = new ArrayList<>();
     private FirebaseAuth mAuth;
@@ -60,7 +59,6 @@ public class plansFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        btnBackMain = view.findViewById(R.id.btn_back_main);
         rvPlans = view.findViewById(R.id.rv_plans);
         btnAddPlan = view.findViewById(R.id.btn_add_plan);
 
@@ -77,12 +75,6 @@ public class plansFragment extends Fragment {
             }
         });
 
-        btnBackMain.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            getActivity().finish();
-        });
 
         // Load dữ liệu kế hoạch từ Firestore
         loadPlans();

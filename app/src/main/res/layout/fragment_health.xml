@@ -29,100 +29,158 @@
 
 
         <!-- Nhập huyết áp -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Huyết áp tâm thu/mmHg "
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="8dp"/>
-        <EditText
-            android:id="@+id/inputBloodPressure"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
-            android:padding="15dp"
-            android:hint="Duới 120 mmHg đến ≥ 180 mmHg "
-            android:inputType="numberDecimal" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Huyết áp tâm trương/mmHg "
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="8dp"/>
-        <EditText
-            android:id="@+id/inputBloodPressurePP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
-            android:padding="15dp"
-            android:hint="Dưới 80 mmHg đến > 120 mmHg "
-            android:inputType="numberDecimal" />
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <!-- Cột cho Huyết áp tâm thu -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Huyết áp tâm thu/mmHg "
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"/>
+
+                <EditText
+                    android:id="@+id/inputBloodPressure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="15dp"
+                    android:textSize="15dp"
+                    android:hint="Dưới 120 đến ≥ 180"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <!-- Cột cho Huyết áp tâm trương -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Huyết áp tâm trương/mmHg "
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"/>
+
+                <EditText
+                    android:id="@+id/inputBloodPressurePP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="15dp"
+                    android:textSize="15dp"
+                    android:hint="Dưới 80 đến > 120"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- Biểu đồ cột cho huyết áp -->
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartBloodPressure"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="167dp"
             android:layout_marginTop="16dp" />
 
-        <!-- Nhập đường huyết lúc đói -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đường huyết lúc đói (mg/dL)"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="24dp"/>
-        <EditText
-            android:id="@+id/inputBloodSugar"
+        <!-- Nhập đường huyết -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
-            android:padding="15dp"
-            android:hint="từ nhỏ hơn 100 đến ≥ 126"
-            android:inputType="numberDecimal" />
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
 
-        <!-- Biểu đồ đường cho đường huyết -->
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChartBloodSugar"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp" />
-        <!-- Nhập đường huyết lúc đói -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đường huyết lúc no (mg/dL)"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="24dp"/>
-        <EditText
-            android:id="@+id/inputBloodSugarPP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
-            android:padding="15dp"
-            android:hint="từ nhỏ hơn 140 đến ≥ 200 "
-            android:inputType="numberDecimal" />
+            <!-- Cột cho Đường huyết lúc đói -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <!-- Biểu đồ đường cho đường huyết -->
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChartBloodSugarPP"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đường huyết lúc đói mg/dL"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"/>
+
+                <EditText
+                    android:id="@+id/inputBloodSugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="15dp"
+                    android:hint="Dưới 100 đến ≥ 126"
+                    android:textSize="15dp"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <!-- Cột cho Đường huyết lúc no -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đường huyết lúc no mg/dL"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"/>
+
+                <EditText
+                    android:id="@+id/inputBloodSugarPP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:padding="15dp"
+                    android:hint="Dưới 140 đến ≥ 200"
+                    android:textSize="15dp"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Biểu đồ cột cho đường huyết -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartBloodSugar"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="167dp"
             android:layout_marginTop="16dp" />
+
 
         <!-- Nhập cholesterol -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Cholesterol (mg/dL)"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:layout_marginTop="24dp"/>
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/inputCholesterol"
             android:layout_width="match_parent"
@@ -130,13 +188,14 @@
             android:hint="từ nhỏ hơn 200 đến ≥ 240"
             android:background="@drawable/edit_text_background"
             android:padding="15dp"
+            android:textSize="15dp"
             android:inputType="numberDecimal" />
 
         <!-- Biểu đồ mạng nhện cho cholesterol -->
         <com.github.mikephil.charting.charts.RadarChart
             android:id="@+id/radarChartCholesterol"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="167dp"
             android:layout_marginTop="16dp" />
 
 
