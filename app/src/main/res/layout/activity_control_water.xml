@@ -54,7 +54,7 @@
                     android:id="@+id/txvDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="14-09-2003"
+                    android:text="10/07/2024"
                     android:textColor="@color/blue_water"
                     android:textSize="16sp"
                     android:layout_marginBottom="25dp"

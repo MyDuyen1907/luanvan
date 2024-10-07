@@ -1,5 +1,6 @@
 package com.example.project.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +33,11 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class HealthFragment extends Fragment {
 
     private EditText inputBloodPressure, inputBloodPressurePP; // Tâm thu và tâm trương
@@ -38,7 +45,9 @@ public class HealthFragment extends Fragment {
     private EditText inputCholesterol; // Cholesterol
     private BarChart barChartBloodPressure, barChartBloodSugar;
     private RadarChart radarChartCholesterol;
-    private TextView alertText;
+    private TextView alertText, dateText;
+    private ImageView leftArrow, rightArrow;
+    private Calendar calendar;
 
     @Nullable
     @Override
@@ -56,6 +65,41 @@ public class HealthFragment extends Fragment {
         alertText = view.findViewById(R.id.alertText);
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
         Button btnViewReport = view.findViewById(R.id.btnViewReport);
+        dateText = view.findViewById(R.id.dateText);
+        leftArrow = view.findViewById(R.id.leftArrow);
+        rightArrow = view.findViewById(R.id.rightArrow);
+        calendar = Calendar.getInstance();
+        updateDateText();
+        leftArrow.setOnClickListener(v -> {
+            calendar.add(Calendar.DAY_OF_MONTH, -1); // Trừ đi 1 ngày
+            updateDateText(); // Cập nhật lại TextView
+        });
+
+        rightArrow.setOnClickListener(v -> {
+            calendar.add(Calendar.DAY_OF_MONTH, 1); // Thêm 1 ngày
+            updateDateText(); // Cập nhật lại TextView
+        });
+
+        dateText.setOnClickListener(v -> {
+            // Hành động cho nhấn đơn
+            // Có thể mở một menu hoặc làm một hành động khác
+        });
+
+        dateText.setOnLongClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                    (view1, year, month, dayOfMonth) -> {
+                        calendar.set(year, month, dayOfMonth); // Cập nhật ngày chọn
+                        updateDateText(); // Cập nhật lại TextView với ngày đã chọn
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show(); // Hiển thị dialog chọn ngày
+            return true; // Trả về true để chỉ ra rằng sự kiện đã được xử lý
+        });
+
+
+
 
         btnViewReport.setOnClickListener(v -> viewReport());
 
@@ -64,6 +108,13 @@ public class HealthFragment extends Fragment {
 
         return view;
     }
+    private void updateDateText() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String selectedDate = dateFormat.format(calendar.getTime());
+        dateText.setText(selectedDate); // Cập nhật TextView với ngày đã chọn
+    }
+
+
 
     private void saveData() {
         String systolicStr = inputBloodPressure.getText().toString().trim(); // Tâm thu
