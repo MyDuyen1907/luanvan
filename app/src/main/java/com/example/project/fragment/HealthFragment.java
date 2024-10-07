@@ -1,5 +1,6 @@
 package com.example.project.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.project.R;
+import com.example.project.activity.ReportActivity;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.RadarChart;
@@ -55,6 +57,10 @@ public class HealthFragment extends Fragment {
         radarChartCholesterol = view.findViewById(R.id.radarChartCholesterol);
         alertText = view.findViewById(R.id.alertText);
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
+        Button btnViewReport = view.findViewById(R.id.btnViewReport);
+
+        btnViewReport.setOnClickListener(v -> viewReport());
+
 
         btnSaveData.setOnClickListener(v -> saveData());
 
@@ -95,21 +101,31 @@ public class HealthFragment extends Fragment {
     }
 
     private void updateBloodPressureChart(float systolic, float diastolic) {
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0, systolic)); // Tâm thu
-        entries.add(new BarEntry(1, diastolic)); // Tâm trương
+        ArrayList<BarEntry> systolicEntries = new ArrayList<>();
+        ArrayList<BarEntry> diastolicEntries = new ArrayList<>();
+
+        // Thêm giá trị vào từng danh sách
+        systolicEntries.add(new BarEntry(0, systolic)); // Tâm thu
+        diastolicEntries.add(new BarEntry(1, diastolic)); // Tâm trương
 
         // Tạo dữ liệu cho huyết áp tâm thu
-        BarDataSet dataSet = new BarDataSet(entries, "Huyết áp");
+        BarDataSet systolicDataSet = new BarDataSet(systolicEntries, "Tâm thu");
+        systolicDataSet.setColor(getResources().getColor(R.color.red)); // Màu đỏ cho tâm thu
+        systolicDataSet.setValueTextColor(getResources().getColor(R.color.black)); // Màu chữ
 
-        // Chỉ định màu sắc cho từng loại huyết áp
-        dataSet.setColors(new int[]{getResources().getColor(R.color.red), getResources().getColor(R.color.yellow)}); // Màu cho tâm thu và tâm trương
-        dataSet.setValueTextColor(getResources().getColor(R.color.black)); // Màu sắc cho giá trị
+        // Tạo dữ liệu cho huyết áp tâm trương
+        BarDataSet diastolicDataSet = new BarDataSet(diastolicEntries, "Tâm trương");
+        diastolicDataSet.setColor(getResources().getColor(R.color.yellow)); // Màu vàng cho tâm trương
+        diastolicDataSet.setValueTextColor(getResources().getColor(R.color.black)); // Màu chữ
 
-        BarData data = new BarData(dataSet);
+        // Kết hợp hai DataSet vào BarData
+        BarData data = new BarData(systolicDataSet, diastolicDataSet);
+
+        // Đặt dữ liệu vào biểu đồ và làm mới
         barChartBloodPressure.setData(data);
         barChartBloodPressure.invalidate(); // Refresh biểu đồ
     }
+
 
 
     private void updateBloodSugarCharts(float bloodSugar, float bloodSugarPP) {
@@ -141,6 +157,17 @@ public class HealthFragment extends Fragment {
         RadarData radarData = new RadarData(radarDataSet);
         radarChartCholesterol.setData(radarData);
         radarChartCholesterol.invalidate(); // Refresh biểu đồ
+    }
+    private void viewReport() {
+        // Chuyển đến Activity hoặc Fragment hiển thị báo cáo
+        // Sử dụng Intent để chuyển dữ liệu nếu cần
+        Intent intent = new Intent(getActivity(), ReportActivity.class);
+        intent.putExtra("systolic", inputBloodPressure.getText().toString().trim());
+        intent.putExtra("diastolic", inputBloodPressurePP.getText().toString().trim());
+        intent.putExtra("bloodSugar", inputBloodSugar.getText().toString().trim());
+        intent.putExtra("bloodSugarPP", inputBloodSugarPP.getText().toString().trim());
+        intent.putExtra("cholesterol", inputCholesterol.getText().toString().trim());
+        startActivity(intent);
     }
 
 

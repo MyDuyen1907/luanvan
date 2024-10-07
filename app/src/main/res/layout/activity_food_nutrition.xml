@@ -17,14 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/editTextFood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Nhập tên món ăn"
         android:background="@drawable/edit_text_background"
         android:padding="15dp"
-        android:layout_margin="20dp"
-        android:hint="Nhập tên món ăn" />
+        android:completionThreshold="1"
+        android:inputType="text" />
+
 
     <Button
         android:id="@+id/buttonSearch"

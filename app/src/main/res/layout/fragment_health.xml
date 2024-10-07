@@ -43,7 +43,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="15dp"
             android:hint="Duới 120 mmHg đến ≥ 180 mmHg "
-            android:inputType="text" />
+            android:inputType="numberDecimal" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:background="@drawable/edit_text_background"
             android:padding="15dp"
             android:hint="Dưới 80 mmHg đến > 120 mmHg "
-            android:inputType="text" />
+            android:inputType="numberDecimal" />
 
         <!-- Biểu đồ cột cho huyết áp -->
 
