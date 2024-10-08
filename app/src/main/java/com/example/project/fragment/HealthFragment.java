@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.project.R;
+import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ReportActivity;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -45,8 +47,8 @@ public class HealthFragment extends Fragment {
     private EditText inputCholesterol; // Cholesterol
     private BarChart barChartBloodPressure, barChartBloodSugar;
     private RadarChart radarChartCholesterol;
-    private TextView alertText, dateText;
-    private ImageView leftArrow, rightArrow;
+    private TextView alertText,dateText;
+    private Button btnPickDate;
     private Calendar calendar;
 
     @Nullable
@@ -66,52 +68,29 @@ public class HealthFragment extends Fragment {
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
         Button btnViewReport = view.findViewById(R.id.btnViewReport);
         dateText = view.findViewById(R.id.dateText);
-        leftArrow = view.findViewById(R.id.leftArrow);
-        rightArrow = view.findViewById(R.id.rightArrow);
+        btnPickDate = view.findViewById(R.id.btnPickDate);
         calendar = Calendar.getInstance();
-        updateDateText();
-        leftArrow.setOnClickListener(v -> {
-            calendar.add(Calendar.DAY_OF_MONTH, -1); // Trừ đi 1 ngày
-            updateDateText(); // Cập nhật lại TextView
-        });
-
-        rightArrow.setOnClickListener(v -> {
-            calendar.add(Calendar.DAY_OF_MONTH, 1); // Thêm 1 ngày
-            updateDateText(); // Cập nhật lại TextView
-        });
-
-        dateText.setOnClickListener(v -> {
-            // Hành động cho nhấn đơn
-            // Có thể mở một menu hoặc làm một hành động khác
-        });
-
-        dateText.setOnLongClickListener(v -> {
-            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
-                    (view1, year, month, dayOfMonth) -> {
-                        calendar.set(year, month, dayOfMonth); // Cập nhật ngày chọn
-                        updateDateText(); // Cập nhật lại TextView với ngày đã chọn
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show(); // Hiển thị dialog chọn ngày
-            return true; // Trả về true để chỉ ra rằng sự kiện đã được xử lý
-        });
-
-
-
 
         btnViewReport.setOnClickListener(v -> viewReport());
-
-
         btnSaveData.setOnClickListener(v -> saveData());
+        btnPickDate.setOnClickListener(v -> showDatePickerDialog());
 
         return view;
     }
-    private void updateDateText() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        String selectedDate = dateFormat.format(calendar.getTime());
-        dateText.setText(selectedDate); // Cập nhật TextView với ngày đã chọn
+
+    private void showDatePickerDialog() {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Cập nhật ngày đã chọn vào TextView
+                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear; // Tháng bắt đầu từ 0
+                    dateText.setText(selectedDate);
+                }, year, month, day);
+
+        datePickerDialog.show();
     }
 
 
@@ -227,6 +206,7 @@ public class HealthFragment extends Fragment {
         intent.putExtra("bloodSugar", inputBloodSugar.getText().toString().trim());
         intent.putExtra("bloodSugarPP", inputBloodSugarPP.getText().toString().trim());
         intent.putExtra("cholesterol", inputCholesterol.getText().toString().trim());
+        intent.putExtra("selectedDate", dateText.getText().toString().trim());
         startActivity(intent);
     }
 
