@@ -30,7 +30,7 @@ public class ReminderReceiver extends BroadcastReceiver {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "medication_reminder")
                     .setSmallIcon(R.drawable.ic_notification)
                     .setContentTitle("Nhắc nhở uống thuốc")
-                    .setContentText("Tên thuốc: " + medicineName + ", Liều lượng: " + dosage + ", Thời gian: " + time)
+                    .setContentText("Tên thuốc: " + medicineName + ", Liều lượng: " + dosage + ", Thời gian dùng trước đó: " + time)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setAutoCancel(true);
 

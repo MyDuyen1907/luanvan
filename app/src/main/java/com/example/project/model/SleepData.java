@@ -1,98 +1,34 @@
 package com.example.project.model;
 
+
 public class SleepData {
-    private String startSleepTime;
-    private String wakeUpTime;
+    private String userId; // ID người dùng
+    private int sleepHour;
+    private int sleepMinute;
+    private int wakeHour;
+    private int wakeMinute;
+    private int hoursSlept;
+    private int minutesSlept;
+    private int caloriesBurned;
     private String sleepQuality;
-    private int awakenings;
-    private String sleepCycles;
-    private float sleepDurationDeep;
-    private float sleepDurationRem;
-    private float sleepDurationLight;
-    private String userId;
 
-    // Constructor rỗng yêu cầu bởi Firebase
     public SleepData() {
-        // Firebase yêu cầu constructor rỗng
+        // Constructor trống cần thiết cho Firestore
     }
 
-    // Constructor với tất cả các trường
-    public SleepData(String startSleepTime, String wakeUpTime, String sleepQuality, int awakenings, String sleepCycles, float sleepDurationDeep, float sleepDurationRem, float sleepDurationLight, String userId) {
-        this.startSleepTime = startSleepTime;
-        this.wakeUpTime = wakeUpTime;
-        this.sleepQuality = sleepQuality;
-        this.awakenings = awakenings;
-        this.sleepCycles = sleepCycles;
-        this.sleepDurationDeep = sleepDurationDeep;
-        this.sleepDurationRem = sleepDurationRem;
-        this.sleepDurationLight = sleepDurationLight;
+    public SleepData(String userId, int sleepHour, int sleepMinute, int wakeHour, int wakeMinute, int hoursSlept, int minutesSlept, int caloriesBurned, String sleepQuality) {
         this.userId = userId;
-    }
-
-    // Getters và Setters
-    public String getStartSleepTime() {
-        return startSleepTime;
-    }
-
-    public void setStartSleepTime(String startSleepTime) {
-        this.startSleepTime = startSleepTime;
-    }
-
-    public String getWakeUpTime() {
-        return wakeUpTime;
-    }
-
-    public void setWakeUpTime(String wakeUpTime) {
-        this.wakeUpTime = wakeUpTime;
-    }
-
-    public String getSleepQuality() {
-        return sleepQuality;
-    }
-
-    public void setSleepQuality(String sleepQuality) {
+        this.sleepHour = sleepHour;
+        this.sleepMinute = sleepMinute;
+        this.wakeHour = wakeHour;
+        this.wakeMinute = wakeMinute;
+        this.hoursSlept = hoursSlept;
+        this.minutesSlept = minutesSlept;
+        this.caloriesBurned = caloriesBurned;
         this.sleepQuality = sleepQuality;
     }
 
-    public int getAwakenings() {
-        return awakenings;
-    }
-
-    public void setAwakenings(int awakenings) {
-        this.awakenings = awakenings;
-    }
-
-    public String getSleepCycles() {
-        return sleepCycles;
-    }
-
-    public void setSleepCycles(String sleepCycles) {
-        this.sleepCycles = sleepCycles;
-    }
-
-    public float getSleepDurationDeep() {
-        return sleepDurationDeep;
-    }
-
-    public void setSleepDurationDeep(float sleepDurationDeep) {
-        this.sleepDurationDeep = sleepDurationDeep;
-    }
-
-    public float getSleepDurationRem() {
-        return sleepDurationRem;
-    }
-
-    public void setSleepDurationRem(float sleepDurationRem) {
-        this.sleepDurationRem = sleepDurationRem;
-    }
-
-    public float getSleepDurationLight() {
-        return sleepDurationLight;
-    }
-
-    public void setSleepDurationLight(float sleepDurationLight) {
-        this.sleepDurationLight = sleepDurationLight;
-    }
+    // Getter và Setter cho tất cả các thuộc tính
 
     public String getUserId() {
         return userId;
@@ -102,18 +38,82 @@ public class SleepData {
         this.userId = userId;
     }
 
+
+    public int getSleepHour() {
+        return sleepHour;
+    }
+
+    public void setSleepHour(int sleepHour) {
+        this.sleepHour = sleepHour;
+    }
+
+    public int getSleepMinute() {
+        return sleepMinute;
+    }
+
+    public void setSleepMinute(int sleepMinute) {
+        this.sleepMinute = sleepMinute;
+    }
+
+    public int getWakeHour() {
+        return wakeHour;
+    }
+
+    public void setWakeHour(int wakeHour) {
+        this.wakeHour = wakeHour;
+    }
+
+    public int getWakeMinute() {
+        return wakeMinute;
+    }
+
+    public void setWakeMinute(int wakeMinute) {
+        this.wakeMinute = wakeMinute;
+    }
+
+    public int getHoursSlept() {
+        return hoursSlept;
+    }
+
+    public void setHoursSlept(int hoursSlept) {
+        this.hoursSlept = hoursSlept;
+    }
+
+    public int getMinutesSlept() {
+        return minutesSlept;
+    }
+
+    public void setMinutesSlept(int minutesSlept) {
+        this.minutesSlept = minutesSlept;
+    }
+
+    public int getCaloriesBurned() {
+        return caloriesBurned;
+    }
+
+    public void setCaloriesBurned(int caloriesBurned) {
+        this.caloriesBurned = caloriesBurned;
+    }
+
+    public String getSleepQuality() {
+        return sleepQuality;
+    }
+
+    public void setSleepQuality(String sleepQuality) {
+        this.sleepQuality = sleepQuality;
+    }
     @Override
     public String toString() {
         return "SleepData{" +
-                "startSleepTime='" + startSleepTime + '\'' +
-                ", wakeUpTime='" + wakeUpTime + '\'' +
+                "userId='" + userId + '\'' +
+                ", sleepHour=" + sleepHour +
+                ", sleepMinute=" + sleepMinute +
+                ", wakeHour=" + wakeHour +
+                ", wakeMinute=" + wakeMinute +
+                ", hoursSlept=" + hoursSlept +
+                ", minutesSlept=" + minutesSlept +
+                ", caloriesBurned=" + caloriesBurned +
                 ", sleepQuality='" + sleepQuality + '\'' +
-                ", awakenings=" + awakenings +
-                ", sleepCycles='" + sleepCycles + '\'' +
-                ", sleepDurationDeep=" + sleepDurationDeep +
-                ", sleepDurationRem=" + sleepDurationRem +
-                ", sleepDurationLight=" + sleepDurationLight +
-                ", userId='" + userId + '\'' +
                 '}';
     }
 }

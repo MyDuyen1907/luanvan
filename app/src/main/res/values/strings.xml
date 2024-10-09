@@ -19,4 +19,10 @@
         <item>Trung bình</item>
         <item>Kém</item>
     </string-array>
+        <string-array name="report_types">
+            <item>Hàng ngày</item>
+            <item>Hàng tuần</item>
+            <item>Hàng tháng</item>
+        </string-array>
+
 </resources>

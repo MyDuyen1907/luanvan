@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.SleeptrackingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:ignore="ExtraText">
+        <Button
+            android:id="@+id/sleep"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+            android:text="Giấc ngủ"
+            android:textColor="#3C3C3E"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvSleepTimePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hãy cho chúng tôi biết thời gian ngủ của bạn:"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TimePicker
+            android:id="@+id/timePickerSleep"
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:timePickerMode="spinner"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/tvWakeUpTimePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hãy cho chúng tôi biết thời gian thức của bạn:"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/timePickerSleep"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <!-- TimePicker để chọn giờ thức dậy -->
+        <TimePicker
+            android:id="@+id/timePickerWakeUp"
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:timePickerMode="spinner"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/timePickerSleep"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- TextView để hiển thị tổng thời gian ngủ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <!-- TextView để hiển thị tổng thời gian ngủ -->
+            <TextView
+                android:id="@+id/tvTotalSleepTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng thời gian ngủ: 0h"
+                android:textColor="@color/red"
+                android:textSize="13sp" />
+
+            <!-- TextView để hiển thị lượng calo đốt cháy -->
+            <TextView
+                android:id="@+id/tvCaloriesBurned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calories tiêu thụ: 0 kcal"
+                android:textSize="13sp"
+                android:layout_gravity="end"
+                android:textColor="@color/yellow"
+                android:layout_marginStart="20dp" />  <!-- Thêm marginStart để tạo khoảng cách -->
+        </LinearLayout>
+
+
+
+        <!-- TextView để hiển thị chất lượng giấc ngủ -->
+        <TextView
+            android:id="@+id/tvSleepQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chất lượng giấc ngủ: Không xác định"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvCaloriesBurned"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Lưu thông tin"
+            android:textColor="#FFFFFF"
+            android:background="@color/green_main"
+            android:layout_marginTop="10dp"/>
+        <!-- RecyclerView để hiển thị lịch sử giấc ngủ -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSleepHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+            app:layout_constraintTop_toBottomOf="@id/spinnerReportType"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+        </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
+</ScrollView>

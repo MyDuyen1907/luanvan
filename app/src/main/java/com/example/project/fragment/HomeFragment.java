@@ -20,7 +20,7 @@ import com.example.project.activity.ControlWaterActivity;
 import com.example.project.activity.ExerciseTimerActivity;
 import com.example.project.activity.FoodNutritionActivity;
 import com.example.project.activity.MedicationNotesApp;
-import com.example.project.activity.SleepTrackerActivity;
+import com.example.project.activity.SleeptrackingActivity;
 import com.example.project.activity.UserActivity;
 import com.example.project.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Navigate to the SleepDataActivity
-                Intent intent = new Intent(getActivity(), SleepTrackerActivity.class);
+                Intent intent = new Intent(getActivity(), SleeptrackingActivity.class);
                 startActivity(intent);
             }
         });

@@ -212,7 +212,7 @@ public class MedicationNotesApp extends AppCompatActivity {
                                 medicationList.clear();
                                 for (DocumentSnapshot document : task.getResult()) {
                                     Medication medication = document.toObject(Medication.class);
-                                    medication.setUserId(document.getId()); // Set document ID
+                                    medication.setUserId(userId); // Set userId
                                     medicationList.add(medication);
                                 }
                                 adapter.notifyDataSetChanged();
@@ -224,42 +224,36 @@ public class MedicationNotesApp extends AppCompatActivity {
         }
     }
 
+
     private void saveMedication(String medicineName, String dosage, String time, String reminder, String note) {
         if (currentUser != null) {
-            String userId = currentUser.getUid();
-
-            // Tạo ID cho tài liệu
-            String medicationId = db.collection("medications").document().getId(); // Tạo ID mới
+            String userId = currentUser.getUid();  // Lấy userId của người dùng
 
             Map<String, Object> medication = new HashMap<>();
             medication.put("medicineName", medicineName);
             medication.put("dosage", dosage);
             medication.put("time", time);
-            medication.put("userId", userId); // Store user ID
+            medication.put("userId", userId);  // Lưu userId
             medication.put("reminder", reminder);
             medication.put("note", note);
-            medication.put("Id", medicationId); // Set an empty ID
 
             db.collection("medications")
-                    .document(medicationId) // Sử dụng ID đã tạo
-                    .set(medication) // Sử dụng set thay vì add
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    .add(medication)   // Sử dụng add() để tạo Document mới
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
-                                // Cập nhật Id vào mô hình
-                                medication.put("Id", medicationId); // Cập nhật Id trong HashMap nếu cần
-
-                                Toast.makeText(MedicationNotesApp.this, "Kế hoạch đã được thêm", Toast.LENGTH_SHORT).show(); // Thay đổi getContext() thành MedicationNotesApp.this
-                                loadMedications(); // Tải lại danh sách kế hoạch
-                                clearInputs(); // Gọi hàm để xóa các ô nhập sau khi lưu thành công
+                                Toast.makeText(MedicationNotesApp.this, "Đã lưu đơn thuốc", Toast.LENGTH_SHORT).show();
+                                loadMedications();  // Tải lại danh sách
+                                clearInputs();  // Xóa các ô nhập sau khi lưu thành công
                             } else {
-                                Toast.makeText(MedicationNotesApp.this, "Thêm kế hoạch không thành công", Toast.LENGTH_SHORT).show(); // Thay đổi getContext() thành MedicationNotesApp.this
+                                Toast.makeText(MedicationNotesApp.this, "Lưu đơn thuốc không thành công", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
         }
     }
+
 
     private void clearInputs() {
         etMedicineName.setText("");
