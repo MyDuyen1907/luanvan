@@ -47,8 +47,7 @@ public class HealthFragment extends Fragment {
     private EditText inputCholesterol; // Cholesterol
     private BarChart barChartBloodPressure, barChartBloodSugar;
     private RadarChart radarChartCholesterol;
-    private TextView alertText,dateText;
-    private Button btnPickDate;
+    private TextView alertText;
     private Calendar calendar;
 
     @Nullable
@@ -67,30 +66,12 @@ public class HealthFragment extends Fragment {
         alertText = view.findViewById(R.id.alertText);
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
         Button btnViewReport = view.findViewById(R.id.btnViewReport);
-        dateText = view.findViewById(R.id.dateText);
-        btnPickDate = view.findViewById(R.id.btnPickDate);
         calendar = Calendar.getInstance();
 
         btnViewReport.setOnClickListener(v -> viewReport());
         btnSaveData.setOnClickListener(v -> saveData());
-        btnPickDate.setOnClickListener(v -> showDatePickerDialog());
 
         return view;
-    }
-
-    private void showDatePickerDialog() {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    // Cập nhật ngày đã chọn vào TextView
-                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear; // Tháng bắt đầu từ 0
-                    dateText.setText(selectedDate);
-                }, year, month, day);
-
-        datePickerDialog.show();
     }
 
 
@@ -206,7 +187,6 @@ public class HealthFragment extends Fragment {
         intent.putExtra("bloodSugar", inputBloodSugar.getText().toString().trim());
         intent.putExtra("bloodSugarPP", inputBloodSugarPP.getText().toString().trim());
         intent.putExtra("cholesterol", inputCholesterol.getText().toString().trim());
-        intent.putExtra("selectedDate", dateText.getText().toString().trim());
         startActivity(intent);
     }
 

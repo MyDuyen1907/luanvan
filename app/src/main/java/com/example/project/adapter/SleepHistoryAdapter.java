@@ -51,7 +51,8 @@ public class SleepHistoryAdapter extends RecyclerView.Adapter<SleepHistoryAdapte
         private TextView tvTotalSleepTime;
         private TextView tvCaloriesBurned;
         private TextView tvSleepQuality;
-        public ImageButton btnDelete; // Thêm tham chiếu cho nút xóa
+        public ImageButton btnDelete;
+        private TextView tvDate;
 
         public SleepViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,7 +61,8 @@ public class SleepHistoryAdapter extends RecyclerView.Adapter<SleepHistoryAdapte
             tvTotalSleepTime = itemView.findViewById(R.id.tvTotalSleepTime);
             tvCaloriesBurned = itemView.findViewById(R.id.tvCaloriesBurned);
             tvSleepQuality = itemView.findViewById(R.id.tvSleepQuality);
-            btnDelete = itemView.findViewById(R.id.btnDelete); // Khởi tạo nút xóa
+            btnDelete = itemView.findViewById(R.id.btnDelete);
+            tvDate = itemView.findViewById(R.id.tvDate);
         }
 
         public void bind(SleepData sleepData, int position, SleepHistoryAdapter adapter) {
@@ -71,18 +73,17 @@ public class SleepHistoryAdapter extends RecyclerView.Adapter<SleepHistoryAdapte
             tvTotalSleepTime.setText(String.format(" %dh %d phút", sleepData.getHoursSlept(), sleepData.getMinutesSlept()));
             tvCaloriesBurned.setText(" " + sleepData.getCaloriesBurned() + " kcal");
             tvSleepQuality.setText(" " + sleepData.getSleepQuality());
+            tvDate.setText("Ngày: " + sleepData.getDate());
 
             // Xử lý sự kiện click cho nút xóa
             btnDelete.setOnClickListener(v -> deleteSleepData(sleepData.getUserId(), position, adapter)); // Sử dụng userId làm Document ID
         }
 
         private void deleteSleepData(String sleepDataId, int position, SleepHistoryAdapter adapter) {
-            // Xóa dữ liệu khỏi Firestore
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("sleep_data").document(sleepDataId) // Sử dụng sleepDataId làm Document ID
+            db.collection("sleep_data").document(sleepDataId)
                     .delete()
                     .addOnSuccessListener(aVoid -> {
-                        // Xóa dữ liệu khỏi danh sách và cập nhật UI
                         adapter.sleepDataList.remove(position);
                         adapter.notifyItemRemoved(position);
                         Toast.makeText(itemView.getContext(), "Dữ liệu đã được xóa!", Toast.LENGTH_SHORT).show();

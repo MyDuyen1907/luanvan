@@ -21,10 +21,21 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
-            android:name=".activity.SleeptrackingActivity"
+            android:name=".activity.ReportActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".activity.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+        </receiver>
+
+        <activity
+            android:name=".activity.MealAlarmActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ReportActivity"
+            android:name=".activity.SleeptrackingActivity"
             android:exported="false" />
         <activity
             android:name=".activity.FoodNutritionActivity"
@@ -40,12 +51,6 @@
             android:exported="true" />
         <activity
             android:name=".activity.ExerciseTimerActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity.SleepReportActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity.SleepTrackerActivity"
             android:exported="true" />
         <activity
             android:name=".activity.NotificationReceiver"

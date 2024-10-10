@@ -24,6 +24,28 @@
             android:textColor="#3C3C3E"
             android:textSize="16dp"
             android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/btnPickDate"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_calendar"
+                android:contentDescription="Chọn ngày"
+                android:layout_marginStart="8dp"/>
+            <TextView
+                android:id="@+id/tvDatePrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Chọn ngày theo dõi giấc ngủ:"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
         <TextView
             android:id="@+id/tvSleepTimePrompt"
             android:layout_width="wrap_content"

@@ -24,9 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SleeptrackingActivity extends AppCompatActivity {
 
@@ -47,7 +49,7 @@ public class SleeptrackingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sleeptracking); // Đảm bảo tên layout đúng
+        setContentView(R.layout.activity_sleeptracking);
 
         // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
@@ -143,12 +145,18 @@ public class SleeptrackingActivity extends AppCompatActivity {
 
         // Đánh giá chất lượng giấc ngủ
         String sleepQuality = assessSleepQuality(hoursSlept);
-        tvSleepQuality.setText("Chất lượng giấc ngủ: " + sleepQuality); // Cập nhật tvSleepQuality
+        tvSleepQuality.setText("Chất lượng giấc ngủ: " + sleepQuality);
+
+        // Lấy ngày hiện tại
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String currentDate = sdf.format(Calendar.getInstance().getTime());
 
         // Lưu dữ liệu vào Firestore
-        String userId = currentUser.getUid(); // Lấy userId từ đối tượng FirebaseUser
+        String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
 
-        SleepData sleepData = new SleepData(userId, sleepHour, sleepMinute, wakeHour, wakeMinute, hoursSlept, minutesSlept, caloriesBurned, sleepQuality);
+        // Thêm ngày vào SleepData
+        SleepData sleepData = new SleepData(userId, sleepHour, sleepMinute, wakeHour, wakeMinute,
+                hoursSlept, minutesSlept, caloriesBurned, sleepQuality, currentDate);
 
         db.collection("sleep_data")
                 .document(userId) // Sử dụng userId làm Document ID
@@ -162,6 +170,7 @@ public class SleeptrackingActivity extends AppCompatActivity {
     }
 
 
+
     private String assessSleepQuality(int hoursSlept) {
         if (hoursSlept >= 7) {
             return "Tốt";
@@ -172,22 +181,4 @@ public class SleeptrackingActivity extends AppCompatActivity {
         }
     }
 
-    private void showReport(String reportType) {
-        switch (reportType) {
-            case "Hàng ngày":
-                // Hiển thị báo cáo hàng ngày
-                Toast.makeText(this, "Hiển thị báo cáo hàng ngày", Toast.LENGTH_SHORT).show();
-                break;
-            case "Hàng tuần":
-                // Hiển thị báo cáo hàng tuần
-                Toast.makeText(this, "Hiển thị báo cáo hàng tuần", Toast.LENGTH_SHORT).show();
-                break;
-            case "Hàng tháng":
-                // Hiển thị báo cáo hàng tháng
-                Toast.makeText(this, "Hiển thị báo cáo hàng tháng", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                break;
-        }
-    }
 }

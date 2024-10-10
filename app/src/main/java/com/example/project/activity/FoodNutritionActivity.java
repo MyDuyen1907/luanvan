@@ -36,7 +36,6 @@ public class FoodNutritionActivity extends AppCompatActivity {
         Button buttonSearch = findViewById(R.id.buttonSearch);
         Button btnBackFoodNutrition = findViewById(R.id.btn_back_food_nutrition);
 
-        // Danh sách các món ăn gợi ý (có thể thay thế bằng dữ liệu động từ API)
         List<String> foodSuggestions = Arrays.asList(
                 "Apple", "Banana", "Orange", "Chicken breast", "Rice", "Salmon", "Broccoli",
                 "Eggs", "Milk", "Beef steak", "Pasta", "Avocado", "Almonds", "Carrot",

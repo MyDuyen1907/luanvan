@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đặt Báo Thức"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_breakfast_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Báo thức ăn sáng"
+                android:textSize="20sp"
+                android:textColor="@color/green_main" />
+
+            <Button
+                android:id="@+id/btn_set_breakfast_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đặt báo thức"
+                android:backgroundTint="@color/yellow"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_lunch_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Báo thức ăn trưa"
+                android:textSize="20sp"
+                android:textColor="@color/green_main" />
+
+            <Button
+                android:id="@+id/btn_set_lunch_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đặt báo thức"
+                android:backgroundTint="@color/yellow"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_dinner_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Báo thức ăn tối"
+                android:textSize="20sp"
+                android:textColor="@color/green_main" />
+
+            <Button
+                android:id="@+id/btn_set_dinner_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đặt báo thức"
+                android:backgroundTint="@color/yellow"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -22,17 +22,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_password); // Assuming your layout file is activity_change_password.xml
+        setContentView(R.layout.activity_change_password);
 
-        // Initialize Firebase Auth
+
         mAuth = FirebaseAuth.getInstance();
 
-        // Bind the views
+
         edtNewPass = findViewById(R.id.edtNewPass);
         edtConfirmPass = findViewById(R.id.edtConfirmPass);
         btnChangePass = findViewById(R.id.btnChangePass);
 
-        // Set click listener for the Change Password button
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,11 +60,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
             return;
         }
 
-        // Get the current user from Firebase Auth
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
-            // Update the user's password
             user.updatePassword(newPassword).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Toast.makeText(ChangePasswordActivity.this, "Password changed successfully", Toast.LENGTH_SHORT).show();

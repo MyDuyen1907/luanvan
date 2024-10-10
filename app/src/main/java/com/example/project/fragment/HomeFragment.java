@@ -19,6 +19,7 @@ import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ControlWaterActivity;
 import com.example.project.activity.ExerciseTimerActivity;
 import com.example.project.activity.FoodNutritionActivity;
+import com.example.project.activity.MealAlarmActivity;
 import com.example.project.activity.MedicationNotesApp;
 import com.example.project.activity.SleeptrackingActivity;
 import com.example.project.activity.UserActivity;
@@ -30,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeFragment extends Fragment {
     private CardView cvUser,cv_control_calories,cv_medical,cv_control_water,cv_exercise,cv_sleep;
-    private TextView txvHello;
+    private TextView txvHello, mealrem;
     private FirebaseFirestore db;
     private ImageView food_nut;
 
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment {
         txvHello = view.findViewById(R.id.txvHello);
         cv_sleep = view.findViewById(R.id.cv_sleep);
         food_nut = view.findViewById(R.id.food_nut);
+        mealrem = view.findViewById(R.id.mealrem);
 
         // Fetch user data from Firestore and set the greeting text
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
@@ -119,6 +121,14 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 // Navigate to the FoodNutritionActivity
                 Intent intent = new Intent(getActivity(), FoodNutritionActivity.class);
+                startActivity(intent);
+            }
+        });
+        mealrem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Navigate to the FoodNutritionActivity
+                Intent intent = new Intent(getActivity(), MealAlarmActivity.class);
                 startActivity(intent);
             }
         });
