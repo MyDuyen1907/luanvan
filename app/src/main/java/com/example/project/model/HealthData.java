@@ -8,12 +8,13 @@ public class HealthData {
     private float cholesterol;
     private String userId;
     private String status;
+    private String date;
 
     public HealthData() {
         // Cần thiết cho Firestore
     }
 
-    public HealthData(float systolic, float diastolic, float bloodSugar, float bloodSugarPP, float cholesterol, String userId, String status) {
+    public HealthData(float systolic, float diastolic, float bloodSugar, float bloodSugarPP, float cholesterol, String userId, String status, String date) {
         this.systolic = systolic;
         this.diastolic = diastolic;
         this.bloodSugar = bloodSugar;
@@ -21,6 +22,7 @@ public class HealthData {
         this.cholesterol = cholesterol;
         this.userId = userId;
         this.status = status;
+        this.date = date;
     }
 
     // Getter và Setter
@@ -74,5 +76,11 @@ public class HealthData {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
     }
 }

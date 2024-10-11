@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.example.project.R;
 import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ReportActivity;
+import com.example.project.model.HealthData;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.RadarChart;
@@ -34,10 +36,14 @@ import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class HealthFragment extends Fragment {
@@ -72,8 +78,6 @@ public class HealthFragment extends Fragment {
         return view;
     }
 
-
-
     private void saveData() {
         String systolicStr = inputBloodPressure.getText().toString().trim(); // Tâm thu
         String diastolicStr = inputBloodPressurePP.getText().toString().trim(); // Tâm trương
@@ -81,7 +85,6 @@ public class HealthFragment extends Fragment {
         String bloodSugarPPStr = inputBloodSugarPP.getText().toString().trim(); // Đường huyết lúc no
         String cholesterolStr = inputCholesterol.getText().toString().trim(); // Cholesterol
 
-        // Kiểm tra dữ liệu đầu vào
         if (TextUtils.isEmpty(systolicStr) || TextUtils.isEmpty(diastolicStr) || TextUtils.isEmpty(bloodSugarStr)
                 || TextUtils.isEmpty(bloodSugarPPStr) || TextUtils.isEmpty(cholesterolStr)) {
             alertText.setText("Vui lòng nhập tất cả dữ liệu.");
@@ -94,20 +97,41 @@ public class HealthFragment extends Fragment {
         float bloodSugarPP = Float.parseFloat(bloodSugarPPStr);
         float cholesterol = Float.parseFloat(cholesterolStr);
 
-        // Cập nhật biểu đồ huyết áp
+        // Lấy ngày hiện tại
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String currentDate = dateFormat.format(new Date());
+
+        // Lưu thông tin vào Firestore kèm ngày
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+            String userId = user.getUid(); // Lấy User ID
+
+            // Tạo đối tượng dữ liệu sức khỏe
+            HealthData healthData = new HealthData(systolic, diastolic, bloodSugar, bloodSugarPP, cholesterol, userId, "Bình thường", currentDate);
+
+            // Lưu vào Firestore
+            CollectionReference healthDataRef = db.collection("healthData").document(userId).collection("dailyRecords");
+            healthDataRef.add(healthData)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(getActivity(), "Dữ liệu đã được lưu thành công! ", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(getActivity(), "Lỗi khi lưu dữ liệu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(getActivity(), "Người dùng chưa đăng nhập!", Toast.LENGTH_SHORT).show();
+        }
+
+        // Cập nhật biểu đồ và kiểm tra trạng thái sức khỏe
         updateBloodPressureChart(systolic, diastolic);
-
-        // Cập nhật biểu đồ đường huyết
-
-
         updateBloodSugarCharts(bloodSugar, bloodSugarPP);
-
-        // Cập nhật biểu đồ cholesterol
         updateCholesterolChart(cholesterol);
-
-        // Kiểm tra trạng thái sức khỏe
         checkHealthStatus(systolic, diastolic, bloodSugar, bloodSugarPP, cholesterol);
     }
+
 
     private void updateBloodPressureChart(float systolic, float diastolic) {
         ArrayList<BarEntry> systolicEntries = new ArrayList<>();
