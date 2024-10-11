@@ -48,7 +48,6 @@ public class HealthFragment extends Fragment {
     private BarChart barChartBloodPressure, barChartBloodSugar;
     private RadarChart radarChartCholesterol;
     private TextView alertText;
-    private Calendar calendar;
 
     @Nullable
     @Override
@@ -66,7 +65,6 @@ public class HealthFragment extends Fragment {
         alertText = view.findViewById(R.id.alertText);
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
         Button btnViewReport = view.findViewById(R.id.btnViewReport);
-        calendar = Calendar.getInstance();
 
         btnViewReport.setOnClickListener(v -> viewReport());
         btnSaveData.setOnClickListener(v -> saveData());

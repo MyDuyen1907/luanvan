@@ -14,6 +14,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ReportActivity extends AppCompatActivity {
 
     private TextView reportTextView;
@@ -37,6 +41,10 @@ public class ReportActivity extends AppCompatActivity {
         String bloodSugarPPStr = intent.getStringExtra("bloodSugarPP");
         String cholesterolStr = intent.getStringExtra("cholesterol");
 
+        // Lấy ngày và giờ hiện tại
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        String currentDateTime = dateFormat.format(new Date()); // Ngày giờ hiện tại
+
         // Kiểm tra xem có dữ liệu hay không
         if (systolicStr == null || diastolicStr == null || bloodSugarStr == null ||
                 bloodSugarPPStr == null || cholesterolStr == null) {
@@ -51,8 +59,9 @@ public class ReportActivity extends AppCompatActivity {
                 float bloodSugarPP = Float.parseFloat(bloodSugarPPStr);
                 float cholesterol = Float.parseFloat(cholesterolStr);
 
-                // Hiển thị dữ liệu trong TextView
-                String report = "Huyết áp: " + systolic + "/" + diastolic + "\n" +
+                // Hiển thị dữ liệu trong TextView, bao gồm ngày giờ hiện tại
+                String report = "Báo cáo ngày: " + currentDateTime + "\n\n" +
+                        "Huyết áp: " + systolic + "/" + diastolic + "\n" +
                         "Đường huyết lúc đói: " + bloodSugar + "\n" +
                         "Đường huyết lúc no: " + bloodSugarPP + "\n" +
                         "Cholesterol: " + cholesterol;
