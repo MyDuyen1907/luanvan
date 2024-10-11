@@ -138,39 +138,76 @@ public class SleeptrackingActivity extends AppCompatActivity {
         // Cập nhật UI
         tvTotalSleepTime.setText(String.format("Tổng thời gian ngủ: %dh %d phút", hoursSlept, minutesSlept));
 
-        // Tính lượng calo tiêu thụ
-        int weight = u != null ? u.getWeight() : 0; // Nếu u không null, lấy trọng lượng
-        int caloriesBurned = (int) (weight * totalSleepMinutes * 0.0138889); // Giả định 0.0138889 kcal/kg/phút
-        tvCaloriesBurned.setText(String.format("Calories tiêu thụ: %d kcal", caloriesBurned));
+        // Tính BMR
+        if (u != null) {
+            int weight = u.getWeight();  // Trọng lượng
+            int height = u.getHeight();  // Chiều cao
+            int age = u.getAge();        // Tuổi
+            int gender = u.getGender(); // Giới tính
 
-        // Đánh giá chất lượng giấc ngủ
-        String sleepQuality = assessSleepQuality(hoursSlept);
-        tvSleepQuality.setText("Chất lượng giấc ngủ: " + sleepQuality);
+            double BMR = calculateBMR(weight, height, age, gender); // Tính BMR
 
-        // Lấy ngày hiện tại
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String currentDate = sdf.format(Calendar.getInstance().getTime());
+            // Tính lượng calo tiêu thụ trong khi ngủ dựa trên BMR
+            int caloriesBurned = calculateCaloriesBurnedDuringSleep(BMR, (int) totalSleepMinutes);
+            tvCaloriesBurned.setText(String.format("Calories tiêu thụ: %d kcal", caloriesBurned));
 
-        // Lưu dữ liệu vào Firestore
-        String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
+            // Đánh giá chất lượng giấc ngủ
+            String sleepQuality = assessSleepQuality(hoursSlept);
+            tvSleepQuality.setText("Chất lượng giấc ngủ: " + sleepQuality);
 
-        // Thêm ngày vào SleepData
-        SleepData sleepData = new SleepData(userId, sleepHour, sleepMinute, wakeHour, wakeMinute,
-                hoursSlept, minutesSlept, caloriesBurned, sleepQuality, currentDate);
+            // Lấy ngày hiện tại
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String currentDate = sdf.format(Calendar.getInstance().getTime());
 
-        db.collection("sleep_data")
-                .document(userId) // Sử dụng userId làm Document ID
-                .set(sleepData)
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(SleeptrackingActivity.this, "Dữ liệu giấc ngủ đã được lưu", Toast.LENGTH_SHORT).show();
-                    sleepDataList.add(sleepData);
-                    sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật danh sách
-                })
-                .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi lưu dữ liệu", Toast.LENGTH_SHORT).show());
+            // Lưu dữ liệu vào Firestore
+            String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
+
+            // Thêm ngày vào SleepData
+            SleepData sleepData = new SleepData(userId, sleepHour, sleepMinute, wakeHour, wakeMinute,
+                    hoursSlept, minutesSlept, caloriesBurned, sleepQuality, currentDate);
+
+            db.collection("sleep_data")
+                    .document(userId) // Sử dụng userId làm Document ID
+                    .set(sleepData)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(SleeptrackingActivity.this, "Dữ liệu giấc ngủ đã được lưu", Toast.LENGTH_SHORT).show();
+                        sleepDataList.add(sleepData);
+                        sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật danh sách
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi lưu dữ liệu", Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(this, "Thông tin người dùng chưa được tải", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
+    private double calculateBMR(int weight, int height, int age, int gender) {
+        double BMR;
 
+        // Giả định: 1 là "male", 0 là "female"
+        if (gender == 1) {
+            // Tính BMR cho nam
+            BMR = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else if (gender == 0) {
+            // Tính BMR cho nữ
+            BMR = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+        } else {
+            // Trường hợp giá trị giới tính không hợp lệ
+            BMR = 0;
+        }
+
+        return BMR;
+    }
+    private int calculateCaloriesBurnedDuringSleep(double BMR, int totalSleepMinutes) {
+        // Giả sử calo tiêu thụ khi ngủ chiếm 70% BMR mỗi ngày
+        double BMRDuringSleep = BMR * 0.7;
+
+        // Tính lượng calo tiêu thụ mỗi phút (BMR trong khi ngủ chia cho số phút trong 1 ngày)
+        double caloriesPerMinute = BMRDuringSleep / 1440; // 1440 phút trong 1 ngày
+
+        // Tính tổng lượng calo tiêu thụ trong khi ngủ
+        return (int) (caloriesPerMinute * totalSleepMinutes);
+    }
     private String assessSleepQuality(int hoursSlept) {
         if (hoursSlept >= 7) {
             return "Tốt";
