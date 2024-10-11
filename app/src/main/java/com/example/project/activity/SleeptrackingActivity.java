@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,7 +19,9 @@ import com.example.project.model.SleepData;
 import com.example.project.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class SleeptrackingActivity extends AppCompatActivity {
     private TextView tvTotalSleepTime;
     private TextView tvCaloriesBurned;
     private TextView tvSleepQuality;
-    private Button btnSave,btnBackSleeptracking;
+    private Button btnSave, btnBackSleeptracking;
     private RecyclerView rvSleepHistory;
     private List<SleepData> sleepDataList;
     private SleepHistoryAdapter sleepHistoryAdapter;
@@ -75,6 +74,8 @@ public class SleeptrackingActivity extends AppCompatActivity {
         rvSleepHistory.setLayoutManager(new LinearLayoutManager(this));
         rvSleepHistory.setAdapter(sleepHistoryAdapter);
 
+        // Tải lịch sử giấc ngủ ban đầu từ Firestore
+        loadSleepHistory();
 
         // Thêm sự kiện cho nút "Lưu"
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,7 @@ public class SleeptrackingActivity extends AppCompatActivity {
                 saveSleepData();
             }
         });
+
         btnBackSleeptracking.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -109,12 +111,12 @@ public class SleeptrackingActivity extends AppCompatActivity {
                 });
     }
 
-
     private void saveSleepData() {
         int sleepHour = timePickerSleep.getCurrentHour();
         int sleepMinute = timePickerSleep.getCurrentMinute();
         int wakeHour = timePickerWakeUp.getCurrentHour();
         int wakeMinute = timePickerWakeUp.getCurrentMinute();
+        String userId = currentUser.getUid();
 
         // Tính toán thời gian ngủ
         Calendar sleepTime = Calendar.getInstance();
@@ -143,7 +145,7 @@ public class SleeptrackingActivity extends AppCompatActivity {
             int weight = u.getWeight();  // Trọng lượng
             int height = u.getHeight();  // Chiều cao
             int age = u.getAge();        // Tuổi
-            int gender = u.getGender(); // Giới tính
+            int gender = u.getGender();  // Giới tính
 
             double BMR = calculateBMR(weight, height, age, gender); // Tính BMR
 
@@ -159,20 +161,17 @@ public class SleeptrackingActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String currentDate = sdf.format(Calendar.getInstance().getTime());
 
-            // Lưu dữ liệu vào Firestore
-            String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
-
-            // Thêm ngày vào SleepData
+            // Tạo đối tượng SleepData
             SleepData sleepData = new SleepData(userId, sleepHour, sleepMinute, wakeHour, wakeMinute,
                     hoursSlept, minutesSlept, caloriesBurned, sleepQuality, currentDate);
 
+            // Lưu SleepData vào Firestore và sử dụng ID ngẫu nhiên tự động
             db.collection("sleep_data")
-                    .document(userId) // Sử dụng userId làm Document ID
-                    .set(sleepData)
+                    .add(sleepData)  // Thêm SleepData và để Firestore tự động tạo ID ngẫu nhiên
                     .addOnSuccessListener(documentReference -> {
                         Toast.makeText(SleeptrackingActivity.this, "Dữ liệu giấc ngủ đã được lưu", Toast.LENGTH_SHORT).show();
                         sleepDataList.add(sleepData);
-                        sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật danh sách
+                        sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật danh sách ngay lập tức
                     })
                     .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi lưu dữ liệu", Toast.LENGTH_SHORT).show());
         } else {
@@ -181,41 +180,48 @@ public class SleeptrackingActivity extends AppCompatActivity {
     }
 
 
+    private void loadSleepHistory() {
+        String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
+
+        db.collection("sleep_data")
+                .document(userId)
+                .collection("records")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        SleepData sleepData = document.toObject(SleepData.class);
+                        sleepDataList.add(sleepData);
+                    }
+                    sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView sau khi tải dữ liệu
+                })
+                .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi tải lịch sử giấc ngủ", Toast.LENGTH_SHORT).show());
+    }
+
     private double calculateBMR(int weight, int height, int age, int gender) {
         double BMR;
 
         // Giả định: 1 là "male", 0 là "female"
         if (gender == 1) {
-            // Tính BMR cho nam
             BMR = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-        } else if (gender == 0) {
-            // Tính BMR cho nữ
-            BMR = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
         } else {
-            // Trường hợp giá trị giới tính không hợp lệ
-            BMR = 0;
+            BMR = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
         }
 
         return BMR;
     }
-    private int calculateCaloriesBurnedDuringSleep(double BMR, int totalSleepMinutes) {
-        // Giả sử calo tiêu thụ khi ngủ chiếm 70% BMR mỗi ngày
-        double BMRDuringSleep = BMR * 0.7;
 
-        // Tính lượng calo tiêu thụ mỗi phút (BMR trong khi ngủ chia cho số phút trong 1 ngày)
-        double caloriesPerMinute = BMRDuringSleep / 1440; // 1440 phút trong 1 ngày
-
-        // Tính tổng lượng calo tiêu thụ trong khi ngủ
-        return (int) (caloriesPerMinute * totalSleepMinutes);
+    private int calculateCaloriesBurnedDuringSleep(double BMR, int minutesSlept) {
+        // Giả sử cơ thể tiêu thụ 0.85 lần BMR khi ngủ
+        return (int) ((BMR / 1440) * minutesSlept * 0.85);
     }
+
     private String assessSleepQuality(int hoursSlept) {
-        if (hoursSlept >= 7) {
+        if (hoursSlept >= 7 && hoursSlept <= 9) {
             return "Tốt";
-        } else if (hoursSlept >= 5) {
-            return "Trung bình";
+        } else if (hoursSlept < 7) {
+            return "Ngắn";
         } else {
-            return "Kém";
+            return "Dài";
         }
     }
-
 }
