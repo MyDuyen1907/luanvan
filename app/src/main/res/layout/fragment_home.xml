@@ -302,18 +302,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:id="@+id/mealrem"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="    Select meal Reminders"
-                        android:textColor="@color/black"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:layout_margin="5dp"
-                        android:drawableEnd="@drawable/baseline_arrow_forward_24"
-                        android:drawableStart="@drawable/baseline_access_alarm_24"
-                        android:textSize="20sp"/>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
