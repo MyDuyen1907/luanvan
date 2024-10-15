@@ -216,19 +216,22 @@ public class HealthFragment extends Fragment {
     private void checkHealthStatus(float systolic, float diastolic, float bloodSugar, float bloodSugarPP, float cholesterol) {
         StringBuilder status = new StringBuilder();
 
-        // Cảnh báo huyết áp
-        if (systolic < 120 && diastolic < 80) {
-            status.append("Huyết áp bình thường (Dưới 120/80 mmHg).\n");
-        } else if (systolic <= 129 && diastolic < 80) {
-            status.append("Huyết áp bình thường cao (120-129/80 mmHg).\n");
-        } else if (systolic >= 130 || diastolic >= 80) {
-            status.append("Huyết áp cao (≥ 130/80 mmHg). Cần chú ý đến sức khỏe tim mạch.\n");
+        // Cảnh báo huyết áp tổng hợp (Tâm thu và Tâm trương)
+        if (systolic < 130 && diastolic < 85) {
+            status.append("Huyết áp bình thường: Tâm thu < 130 mmHg và Tâm trương < 85 mmHg.\n");
+        } else if (systolic >= 130 && systolic <= 139 && diastolic < 90) {
+            status.append("Huyết áp bình thường cao: Tâm thu 130-139 mmHg và Tâm trương < 90 mmHg.\n");
+        } else if (systolic >= 140 || diastolic >= 90) {
+            status.append("Tăng huyết áp: Tâm thu ≥ 140 mmHg hoặc Tâm trương ≥ 90 mmHg. Cần chú ý đến sức khỏe tim mạch.\n");
+        } else if (diastolic >= 85 && diastolic <= 89) {
+            status.append("Huyết áp tâm trương bình thường cao: Tâm trương 85-89 mmHg.\n");
         }
+
 
         // Cảnh báo đường huyết lúc đói
         if (bloodSugar < 100) {
             status.append("Đường huyết bình thường lúc đói (Dưới 100 mg/dL).\n");
-        } else if (bloodSugar < 126) {
+        } else if (bloodSugar >= 100 && bloodSugar < 126) {
             status.append("Đường huyết cao lúc đói (100-125 mg/dL). Cần theo dõi.\n");
         } else {
             status.append("Đường huyết cao lúc đói (≥ 126 mg/dL). Nên kiểm tra tình trạng tiểu đường.\n");

@@ -1,6 +1,5 @@
 package com.example.project.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,9 +43,13 @@ public class ReportActivity extends AppCompatActivity {
             healthDataRef.get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         StringBuilder report = new StringBuilder();
+
+                        // Lấy giờ hiện tại
+                        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             HealthData healthData = document.toObject(HealthData.class);
-                            report.append("Ngày: ").append(healthData.getDate()).append("\n")
+                            report.append("Ngày: ").append(healthData.getDate()).append(" - ").append(currentTime).append("\n") // Thêm giờ hiện tại
                                     .append("Huyết áp: ").append(healthData.getSystolic()).append("/").append(healthData.getDiastolic()).append("\n")
                                     .append("Đường huyết lúc đói: ").append(healthData.getBloodSugar()).append("\n")
                                     .append("Đường huyết lúc no: ").append(healthData.getBloodSugarPP()).append("\n")
