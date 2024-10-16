@@ -170,8 +170,8 @@ public class SleeptrackingActivity extends AppCompatActivity {
                     .add(sleepData)  // Thêm SleepData và để Firestore tự động tạo ID ngẫu nhiên
                     .addOnSuccessListener(documentReference -> {
                         Toast.makeText(SleeptrackingActivity.this, "Dữ liệu giấc ngủ đã được lưu", Toast.LENGTH_SHORT).show();
-                        sleepDataList.add(sleepData);
-                        sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật danh sách ngay lập tức
+                        sleepDataList.add(sleepData); // Thêm dữ liệu vào danh sách hiển thị
+                        sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView ngay lập tức
                     })
                     .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi lưu dữ liệu", Toast.LENGTH_SHORT).show());
         } else {
@@ -180,22 +180,24 @@ public class SleeptrackingActivity extends AppCompatActivity {
     }
 
 
+
     private void loadSleepHistory() {
         String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
 
         db.collection("sleep_data")
-                .document(userId)
-                .collection("records")
+                .whereEqualTo("userId", userId) // Chỉ lấy dữ liệu của người dùng hiện tại
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    sleepDataList.clear(); // Xóa dữ liệu cũ trước khi tải lại
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         SleepData sleepData = document.toObject(SleepData.class);
-                        sleepDataList.add(sleepData);
+                        sleepDataList.add(sleepData); // Thêm dữ liệu vào danh sách
                     }
                     sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView sau khi tải dữ liệu
                 })
                 .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi tải lịch sử giấc ngủ", Toast.LENGTH_SHORT).show());
     }
+
 
     private double calculateBMR(int weight, int height, int age, int gender) {
         double BMR;

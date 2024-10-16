@@ -36,10 +36,13 @@ public class ReportActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
-            String userId = user.getUid();
+            String userId = user.getUid(); // Lấy ID của người dùng hiện tại
 
-            // Truy vấn tất cả các bản ghi sức khỏe theo ngày từ Firestore
-            CollectionReference healthDataRef = db.collection("healthData").document(userId).collection("dailyRecords");
+            // Truy vấn tất cả các bản ghi sức khỏe theo ngày của người dùng từ Firestore
+            CollectionReference healthDataRef = db.collection("healthData")
+                    .document(userId) // Chỉ truy cập vào tài liệu của người dùng hiện tại
+                    .collection("dailyRecords");
+
             healthDataRef.get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         StringBuilder report = new StringBuilder();
@@ -49,13 +52,13 @@ public class ReportActivity extends AppCompatActivity {
 
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             HealthData healthData = document.toObject(HealthData.class);
-                            report.append("Ngày: ").append(healthData.getDate()).append(" - ").append(currentTime).append("\n") // Thêm giờ hiện tại
+                            report.append("Ngày: ").append(healthData.getDate()).append(" - ").append(currentTime).append("\n")
                                     .append("Huyết áp: ").append(healthData.getSystolic()).append("/").append(healthData.getDiastolic()).append("\n")
                                     .append("Đường huyết lúc đói: ").append(healthData.getBloodSugar()).append("\n")
                                     .append("Đường huyết lúc no: ").append(healthData.getBloodSugarPP()).append("\n")
                                     .append("Cholesterol: ").append(healthData.getCholesterol()).append("\n\n");
                         }
-                        reportTextView.setText(report.toString());
+                        reportTextView.setText(report.toString()); // Hiển thị báo cáo
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(ReportActivity.this, "Lỗi khi lấy dữ liệu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
