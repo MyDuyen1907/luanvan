@@ -31,6 +31,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="8dp">
 
+
             <!-- Cột cho Huyết áp tâm thu -->
             <LinearLayout
                 android:layout_width="0dp"
@@ -48,15 +49,22 @@
                     android:textColor="@color/black"
                     android:layout_marginTop="8dp"/>
 
-                <EditText
+                <SeekBar
                     android:id="@+id/inputBloodPressure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:hint="Dưới 130mmHg đến ≥ 140mmHg"
-                    android:inputType="numberDecimal"
-                    android:padding="15dp"
-                    android:textSize="10.5dp" />
+                    android:max="140"
+                    android:progress="130"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvBloodPressureValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120 mmHg"
+                    android:layout_gravity="center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="4dp"/>
             </LinearLayout>
 
             <!-- Cột cho Huyết áp tâm trương -->
@@ -76,15 +84,22 @@
                     android:textColor="@color/black"
                     android:layout_marginTop="8dp"/>
 
-                <EditText
+                <SeekBar
                     android:id="@+id/inputBloodPressurePP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="15dp"
-                    android:textSize="10.5dp"
-                    android:hint="Dưới 85mmHg đến ≥ 90mmHg"
-                    android:inputType="numberDecimal" />
+                    android:max="90"
+                    android:progress="85"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvBloodPressurePPValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="76 mmHg"
+                    android:layout_gravity="center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="4dp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -120,15 +135,22 @@
                     android:textColor="@color/black"
                     android:layout_marginTop="8dp"/>
 
-                <EditText
+                <SeekBar
                     android:id="@+id/inputBloodSugar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="15dp"
-                    android:hint="Dưới 100 mg/dl đến ≥ 126mg/dl"
-                    android:textSize="11dp"
-                    android:inputType="numberDecimal" />
+                    android:max="126"
+                    android:progress="130"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvBloodSugarValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="101 mg/dL"
+                    android:layout_gravity="center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="4dp"/>
             </LinearLayout>
 
             <!-- Cột cho Đường huyết lúc no -->
@@ -148,15 +170,22 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"/>
 
-                <EditText
+                <SeekBar
                     android:id="@+id/inputBloodSugarPP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="15dp"
-                    android:hint="Dưới 140 mg/dl đến ≥ 200 mg/dl"
-                    android:textSize="11dp"
-                    android:inputType="numberDecimal" />
+                    android:max="200"
+                    android:progress="130"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvBloodSugarPPValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120 mg/dL"
+                    android:layout_gravity="center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="4dp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -214,7 +243,7 @@
                 android:id="@+id/btnViewReport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Xem báo cáo"
+                android:text="Lịch sử"
                 android:background="@drawable/button_background"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp" />

@@ -1,17 +1,14 @@
 package com.example.project.fragment;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,18 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.project.R;
-import com.example.project.activity.ControlCaloriesActivity;
 import com.example.project.activity.ReportActivity;
 import com.example.project.model.HealthData;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
@@ -42,18 +34,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class HealthFragment extends Fragment {
 
-    private EditText inputBloodPressure, inputBloodPressurePP; // Tâm thu và tâm trương
-    private EditText inputBloodSugar, inputBloodSugarPP; // Đường huyết lúc đói và lúc no
+    private SeekBar inputBloodPressure, inputBloodPressurePP; // Tâm thu và tâm trương
+    private SeekBar inputBloodSugar, inputBloodSugarPP; // Đường huyết lúc đói và lúc no
     private EditText inputCholesterol; // Cholesterol
     private BarChart barChartBloodPressure, barChartBloodSugar;
     private RadarChart radarChartCholesterol;
-    private TextView alertText;
+    private TextView alertText, tvBloodPressureValue, tvBloodPressurePPValue,tvBloodSugarValue,tvBloodSugarPPValue;
 
     @Nullable
     @Override
@@ -66,57 +57,130 @@ public class HealthFragment extends Fragment {
         inputBloodSugarPP = view.findViewById(R.id.inputBloodSugarPP);
         inputCholesterol = view.findViewById(R.id.inputCholesterol);
         barChartBloodPressure = view.findViewById(R.id.barChartBloodPressure);
-        barChartBloodSugar = view.findViewById(R.id. barChartBloodSugar);
+        barChartBloodSugar = view.findViewById(R.id.barChartBloodSugar);
         radarChartCholesterol = view.findViewById(R.id.radarChartCholesterol);
         alertText = view.findViewById(R.id.alertText);
+        tvBloodPressureValue = view.findViewById(R.id.tvBloodPressureValue);
+        tvBloodPressurePPValue = view.findViewById(R.id.tvBloodPressurePPValue);
+        tvBloodSugarValue = view.findViewById(R.id.tvBloodSugarValue);
+        tvBloodSugarPPValue = view.findViewById(R.id.tvBloodSugarPPValue);
         Button btnSaveData = view.findViewById(R.id.btnSaveData);
         Button btnViewReport = view.findViewById(R.id.btnViewReport);
 
         btnViewReport.setOnClickListener(v -> viewReport());
         btnSaveData.setOnClickListener(v -> saveData());
 
+        // Thêm sự kiện lắng nghe thay đổi trên SeekBar để cập nhật TextView ngay lập tức
+        inputBloodPressure.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Cập nhật giá trị TextView khi thanh SeekBar thay đổi
+                tvBloodPressureValue.setText(progress + " mmHg");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+        });
+
+        inputBloodPressurePP.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Cập nhật giá trị TextView khi thanh SeekBar thay đổi
+                tvBloodPressurePPValue.setText(progress + " mmHg");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+        });
+        inputBloodSugar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Cập nhật giá trị TextView khi thanh SeekBar thay đổi
+                tvBloodSugarValue.setText(progress + " mg/dL");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+        });
+        inputBloodSugarPP.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Cập nhật giá trị TextView khi thanh SeekBar thay đổi
+                tvBloodSugarPPValue.setText(progress + " mg/dL");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Không cần xử lý
+            }
+        });
+
+
         return view;
     }
 
     private void saveData() {
-        String systolicStr = inputBloodPressure.getText().toString().trim(); // Tâm thu
-        String diastolicStr = inputBloodPressurePP.getText().toString().trim(); // Tâm trương
-        String bloodSugarStr = inputBloodSugar.getText().toString().trim(); // Đường huyết lúc đói
-        String bloodSugarPPStr = inputBloodSugarPP.getText().toString().trim(); // Đường huyết lúc no
-        String cholesterolStr = inputCholesterol.getText().toString().trim(); // Cholesterol
+        int systolic = inputBloodPressure.getProgress(); // Tâm thu
+        int diastolic = inputBloodPressurePP.getProgress(); // Tâm trương
+        int bloodSugar = inputBloodSugar.getProgress(); // Đường huyết lúc đói (lấy giá trị từ SeekBar)
+        int bloodSugarPP = inputBloodSugarPP.getProgress(); // Đường huyết lúc no (lấy giá trị từ SeekBar)
+        String cholesterolStr = inputCholesterol.getText().toString().trim();// Cholesterol
 
-        if (TextUtils.isEmpty(systolicStr) || TextUtils.isEmpty(diastolicStr) || TextUtils.isEmpty(bloodSugarStr)
-                || TextUtils.isEmpty(bloodSugarPPStr) || TextUtils.isEmpty(cholesterolStr)) {
+        if (systolic == 0 || diastolic == 0 || cholesterolStr.isEmpty()) {
             alertText.setText("Vui lòng nhập tất cả dữ liệu.");
             return;
         }
 
-        float systolic = Float.parseFloat(systolicStr);
-        float diastolic = Float.parseFloat(diastolicStr);
-        float bloodSugar = Float.parseFloat(bloodSugarStr);
-        float bloodSugarPP = Float.parseFloat(bloodSugarPPStr);
-        float cholesterol = Float.parseFloat(cholesterolStr);
+        float cholesterol;
 
-        // Lấy ngày hiện tại
+        try {
+            cholesterol = Float.parseFloat(cholesterolStr);
+        } catch (NumberFormatException e) {
+            alertText.setText("Dữ liệu nhập vào không hợp lệ. Vui lòng kiểm tra lại.");
+            return;
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String currentDate = dateFormat.format(new Date());
 
-        // Lưu thông tin vào Firestore kèm ngày
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
-            String userId = user.getUid(); // Lấy User ID
-
-            // Tạo đối tượng dữ liệu sức khỏe
+            String userId = user.getUid();
             HealthData healthData = new HealthData(systolic, diastolic, bloodSugar, bloodSugarPP, cholesterol, userId, "Bình thường", currentDate);
 
-            // Lưu vào Firestore
             CollectionReference healthDataRef = db.collection("healthData").document(userId).collection("dailyRecords");
             healthDataRef.add(healthData)
                     .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(getActivity(), "Dữ liệu đã được lưu thành công! ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Dữ liệu đã được lưu thành công!", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(getActivity(), "Lỗi khi lưu dữ liệu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -125,12 +189,13 @@ public class HealthFragment extends Fragment {
             Toast.makeText(getActivity(), "Người dùng chưa đăng nhập!", Toast.LENGTH_SHORT).show();
         }
 
-        // Cập nhật biểu đồ và kiểm tra trạng thái sức khỏe
+        // Cập nhật biểu đồ
         updateBloodPressureChart(systolic, diastolic);
         updateBloodSugarCharts(bloodSugar, bloodSugarPP);
         updateCholesterolChart(cholesterol);
         checkHealthStatus(systolic, diastolic, bloodSugar, bloodSugarPP, cholesterol);
     }
+
 
 
     private void updateBloodPressureChart(float systolic, float diastolic) {
@@ -204,10 +269,10 @@ public class HealthFragment extends Fragment {
         // Chuyển đến Activity hoặc Fragment hiển thị báo cáo
         // Sử dụng Intent để chuyển dữ liệu nếu cần
         Intent intent = new Intent(getActivity(), ReportActivity.class);
-        intent.putExtra("systolic", inputBloodPressure.getText().toString().trim());
-        intent.putExtra("diastolic", inputBloodPressurePP.getText().toString().trim());
-        intent.putExtra("bloodSugar", inputBloodSugar.getText().toString().trim());
-        intent.putExtra("bloodSugarPP", inputBloodSugarPP.getText().toString().trim());
+        intent.putExtra("systolic", inputBloodPressure.getProgress());
+        intent.putExtra("diastolic", inputBloodPressurePP.getProgress());
+        intent.putExtra("bloodSugar", inputBloodSugar.getProgress());
+        intent.putExtra("bloodSugarPP", inputBloodSugarPP.getProgress());
         intent.putExtra("cholesterol", inputCholesterol.getText().toString().trim());
         startActivity(intent);
     }
