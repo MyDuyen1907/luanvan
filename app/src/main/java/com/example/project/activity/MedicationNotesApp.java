@@ -205,20 +205,17 @@ public class MedicationNotesApp extends AppCompatActivity {
             db.collection("medications")
                     .whereEqualTo("userId", userId)
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                medicationList.clear();
-                                for (DocumentSnapshot document : task.getResult()) {
-                                    Medication medication = document.toObject(Medication.class);
-                                    medication.setUserId(userId); // Set userId
-                                    medicationList.add(medication);
-                                }
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                Toast.makeText(MedicationNotesApp.this, "Không thể tải dữ liệu", Toast.LENGTH_SHORT).show();
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            medicationList.clear();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Medication medication = document.toObject(Medication.class);
+                                medication.setId(document.getId()); // Lưu ID để cập nhật và xóa
+                                medicationList.add(medication);
                             }
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(MedicationNotesApp.this, "Không thể tải dữ liệu", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -227,28 +224,24 @@ public class MedicationNotesApp extends AppCompatActivity {
 
     private void saveMedication(String medicineName, String dosage, String time, String reminder, String note) {
         if (currentUser != null) {
-            String userId = currentUser.getUid();  // Lấy userId của người dùng
-
+            String userId = currentUser.getUid();
             Map<String, Object> medication = new HashMap<>();
             medication.put("medicineName", medicineName);
             medication.put("dosage", dosage);
             medication.put("time", time);
-            medication.put("userId", userId);  // Lưu userId
             medication.put("reminder", reminder);
             medication.put("note", note);
+            medication.put("userId", userId);
 
             db.collection("medications")
-                    .add(medication)   // Sử dụng add() để tạo Document mới
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(MedicationNotesApp.this, "Đã lưu đơn thuốc", Toast.LENGTH_SHORT).show();
-                                loadMedications();  // Tải lại danh sách
-                                clearInputs();  // Xóa các ô nhập sau khi lưu thành công
-                            } else {
-                                Toast.makeText(MedicationNotesApp.this, "Lưu đơn thuốc không thành công", Toast.LENGTH_SHORT).show();
-                            }
+                    .add(medication)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(MedicationNotesApp.this, "Đã lưu đơn thuốc", Toast.LENGTH_SHORT).show();
+                            loadMedications();
+                            clearInputs();
+                        } else {
+                            Toast.makeText(MedicationNotesApp.this, "Lưu đơn thuốc không thành công", Toast.LENGTH_SHORT).show();
                         }
                     });
         }

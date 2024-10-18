@@ -60,11 +60,12 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.btnEdit.setOnClickListener(v -> showEditDialog(medication));
 
         // Xử lý sự kiện nút "Xóa"
-        holder.btnDelete.setOnClickListener(v -> deleteMedication(medication));
+        holder.btnDelete.setOnClickListener(v -> deleteMedication(medication, position));
     }
 
     @Override
     public int getItemCount() {
+
         return medicationList.size();
     }
 
@@ -87,24 +88,25 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     }
 
     // Hàm xóa medication
-    private void deleteMedication(Medication medication) {
+    private void deleteMedication(Medication medication, int position) {
         if (currentUser != null) {
-            String medicationId = medication.getUserId(); // Lấy ID của đơn thuốc cần xóa
+            String medicationId = medication.getId();
 
             db.collection("medications")
                     .document(medicationId)
                     .delete()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            medicationList.remove(position); // Xóa khỏi danh sách
+                            notifyItemRemoved(position); // Cập nhật lại adapter
                             Toast.makeText(context, "Đã xóa đơn thuốc", Toast.LENGTH_SHORT).show();
-                            medicationList.remove(medication);
-                            notifyDataSetChanged();
                         } else {
                             Toast.makeText(context, "Xóa không thành công", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
+
 
     // Hiển thị hộp thoại chỉnh sửa medication
     private void showEditDialog(Medication medication) {
@@ -171,7 +173,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     // Cập nhật đơn thuốc trong Firestore
     private void updateMedication(Medication medication) {
         if (currentUser != null) {
-            String medicationId = medication.getUserId(); // Lấy ID của đơn thuốc để cập nhật
+            String medicationId = medication.getId(); // Sử dụng ID của medication
 
             db.collection("medications")
                     .document(medicationId)
@@ -179,7 +181,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(context, "Đã cập nhật đơn thuốc", Toast.LENGTH_SHORT).show();
-                            notifyDataSetChanged();
+                            notifyDataSetChanged(); // Cập nhật lại adapter
                         } else {
                             Toast.makeText(context, "Cập nhật không thành công", Toast.LENGTH_SHORT).show();
                         }
