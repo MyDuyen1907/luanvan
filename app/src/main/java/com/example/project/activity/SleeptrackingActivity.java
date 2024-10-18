@@ -118,6 +118,9 @@ public class SleeptrackingActivity extends AppCompatActivity {
         int wakeMinute = timePickerWakeUp.getCurrentMinute();
         String userId = currentUser.getUid();
 
+        // Tạo ID ngẫu nhiên từ Firestore
+        String id = db.collection("sleep_data").document().getId();
+
         // Tính toán thời gian ngủ
         Calendar sleepTime = Calendar.getInstance();
         sleepTime.set(Calendar.HOUR_OF_DAY, sleepHour);
@@ -163,11 +166,12 @@ public class SleeptrackingActivity extends AppCompatActivity {
 
             // Tạo đối tượng SleepData
             SleepData sleepData = new SleepData(userId, sleepHour, sleepMinute, wakeHour, wakeMinute,
-                    hoursSlept, minutesSlept, caloriesBurned, sleepQuality, currentDate);
+                    hoursSlept, minutesSlept, caloriesBurned, sleepQuality, currentDate, id); // Lưu ID vào sleepData
 
-            // Lưu SleepData vào Firestore và sử dụng ID ngẫu nhiên tự động
+            // Lưu SleepData vào Firestore và gán id cho tài liệu
             db.collection("sleep_data")
-                    .add(sleepData)  // Thêm SleepData và để Firestore tự động tạo ID ngẫu nhiên
+                    .document(id)  // Sử dụng Document ID đã tạo
+                    .set(sleepData)  // Lưu dữ liệu
                     .addOnSuccessListener(documentReference -> {
                         Toast.makeText(SleeptrackingActivity.this, "Dữ liệu giấc ngủ đã được lưu", Toast.LENGTH_SHORT).show();
                         sleepDataList.add(sleepData); // Thêm dữ liệu vào danh sách hiển thị
@@ -181,6 +185,7 @@ public class SleeptrackingActivity extends AppCompatActivity {
 
 
 
+
     private void loadSleepHistory() {
         String userId = currentUser.getUid(); // Lấy userId từ FirebaseUser
 
@@ -191,12 +196,14 @@ public class SleeptrackingActivity extends AppCompatActivity {
                     sleepDataList.clear(); // Xóa dữ liệu cũ trước khi tải lại
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         SleepData sleepData = document.toObject(SleepData.class);
+                        sleepData.setId(document.getId()); // Lưu Document ID vào trường id
                         sleepDataList.add(sleepData); // Thêm dữ liệu vào danh sách
                     }
                     sleepHistoryAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView sau khi tải dữ liệu
                 })
                 .addOnFailureListener(e -> Toast.makeText(SleeptrackingActivity.this, "Lỗi khi tải lịch sử giấc ngủ", Toast.LENGTH_SHORT).show());
     }
+
 
 
     private double calculateBMR(int weight, int height, int age, int gender) {

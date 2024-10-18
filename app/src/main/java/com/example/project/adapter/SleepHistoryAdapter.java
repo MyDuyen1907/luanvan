@@ -75,13 +75,14 @@ public class SleepHistoryAdapter extends RecyclerView.Adapter<SleepHistoryAdapte
             tvSleepQuality.setText(" " + sleepData.getSleepQuality());
             tvDate.setText("Ngày: " + sleepData.getDate());
 
-            // Xử lý sự kiện click cho nút xóa
-            btnDelete.setOnClickListener(v -> deleteSleepData(sleepData.getUserId(), position, adapter)); // Sử dụng userId làm Document ID
+            // Sử dụng id thay vì userId để xóa
+            btnDelete.setOnClickListener(v -> deleteSleepData(sleepData.getId(), position, adapter));
         }
+
 
         private void deleteSleepData(String sleepDataId, int position, SleepHistoryAdapter adapter) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("sleep_data").document(sleepDataId)
+            db.collection("sleep_data").document(sleepDataId) // Sử dụng id để xóa
                     .delete()
                     .addOnSuccessListener(aVoid -> {
                         adapter.sleepDataList.remove(position);

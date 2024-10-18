@@ -12,13 +12,14 @@ public class SleepData {
     private int caloriesBurned;
     private String sleepQuality;
     private String date;
+    private String id;
 
     public SleepData() {
         // Constructor trống cần thiết cho Firestore
     }
 
     public SleepData(String userId, int sleepHour, int sleepMinute, int wakeHour, int wakeMinute,
-                     int hoursSlept, int minutesSlept, int caloriesBurned, String sleepQuality, String date) {
+                     int hoursSlept, int minutesSlept, int caloriesBurned, String sleepQuality, String date, String id) {
         this.userId = userId;
         this.sleepHour = sleepHour;
         this.sleepMinute = sleepMinute;
@@ -29,6 +30,7 @@ public class SleepData {
         this.caloriesBurned = caloriesBurned;
         this.sleepQuality = sleepQuality;
         this.date = date;
+        this.id = id;
     }
 
     // Getter và Setter cho tất cả các thuộc tính
@@ -111,6 +113,12 @@ public class SleepData {
     public void setDate(String date) {
         this.date = date;
     }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "SleepData{" +
@@ -124,6 +132,7 @@ public class SleepData {
                 ", caloriesBurned=" + caloriesBurned +
                 ", sleepQuality='" + sleepQuality + '\'' +
                 ", date='" + date + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }
