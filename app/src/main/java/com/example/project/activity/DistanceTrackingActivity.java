@@ -1,6 +1,7 @@
 package com.example.project.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ import java.util.Locale;
 public class DistanceTrackingActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextView tvDistance, tvCalories, tvTime;
-    private Button btnStartPause;
+    private Button btnStartPause,btn_back_distance_tracking;
     private boolean isTracking = false;
     private double totalDistance = 0.0;
     private long startTime = 0;
@@ -66,6 +67,7 @@ public class DistanceTrackingActivity extends AppCompatActivity implements OnMap
         tvTime = findViewById(R.id.tvTime);
         btnStartPause = findViewById(R.id.btnStartPause);
         mapView = findViewById(R.id.mapView);
+        btn_back_distance_tracking = findViewById(R.id.btn_back_distance_tracking);
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -83,6 +85,11 @@ public class DistanceTrackingActivity extends AppCompatActivity implements OnMap
             } else {
                 startTracking();
             }
+        });
+        btn_back_distance_tracking.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         mapView.onCreate(savedInstanceState);
