@@ -1,5 +1,7 @@
 package com.example.project.model;
 
+import java.util.Date;
+
 public class Medication {
     private String medicineName;
     private String dosage;
@@ -8,11 +10,12 @@ public class Medication {
     private String userId;
     private String note;
     private String Id;
+    private String date;
 
     public Medication() {
     }
 
-    public Medication( String medicineName, String dosage, String time, String userId, String reminder, String note,String Id) {
+    public Medication( String medicineName, String dosage, String time, String userId, String reminder, String note,String Id, Date date) {
         this.medicineName = medicineName;
         this.dosage = dosage;
         this.time = time;
@@ -20,6 +23,7 @@ public class Medication {
         this.reminder = reminder;
         this.note = note;
         this.Id = Id;
+        this.date = date.toString();
     }
 
 
@@ -70,6 +74,12 @@ public class Medication {
     public void setId(String Id) {
         this.Id = Id;
     }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {
@@ -81,6 +91,7 @@ public class Medication {
                 ", reminder='" + reminder + '\'' +
                 ", note='" + note + '\'' +
                 ", Id='" + Id + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

@@ -20,7 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
 
@@ -53,9 +56,11 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.tvTime.setText(medication.getTime());
         holder.tvReminder.setText(medication.getReminder());
         holder.tvnote.setText(medication.getNote());
+        holder.tvDate.setText(medication.getDate());
 
 
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
         // Xử lý sự kiện nút "Chỉnh sửa"
         holder.btnEdit.setOnClickListener(v -> showEditDialog(medication));
 
@@ -71,7 +76,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
     // MedicationViewHolder class để ánh xạ với các view trong layout
     public static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        TextView tvMedicineName, tvDosage, tvTime, tvReminder, tvnote;
+        TextView tvMedicineName, tvDosage, tvTime, tvReminder, tvnote,tvDate;
         ImageButton btnEdit, btnDelete;
 
         public MedicationViewHolder(@NonNull View itemView) {
@@ -84,6 +89,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             btnDelete = itemView.findViewById(R.id.btnDelete);
             tvReminder = itemView.findViewById(R.id.et_reminder);
             tvnote = itemView.findViewById(R.id.et_note);
+            tvDate = itemView.findViewById(R.id.tvDate);
         }
     }
 

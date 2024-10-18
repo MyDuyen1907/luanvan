@@ -152,6 +152,32 @@
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
 
+            <TextView
+                android:id="@+id/tvdate_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày:"
+                android:layout_marginEnd="15dp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày:"
+                android:layout_marginEnd="15dp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
             <!-- Edit Button -->
             <ImageButton
                 android:id="@+id/btnEdit"

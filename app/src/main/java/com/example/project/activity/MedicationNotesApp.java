@@ -210,8 +210,10 @@ public class MedicationNotesApp extends AppCompatActivity {
                             medicationList.clear();
                             for (DocumentSnapshot document : task.getResult()) {
                                 Medication medication = document.toObject(Medication.class);
-                                medication.setId(document.getId()); // Lưu ID để cập nhật và xóa
-                                medicationList.add(medication);
+                                if (medication != null) {
+                                    medication.setId(document.getId()); // Lưu ID để cập nhật và xóa
+                                    medicationList.add(medication);
+                                }
                             }
                             adapter.notifyDataSetChanged();
                         } else {
@@ -222,9 +224,15 @@ public class MedicationNotesApp extends AppCompatActivity {
     }
 
 
+
     private void saveMedication(String medicineName, String dosage, String time, String reminder, String note) {
         if (currentUser != null) {
             String userId = currentUser.getUid();
+
+            // Lấy ngày hiện tại
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String currentDate = sdf.format(new Date());
+
             Map<String, Object> medication = new HashMap<>();
             medication.put("medicineName", medicineName);
             medication.put("dosage", dosage);
@@ -232,6 +240,7 @@ public class MedicationNotesApp extends AppCompatActivity {
             medication.put("reminder", reminder);
             medication.put("note", note);
             medication.put("userId", userId);
+            medication.put("date", currentDate); // Thêm ngày vào đối tượng
 
             db.collection("medications")
                     .add(medication)
@@ -246,6 +255,7 @@ public class MedicationNotesApp extends AppCompatActivity {
                     });
         }
     }
+
 
 
     private void clearInputs() {
