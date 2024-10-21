@@ -2,6 +2,7 @@ package com.example.project.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -158,17 +159,18 @@ public class DistanceTrackingActivity extends AppCompatActivity implements OnMap
         tvTime.setText("Thời gian: " + time);
 
         caloriesBurned = totalDistance * 43;
-
         tvCalories.setText(String.format(Locale.getDefault(), "Calo tiêu thụ: %.2f cal", caloriesBurned));
 
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            saveToFirestore(user.getUid(), totalDistance, caloriesBurned, elapsedTime);
-        }
+        // Lưu calo vào SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("calorieData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("caloriesBurned", (float) caloriesBurned);
+        editor.apply();
 
         // Dừng cập nhật vị trí
         fusedLocationClient.removeLocationUpdates(locationCallback);
     }
+
 
 
     // Tính toán và lưu vào Firestore

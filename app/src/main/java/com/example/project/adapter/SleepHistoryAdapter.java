@@ -87,7 +87,7 @@ public class SleepHistoryAdapter extends RecyclerView.Adapter<SleepHistoryAdapte
                     .addOnSuccessListener(aVoid -> {
                         adapter.sleepDataList.remove(position);
                         adapter.notifyItemRemoved(position);
-                        Toast.makeText(itemView.getContext(), "Dữ liệu đã được xóa!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(itemView.getContext(), "Dữ liệu giấc ngủ đã được xóa!", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(itemView.getContext(), "Lỗi khi xóa dữ liệu: " + e.getMessage(), Toast.LENGTH_SHORT).show();

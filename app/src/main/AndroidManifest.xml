@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -11,7 +15,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.ScanBarcodeActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.DistanceTrackingActivity"
             android:exported="false" />
@@ -113,9 +120,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCc0bcM2mcs0O1Ur8Ztu7xvQbF-0oouoEU"/>
+            android:value="AIzaSyCc0bcM2mcs0O1Ur8Ztu7xvQbF-0oouoEU" />
     </application>
 
 </manifest>

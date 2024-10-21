@@ -236,6 +236,7 @@
                                 android:id="@+id/cal_meter"
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
+                                android:layout_marginStart="16dp"
                                 app:cpb_background_progressbar_color="#b6bbd8"
                                 app:cpb_background_progressbar_width="5dp"
                                 app:cpb_progress_direction="to_right"
@@ -245,7 +246,6 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.513"
                                 tools:ignore="MissingConstraints" />
 
                             <LinearLayout
@@ -265,7 +265,6 @@
                             </LinearLayout>
 
 
-
                             <ImageView
                                 android:id="@+id/food_nut"
                                 android:layout_width="45dp"
@@ -273,10 +272,10 @@
                                 android:src="@drawable/ma"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/add_food"
-                                app:layout_constraintHorizontal_bias="0.361"
+                                app:layout_constraintHorizontal_bias="0.298"
                                 app:layout_constraintStart_toEndOf="@+id/cal_lin"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.451" />
+                                app:layout_constraintVertical_bias="0.444" />
 
                             <TextView
                                 android:layout_width="wrap_content"
