@@ -104,8 +104,7 @@ public class ScanBarcodeActivity extends AppCompatActivity {
 
         if (product.getProduct() != null) {
             String name = product.getProduct().getProductName();
-            String description = product.getProduct().getDescription();
-            String imageUrl = product.getProduct().getImageUrl();
+            String description = product.getProduct().getDescription() != null ? product.getProduct().getDescription() : "Không có mô tả";
             String nutrientInfo = "Thông tin dinh dưỡng: \n";
 
             // Lấy thông tin dinh dưỡng
@@ -123,10 +122,12 @@ public class ScanBarcodeActivity extends AppCompatActivity {
                 if (nutrients.containsKey("fat")) {
                     nutrientInfo += "Fat: " + nutrients.get("fat") + " g\n";
                 }
+            } else {
+                nutrientInfo += "Không có thông tin dinh dưỡng.\n";
             }
 
             // Hiển thị thông tin trong TextView
-            String result = "Tên món ăn: " + name + "\n" +
+            String result = "Tên món ăn: " + (name != null ? name : "Không có tên") + "\n" +
                     "Mô tả: " + description + "\n" +
                     nutrientInfo;
             txtResult.setText(result);
@@ -134,4 +135,5 @@ public class ScanBarcodeActivity extends AppCompatActivity {
             txtResult.setText("Không tìm thấy thông tin cho mã vạch này");
         }
     }
+
 }

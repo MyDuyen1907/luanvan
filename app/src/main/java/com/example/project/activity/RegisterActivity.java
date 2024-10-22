@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView txvDangNhap;
     Button btnDangKy;
     FirebaseAuth auth;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (isEmpty(email))
-                    Toast.makeText(RegisterActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Nhập email", Toast.LENGTH_SHORT).show();
                 else if (isEmpty(username))
-                    Toast.makeText(RegisterActivity.this, "Enter username", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Nhập username", Toast.LENGTH_SHORT).show();
                 else if (isEmpty(password))
-                    Toast.makeText(RegisterActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Nhập password", Toast.LENGTH_SHORT).show();
                 else if (isEmpty(password2))
                     Toast.makeText(RegisterActivity.this, "Nhập mật khẩu xác nhận", Toast.LENGTH_SHORT).show();
                 else if (!password.getText().toString().trim().equals(password2.getText().toString().trim()))
@@ -101,8 +101,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         AccountDAO accountDAO = new AccountDAO();
                                         accountDAO.addAccountWithID(currentUser.getUid(), account); // Sử dụng UID làm ID cho document
 
-                                        account = null; // Dọn rác
+                                        // Hiển thị thông báo đăng ký thành công
+                                        Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
 
+                                        // Điều hướng tới màn hình GenderActivity
                                         Intent intent = new Intent(getApplicationContext(), GenderActivity.class);
                                         intent.putExtra("user", user);
                                         startActivity(intent);
@@ -128,13 +130,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
+
     private boolean isEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0)
-            return false;
-        return true;
+        return etText.getText().toString().trim().length() == 0;
     }
 }
-
-
