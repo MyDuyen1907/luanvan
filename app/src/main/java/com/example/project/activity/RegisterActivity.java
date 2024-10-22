@@ -57,10 +57,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEmpty(email))
+                if (isEmpty(email) && isEmpty(username) && isEmpty(password) && isEmpty(password2)) {
+                    Toast.makeText(RegisterActivity.this, "Vui lòng nhập tất cả thông tin", Toast.LENGTH_SHORT).show();
+                } else if (isEmpty(email))
                     Toast.makeText(RegisterActivity.this, "Nhập email", Toast.LENGTH_SHORT).show();
                 else if (isEmpty(username))
                     Toast.makeText(RegisterActivity.this, "Nhập username", Toast.LENGTH_SHORT).show();
+                else if (username.getText().toString().trim().length() < 2)
+                    Toast.makeText(RegisterActivity.this, "Username phải có ít nhất 2 ký tự", Toast.LENGTH_SHORT).show();
                 else if (isEmpty(password))
                     Toast.makeText(RegisterActivity.this, "Nhập password", Toast.LENGTH_SHORT).show();
                 else if (isEmpty(password2))

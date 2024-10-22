@@ -5,7 +5,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import static android.content.ContentValues.TAG;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -155,7 +158,6 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void showDialogUpdate() {
-
         User updateUser = p;
         AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -179,22 +181,29 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         RadioButton rdNang = view.findViewById(R.id.rd_nang);
         Button btnReup = view.findViewById(R.id.btn_reup);
 
+        // Kiểm tra kết nối mạng và vô hiệu hóa nút "Cập nhật" nếu không có kết nối
+        if (!isConnectedToInternet()) {
+            btnReup.setEnabled(false);
+            Toast.makeText(this, "Không có kết nối internet, vui lòng thử lại sau", Toast.LENGTH_LONG).show();
+        }
+
         editAge.setText(String.valueOf(p.getAge()));
         editHeight.setText(String.valueOf(p.getHeight()));
         editWeight.setText(String.valueOf(p.getWeight()));
 
-        if(p.getGender()==0) {
+        if (p.getGender() == 0) {
             rdFemale.setChecked(true);
-        }else{
+        } else {
             rdMale.setChecked(true);
         }
-        if(p.getExerciseFrequency()==0) {
+
+        if (p.getExerciseFrequency() == 0) {
             rdKhong.setChecked(true);
-        }else if (p.getExerciseFrequency()==1) {
+        } else if (p.getExerciseFrequency() == 1) {
             rdNhe.setChecked(true);
-        }else if(p.getExerciseFrequency()==2) {
+        } else if (p.getExerciseFrequency() == 2) {
             rdVua.setChecked(true);
-        }else{
+        } else {
             rdNang.setChecked(true);
         }
 
@@ -210,9 +219,9 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 } else if (checkedId == R.id.rd_nang) {
                     updateUser.setExerciseFrequency(3);
                 }
-
             }
         });
+
         rdgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -223,6 +232,7 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 }
             }
         });
+
         btnReup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,14 +255,16 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         });
                 dialog.dismiss();
                 recreate();
-
             }
         });
-
-
     }
 
-
+    // Hàm kiểm tra kết nối internet
+    private boolean isConnectedToInternet() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
