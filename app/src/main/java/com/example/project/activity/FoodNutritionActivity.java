@@ -15,7 +15,9 @@ import com.example.project.model.FoodResponse;
 
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +29,9 @@ public class FoodNutritionActivity extends AppCompatActivity {
     private TextView textViewResult;
     private Button btnBackFoodNutrition;
 
+    // Tạo danh sách ánh xạ giữa món ăn tiếng Việt và tiếng Anh
+    private Map<String, String> foodTranslationMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,21 +42,70 @@ public class FoodNutritionActivity extends AppCompatActivity {
         Button buttonSearch = findViewById(R.id.buttonSearch);
         Button btnBackFoodNutrition = findViewById(R.id.btn_back_food_nutrition);
 
+        // Khởi tạo ánh xạ giữa món ăn tiếng Việt và tiếng Anh
+        foodTranslationMap = new HashMap<>();
+        foodTranslationMap.put("Táo", "Apple");
+        foodTranslationMap.put("Chuối", "Banana");
+        foodTranslationMap.put("Cam", "Orange");
+        foodTranslationMap.put("Ức gà nướng", "Grilled chicken breast");
+        foodTranslationMap.put("Cơm chiên", "Fried rice");
+        foodTranslationMap.put("Cá hồi nướng", "Grilled salmon");
+        foodTranslationMap.put("Súp bông cải xanh", "Broccoli soup");
+        foodTranslationMap.put("Trứng ốp la", "Fried eggs");
+        foodTranslationMap.put("Sữa chua", "Yogurt");
+        foodTranslationMap.put("Bít tết bò", "Beef steak");
+        foodTranslationMap.put("Mỳ ống sốt cà chua", "Pasta with tomato sauce");
+        foodTranslationMap.put("Bơ nghiền", "Mashed avocado");
+        foodTranslationMap.put("Hạnh nhân rang", "Roasted almonds");
+        foodTranslationMap.put("Cà rốt luộc", "Boiled carrots");
+        foodTranslationMap.put("Khoai tây nghiền", "Mashed potatoes");
+        foodTranslationMap.put("Rau bina xào", "Stir-fried spinach");
+        foodTranslationMap.put("Cà chua nấu chín", "Cooked tomatoes");
+        foodTranslationMap.put("Dâu tây trộn đường", "Strawberries with sugar");
+        foodTranslationMap.put("Việt quất tươi", "Fresh blueberries");
+        foodTranslationMap.put("Dưa chuột muối", "Pickled cucumber");
+        foodTranslationMap.put("Cháo yến mạch", "Oatmeal porridge");
+        foodTranslationMap.put("Sữa chua Hy Lạp với mật ong", "Greek yogurt with honey");
+        foodTranslationMap.put("Phô mai Cheddar nướng", "Grilled cheddar cheese");
+        foodTranslationMap.put("Đậu phụ xào", "Stir-fried tofu");
+        foodTranslationMap.put("Tôm chiên xù", "Fried shrimp");
+        foodTranslationMap.put("Quinoa luộc", "Boiled quinoa");
+        foodTranslationMap.put("Bơ đậu phộng với bánh mì", "Peanut butter with bread");
+        foodTranslationMap.put("Sô cô la đen đun chảy", "Melted dark chocolate");
+        foodTranslationMap.put("Salad rau diếp", "Lettuce salad");
+        foodTranslationMap.put("Cải bắp muối", "Pickled cabbage");
+        foodTranslationMap.put("Khoai lang nướng", "Roasted sweet potatoes");
+        foodTranslationMap.put("Bí ngô nướng", "Roasted pumpkin");
+        foodTranslationMap.put("Măng tây hấp", "Steamed asparagus");
+        foodTranslationMap.put("Nấm xào tỏi", "Mushrooms stir-fried with garlic");
+        foodTranslationMap.put("Gà nướng BBQ", "BBQ grilled chicken");
+        foodTranslationMap.put("Lẩu nấm", "Mushroom hotpot");
+        foodTranslationMap.put("Hamburger phô mai", "Cheeseburger");
+        foodTranslationMap.put("Nước dừa tươi", "Fresh coconut water");
+        foodTranslationMap.put("Bánh mì kẹp thịt", "Meat sandwich");
+        foodTranslationMap.put("Mì xào bò", "Stir-fried noodles with beef");
+        foodTranslationMap.put("Pizza phô mai", "Cheese pizza");
+
+
+
         List<String> foodSuggestions = Arrays.asList(
-                "Apple", "Banana", "Orange", "Chicken breast", "Rice", "Salmon", "Broccoli",
-                "Eggs", "Milk", "Beef steak", "Pasta", "Avocado", "Almonds", "Carrot",
-                "Potato", "Spinach", "Tomato", "Strawberry", "Blueberry", "Cucumber",
-                "Oatmeal", "Greek yogurt", "Cheddar cheese", "Tofu", "Shrimp",
-                "Quinoa", "Turkey breast", "Peanut butter", "Dark chocolate",
-                "Lettuce", "Cabbage", "Peas", "Sweet potato", "Pumpkin",
-                "Zucchini", "Mushroom", "Chia seeds", "Walnuts", "Raspberries",
-                "Lentils", "Brown rice", "Cauliflower", "Brussels sprouts",
-                "Bell pepper", "Pear", "Watermelon", "Grapes", "Pineapple",
-                "Mango", "Kiwi", "Pork chop", "Sardines", "Chickpeas",
-                "Hummus", "Cashews", "Coconut milk", "Black beans", "Lamb",
-                "Hambuger", "Asparagus", "Garlic", "Ginger", "Eggplant",
-                "Pomegranate", "Peach", "Plum", "Cottage cheese", "Sunflower seeds"
+                "Táo", "Chuối", "Cam", "Ức gà nướng", "Cơm chiên", "Cá hồi nướng", "Súp bông cải xanh", "Trứng ốp la", "Sữa", "Bít tết bò",
+                "Mỳ ống sốt cà chua", "Bơ nghiền", "Hạnh nhân rang", "Cà rốt luộc", "Khoai tây nghiền", "Rau bina xào", "Cà chua nấu chín", "Dâu tây trộn đường",
+                "Việt quất tươi", "Dưa chuột muối", "Cháo yến mạch", "Sữa chua Hy Lạp với mật ong", "Phô mai Cheddar nướng", "Đậu phụ xào", "Tôm chiên xù",
+                "Quinoa luộc", "Ức gà tây nướng", "Bơ đậu phộng với bánh mì", "Sô cô la đen đun chảy", "Salad rau diếp", "Cải bắp muối", "Đậu Hà Lan xào",
+                "Khoai lang nướng", "Bí ngô nướng", "Bí xanh hấp", "Nấm xào tỏi", "Hạt chia", "Óc chó", "Dâu rừng", "Đậu lăng hầm",
+                "Gạo lứt luộc", "Súp lơ xào", "Măng tây hấp", "Ớt chuông nướng", "Lê", "Dưa hấu", "Nho", "Dứa", "Xoài",
+                "Kiwi", "Sườn heo nướng", "Cá mòi hộp", "Đậu gà nấu", "Hummus", "Hạt điều rang", "Nước dừa tươi", "Đậu đen hầm",
+                "Thịt cừu nướng", "Hamburger phô mai", "Tỏi nướng", "Gừng xào", "Cà tím nướng", "Lựu", "Đào", "Mận", "Phô mai Cottage",
+                "Hạt hướng dương rang",
+                // Thêm các món ăn từ FoodData Central
+                "Chả giò", "Phở", "Bánh mì", "Bún", "Mì Quảng", "Hủ tiếu", "Bánh xèo", "Thịt kho trứng", "Canh chua", "Cá kho tộ",
+                "Bò bía", "Gà xào sả ớt", "Bánh tét", "Bánh chưng", "Cá nướng", "Nộm", "Mì xào", "Cá chiên giòn", "Thịt xông khói",
+                "Salad trái cây", "Nui xào", "Cà ri gà", "Cháo gà", "Bún riêu", "Gỏi đu đủ", "Chả cá", "Xôi gà", "Gà rán",
+                "Mực xào chua ngọt", "Bò kho", "Bánh cuốn", "Cháo lòng", "Nộm bò", "Bánh bao", "Bún chả", "Bánh tráng trộn"
         );
+
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, foodSuggestions);
         editTextFood.setAdapter(adapter);
@@ -59,6 +113,10 @@ public class FoodNutritionActivity extends AppCompatActivity {
         buttonSearch.setOnClickListener(v -> {
             String foodName = editTextFood.getText().toString().trim();
             if (!foodName.isEmpty()) {
+                // Kiểm tra xem tên món ăn có cần dịch sang tiếng Anh không
+                if (foodTranslationMap.containsKey(foodName)) {
+                    foodName = foodTranslationMap.get(foodName);  // Dịch sang tiếng Anh
+                }
                 fetchNutritionData(foodName);
             }
         });
