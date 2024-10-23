@@ -1,5 +1,6 @@
 package com.example.project.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class ScanBarcodeActivity extends AppCompatActivity {
 
-    private Button btnScan;
+    private Button btnScan,btnbackscan;
     private TextView txtResult;
 
     @Override
@@ -35,6 +36,7 @@ public class ScanBarcodeActivity extends AppCompatActivity {
 
         btnScan = findViewById(R.id.btnScan);
         txtResult = findViewById(R.id.txtResult);
+        btnbackscan = findViewById(R.id.btnbackscan);
 
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,14 @@ public class ScanBarcodeActivity extends AppCompatActivity {
                 integrator.setBeepEnabled(false);
                 integrator.setBarcodeImageEnabled(true);
                 integrator.initiateScan();
+            }
+        });
+        btnbackscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -104,12 +114,11 @@ public class ScanBarcodeActivity extends AppCompatActivity {
 
         if (product.getProduct() != null) {
             String name = product.getProduct().getProductName();
-            String description = product.getProduct().getDescription() != null ? product.getProduct().getDescription() : "Không có mô tả";
             String nutrientInfo = "Thông tin dinh dưỡng: \n";
 
             // Lấy thông tin dinh dưỡng
-            if (product.getProduct().getNutrients() != null) {
-                Map<String, Object> nutrients = product.getProduct().getNutrients();
+            Map<String, Object> nutrients = product.getProduct().getNutrients();
+            if (nutrients != null && !nutrients.isEmpty()) {
                 if (nutrients.containsKey("energy-kcal")) {
                     nutrientInfo += "Calories: " + nutrients.get("energy-kcal") + " kcal\n";
                 }
@@ -126,14 +135,30 @@ public class ScanBarcodeActivity extends AppCompatActivity {
                 nutrientInfo += "Không có thông tin dinh dưỡng.\n";
             }
 
-            // Hiển thị thông tin trong TextView
-            String result = "Tên món ăn: " + (name != null ? name : "Không có tên") + "\n" +
-                    "Mô tả: " + description + "\n" +
-                    nutrientInfo;
-            txtResult.setText(result);
+            // Tạo nội dung cho dialog
+            String result = "Tên món ăn: " + (name != null ? name : "Không có tên") + "\n" + nutrientInfo;
+
+            // Hiển thị dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Thông tin sản phẩm")
+                    .setMessage(result)
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        // Xóa nội dung TextView khi nhấn OK
+                        txtResult.setText("");
+                    })
+                    .create()
+                    .show();
         } else {
-            txtResult.setText("Không tìm thấy thông tin cho mã vạch này");
+            // Nếu không tìm thấy sản phẩm
+            new AlertDialog.Builder(this)
+                    .setTitle("Lỗi")
+                    .setMessage("Không tìm thấy thông tin cho mã vạch này")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        // Xóa nội dung TextView khi nhấn OK
+                        txtResult.setText("");
+                    })
+                    .create()
+                    .show();
         }
     }
-
 }

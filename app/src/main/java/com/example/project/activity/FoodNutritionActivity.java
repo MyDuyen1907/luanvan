@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +26,7 @@ public class FoodNutritionActivity extends AppCompatActivity {
     private static final String API_KEY = "wJWNKjpHsk4Q7a0g4uTTIJ8keNMEpivatgbYWC05";
     private AutoCompleteTextView editTextFood;
     private TextView textViewResult;
-    private Button btnBackFoodNutrition;
+    private Button btnBackFoodNutrition, buttonSearch;
 
     // Tạo danh sách ánh xạ giữa món ăn tiếng Việt và tiếng Anh
     private Map<String, String> foodTranslationMap;
@@ -127,6 +126,7 @@ public class FoodNutritionActivity extends AppCompatActivity {
             finish();
         });
     }
+
 
     private void fetchNutritionData(String foodName) {
         try {

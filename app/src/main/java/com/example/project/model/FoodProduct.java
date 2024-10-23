@@ -13,7 +13,7 @@ public class FoodProduct {
         private String product_name;
         private String description;
         private String image_url;
-        private Map<String, Object> nutrients; // Thông tin dinh dưỡng
+        private Map<String, Object> nutriments;
 
         public String getProductName() {
             return product_name;
@@ -28,7 +28,7 @@ public class FoodProduct {
         }
 
         public Map<String, Object> getNutrients() {
-            return nutrients;
+            return nutriments;
         }
     }
 }

@@ -17,15 +17,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
-        android:id="@+id/editTextFood"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập tên món ăn"
-        android:background="@drawable/edit_text_background"
-        android:padding="15dp"
-        android:completionThreshold="1"
-        android:inputType="text" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
+
+        <AutoCompleteTextView
+            android:id="@+id/editTextFood"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_background"
+            android:completionThreshold="1"
+            android:hint="Nhập tên món ăn"
+            android:inputType="text"
+            android:padding="15dp" />
+    </LinearLayout>
+
 
 
     <Button
