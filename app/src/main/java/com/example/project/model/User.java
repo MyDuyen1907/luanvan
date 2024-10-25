@@ -1,6 +1,7 @@
 package com.example.project.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
     private String id;
@@ -12,6 +13,7 @@ public class User implements Serializable {
     private int exerciseFrequency;// 0:Khong 1:Nhe 2:Vua 3:Nang
     private String email;
     private String role;
+    private List<String> activityHistory;
 
     public User() {
         this.id = "";
@@ -113,6 +115,12 @@ public class User implements Serializable {
 
     public void setExerciseFrequency(int exerciseFrequency) {
         this.exerciseFrequency = exerciseFrequency;
+    }
+    public List<String> getActivityHistory() {
+        return activityHistory;
+    }
+    public void setActivityHistory(List<String> activityHistory) {
+        this.activityHistory = activityHistory;
     }
     //BMI được chia cân nặng/ chiều cao*chiều cao
     public float BMICal() {
