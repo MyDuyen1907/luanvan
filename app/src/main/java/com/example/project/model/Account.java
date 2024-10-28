@@ -8,18 +8,20 @@ public class Account implements Serializable {
     private String userName;
     private String email;
     private String password;
-    private String role; // Thêm thuộc tính để xác định vai trò của người dùng
+    private String role;
+    private String recentActivity;
 
     public Account() {
     }
 
-    public Account(String id, String userID, String userName, String email, String password, String role) {
+    public Account(String id, String userID, String userName, String email, String password, String role, String recentActivity) {
         this.id = id;
         this.userID = userID;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.recentActivity = recentActivity;
     }
 
     public String getId() {
@@ -68,5 +70,11 @@ public class Account implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public String getRecentActivity() {
+        return recentActivity;
+    }
+    public void setRecentActivity(String recentActivity) {
+        this.recentActivity = recentActivity;
     }
 }

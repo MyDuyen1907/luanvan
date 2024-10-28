@@ -6,12 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import com.example.project.Database.PasswordHasher;
 import com.example.project.R;
 import com.example.project.activity.basicinfo.GenderActivity;
 import com.example.project.dao.AccountDAO;
+import com.example.project.fragment.AccountAdminFragment;
 import com.example.project.model.Account;
 import com.example.project.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText email, username, password, password2;
     TextView txvDangNhap;
     Button btnDangKy;
+    RadioGroup radioGroupRole;
+    RadioButton radioUser, radioAdmin;
     FirebaseAuth auth;
 
     @Override
@@ -46,6 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.edtPassword);
         password2 = findViewById(R.id.edtPassword2);
         txvDangNhap = findViewById(R.id.txvDangNhap);
+        radioGroupRole = findViewById(R.id.radioGroupRole);
+        radioUser = findViewById(R.id.radioUser);
+        radioAdmin = findViewById(R.id.radioAdmin);
 
         txvDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,23 +85,23 @@ public class RegisterActivity extends AppCompatActivity {
                     String user_name = username.getText().toString().trim();
                     String user_password = password.getText().toString().trim();
 
+                    // Lấy vai trò đã chọn từ RadioGroup
+                    String role = radioUser.isChecked() ? "user" : "admin";
+
                     // Tạo tài khoản mới cho Firebase Authentication
                     auth.createUserWithEmailAndPassword(user_email, user_password)
                             .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Đăng ký thành công, cập nhật giao diện người dùng với thông tin người dùng đã đăng nhập
                                         Log.d(TAG, "createUserWithEmail:success");
 
                                         FirebaseUser currentUser = auth.getCurrentUser();
 
-                                        // Tạo Người dùng mới để sử dụng trong gói hoạt động BasicInfo
                                         User user = new User();
                                         user.setId(currentUser.getUid());
                                         user.setName(user_name);
 
-                                        // Tạo Account mới và thêm vào Firestore với UID làm document ID
                                         Account account = new Account();
                                         PasswordHasher passwordHasher = new PasswordHasher();
                                         String hashPassword = passwordHasher.hashPassword(user_password);
@@ -100,20 +109,23 @@ public class RegisterActivity extends AppCompatActivity {
                                         account.setPassword(hashPassword);
                                         account.setUserName(user_name);
                                         account.setUserID(currentUser.getUid());
-                                        account.setRole("user");
+                                        account.setRole(role);
 
                                         AccountDAO accountDAO = new AccountDAO();
-                                        accountDAO.addAccountWithID(currentUser.getUid(), account); // Sử dụng UID làm ID cho document
+                                        accountDAO.addAccountWithID(currentUser.getUid(), account);
 
-                                        // Hiển thị thông báo đăng ký thành công
                                         Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
 
-                                        // Điều hướng tới màn hình GenderActivity
-                                        Intent intent = new Intent(getApplicationContext(), GenderActivity.class);
-                                        intent.putExtra("user", user);
-                                        startActivity(intent);
+                                        // Điều hướng tới màn hình tương ứng
+                                        if (role.equals("user")) {
+                                            Intent intent = new Intent(getApplicationContext(), GenderActivity.class);
+                                            intent.putExtra("user", user);
+                                            startActivity(intent);
+                                        } else {
+                                            Intent intent = new Intent(getApplicationContext(), AccountAdminFragment.class);
+                                            startActivity(intent);
+                                        }
                                     } else {
-                                        // Xử lý lỗi khi tạo tài khoản
                                         Exception exception = task.getException();
                                         if (exception instanceof FirebaseAuthException) {
                                             String errorCode = ((FirebaseAuthException) exception).getErrorCode();

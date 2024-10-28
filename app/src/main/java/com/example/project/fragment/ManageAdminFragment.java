@@ -11,13 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.project.activity.ChangePasswordActivity;
 import com.example.project.activity.LoginActivity;
 import com.example.project.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ManageAdminFragment extends Fragment {
 
-    private LinearLayout layoutSignOut;
+    private LinearLayout layoutSignOut,layoutChangePassword;
     private FirebaseAuth mAuth;
 
     @Nullable
@@ -29,6 +30,7 @@ public class ManageAdminFragment extends Fragment {
         // Khởi tạo FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
         layoutSignOut = view.findViewById(R.id.layout_sign_out);
+        layoutChangePassword = view.findViewById(R.id.layout_change_password);
 
         layoutSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +41,14 @@ public class ManageAdminFragment extends Fragment {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+        layoutChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển hướng sang trang đổi mật khẩu
+                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(intent);
             }
         });
 

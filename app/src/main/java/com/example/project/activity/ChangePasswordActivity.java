@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class ChangePasswordActivity extends AppCompatActivity {
 
     private EditText edtOldPass, edtNewPass, edtConfirmPass;
-    private Button btnChangePass,btn_back_change_pass;
+    private Button btnChangePass;
     private FirebaseAuth mAuth;
 
     @Override
@@ -33,18 +33,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
         edtNewPass = findViewById(R.id.edtNewPass);
         edtConfirmPass = findViewById(R.id.edtConfirmPass);
         btnChangePass = findViewById(R.id.btnChangePass);
-        btn_back_change_pass = findViewById(R.id.btn_back_change_pass);
 
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changePassword();
             }
-        });
-        btn_back_change_pass.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
         });
     }
     private void changePassword() {
