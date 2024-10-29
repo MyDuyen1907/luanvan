@@ -10,6 +10,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project.model.User;
 import com.example.project.R;
@@ -219,9 +221,14 @@ public class ControlCaloriesActivity extends AppCompatActivity {
         addExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int progress = Integer.parseInt(String.valueOf(progressCalories.getText()));
-                int sub = Integer.parseInt(String.valueOf(editExercise.getText()));
-                int inf = Integer.parseInt(String.valueOf(infExercise.getText()));
+                if (TextUtils.isEmpty(editExercise.getText())) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập số calories cho vận động", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int progress = Integer.parseInt(progressCalories.getText().toString());
+                int sub = Integer.parseInt(editExercise.getText().toString());
+                int inf = Integer.parseInt(infExercise.getText().toString());
                 int circle = ((progress - sub) * 100) / maxCalories;
 
                 progressCalories.setText(String.valueOf(progress - sub));
@@ -243,9 +250,14 @@ public class ControlCaloriesActivity extends AppCompatActivity {
         addSnack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int progress = Integer.parseInt(String.valueOf(progressCalories.getText()));
-                int add = Integer.parseInt(String.valueOf(editSnack.getText()));
-                int inf = Integer.parseInt(String.valueOf(infSnack.getText()));
+                if (TextUtils.isEmpty(editSnack.getText())) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập số calories cho ăn vặt", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int progress = Integer.parseInt(progressCalories.getText().toString());
+                int add = Integer.parseInt(editSnack.getText().toString());
+                int inf = Integer.parseInt(infSnack.getText().toString());
                 int circle = ((progress + add) * 100) / maxCalories;
 
                 progressCalories.setText(String.valueOf(progress + add));
@@ -266,9 +278,14 @@ public class ControlCaloriesActivity extends AppCompatActivity {
         addDinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int progress = Integer.parseInt(String.valueOf(progressCalories.getText()));
-                int add = Integer.parseInt(String.valueOf(editDinner.getText()));
-                int inf = Integer.parseInt(String.valueOf(infDinner.getText()));
+                if (TextUtils.isEmpty(editDinner.getText())) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập số calories cho bữa tối", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int progress = Integer.parseInt(progressCalories.getText().toString());
+                int add = Integer.parseInt(editDinner.getText().toString());
+                int inf = Integer.parseInt(infDinner.getText().toString());
                 int circle = ((progress + add) * 100) / maxCalories;
 
                 progressCalories.setText(String.valueOf(progress + add));
@@ -289,9 +306,14 @@ public class ControlCaloriesActivity extends AppCompatActivity {
         addNoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int progress = Integer.parseInt(String.valueOf(progressCalories.getText()));
-                int add = Integer.parseInt(String.valueOf(editNoon.getText()));
-                int inf = Integer.parseInt(String.valueOf(infNoon.getText()));
+                if (TextUtils.isEmpty(editNoon.getText())) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập số calories cho bữa trưa", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int progress = Integer.parseInt(progressCalories.getText().toString());
+                int add = Integer.parseInt(editNoon.getText().toString());
+                int inf = Integer.parseInt(infNoon.getText().toString());
                 int circle = ((progress + add) * 100) / maxCalories;
 
                 progressCalories.setText(String.valueOf(progress + add));
@@ -312,9 +334,14 @@ public class ControlCaloriesActivity extends AppCompatActivity {
         addMorning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int progress = Integer.parseInt(String.valueOf(progressCalories.getText()));
-                int add = Integer.parseInt(String.valueOf(editMorning.getText()));
-                int inf = Integer.parseInt(String.valueOf(infMorning.getText()));
+                if (TextUtils.isEmpty(editMorning.getText())) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập số calories cho bữa sáng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int progress = Integer.parseInt(progressCalories.getText().toString());
+                int add = Integer.parseInt(editMorning.getText().toString());
+                int inf = Integer.parseInt(infMorning.getText().toString());
                 int circle = ((progress + add) * 100) / maxCalories;
 
                 progressCalories.setText(String.valueOf(progress + add));
@@ -331,8 +358,7 @@ public class ControlCaloriesActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void setMorning(int calo, int sum) {
+ private void setMorning(int calo, int sum) {
         DocumentReference userStatRef = db.collection("statistic").document(user.getUid());
         DocumentReference dailyDataRef = userStatRef.collection("dailyData").document(txvDay.getText().toString());
         Map<String, Object> data = new HashMap<>();

@@ -132,7 +132,7 @@ public class ScanBarcodeActivity extends AppCompatActivity {
                     nutrientInfo += "Fat: " + nutrients.get("fat") + " g\n";
                 }
             } else {
-                nutrientInfo += "Không có thông tin dinh dưỡng.\n";
+                nutrientInfo += "Không có thông tin dinh dưỡng cho mã vạch này.\n";
             }
 
             // Tạo nội dung cho dialog
