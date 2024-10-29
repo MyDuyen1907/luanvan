@@ -125,6 +125,7 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                 ttde.setText(String.valueOf(p.TTDECal()));
                                 bmi.setText(String.valueOf(p.BMICal())); // Use BMICal method
                                 maxWater.setText(String.valueOf(p.WaterCal())); // Use WaterCal method
+                                maxCalories.setText(String.valueOf(p.calculateMaxCalories()));
 
                                 // Gender
                                 switch (p.getGender()) {

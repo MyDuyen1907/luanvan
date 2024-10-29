@@ -126,6 +126,19 @@ public class User implements Serializable {
     public float BMICal() {
         return (float) Math.round(this.weight / (this.height * 0.01 * this.height * 0.01) * 100) / 100;
     }
+    public int calculateMaxCalories() {
+        double maxCalories;
+        if (gender == 0) {
+            // Lượng calo cho nữ
+            maxCalories = (6.25 * height) + (10 * weight) - (5 * age) - 161;
+        } else {
+            // Lượng calo cho nam
+            maxCalories = (6.25 * height) + (10 * weight) - (5 * age) + 5;
+        }
+        return (int) Math.round(maxCalories); // Chuyển đổi sang kiểu int sau khi làm tròn
+    }
+
+
     public int TTDECal() {
         float bmr;
         // Tính BMR dựa trên giới tính
