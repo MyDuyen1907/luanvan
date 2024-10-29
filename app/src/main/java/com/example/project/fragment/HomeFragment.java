@@ -40,7 +40,6 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
     private ImageView food_nut, calimg;
     private CircularProgressBar calMeter;
-    private ImageButton btnScan;
 
     @Nullable
     @Override
@@ -62,7 +61,6 @@ public class HomeFragment extends Fragment {
         food_nut = view.findViewById(R.id.food_nut);
         calimg = view.findViewById(R.id.calimg);
         calMeter = view.findViewById(R.id.cal_meter);
-        btnScan = view.findViewById(R.id.add_food);
 
         // Fetch user data from Firestore and set the greeting text
         FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
@@ -138,14 +136,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 // Navigate to the ControlCaloriesActivity
                 Intent intent = new Intent(getActivity(), DistanceTrackingActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Navigate to the ScanBarcodeActivity
-                Intent intent = new Intent(getActivity(), ScanBarcodeActivity.class);
                 startActivity(intent);
             }
         });

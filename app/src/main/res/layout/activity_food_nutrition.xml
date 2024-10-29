@@ -35,6 +35,16 @@
             android:hint="Nhập tên món ăn"
             android:inputType="text"
             android:padding="15dp" />
+        <ImageButton
+            android:id="@+id/add_food"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@drawable/icquene"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
 

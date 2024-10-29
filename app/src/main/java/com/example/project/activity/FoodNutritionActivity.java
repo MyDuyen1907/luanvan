@@ -2,9 +2,11 @@ package com.example.project.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +29,7 @@ public class FoodNutritionActivity extends AppCompatActivity {
     private AutoCompleteTextView editTextFood;
     private TextView textViewResult;
     private Button btnBackFoodNutrition, buttonSearch;
+    private ImageButton add_food;
 
     // Tạo danh sách ánh xạ giữa món ăn tiếng Việt và tiếng Anh
     private Map<String, String> foodTranslationMap;
@@ -40,6 +43,7 @@ public class FoodNutritionActivity extends AppCompatActivity {
         textViewResult = findViewById(R.id.textViewResult);
         Button buttonSearch = findViewById(R.id.buttonSearch);
         Button btnBackFoodNutrition = findViewById(R.id.btn_back_food_nutrition);
+        add_food = findViewById(R.id.add_food);
 
         // Khởi tạo ánh xạ giữa món ăn tiếng Việt và tiếng Anh
         foodTranslationMap = new HashMap<>();
@@ -125,9 +129,12 @@ public class FoodNutritionActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        add_food.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ScanBarcodeActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
-
-
     private void fetchNutritionData(String foodName) {
         try {
             // Mã hóa URL để xử lý ký tự đặc biệt
