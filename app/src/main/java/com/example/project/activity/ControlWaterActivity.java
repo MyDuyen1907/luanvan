@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project.model.User;
 import com.example.project.R;
@@ -80,24 +81,32 @@ public class ControlWaterActivity extends AppCompatActivity {
         addWater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Kiểm tra xem editWater có trống hay không
+                if (editWater.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập lượng nước uống", Toast.LENGTH_SHORT).show();
+                    return; // Dừng lại nếu không có dữ liệu
+                }
+
+                // Thực hiện các thao tác còn lại nếu editWater có dữ liệu
                 int progress = Integer.parseInt(String.valueOf(progressWater.getText()));
                 int max = Integer.parseInt(String.valueOf(maxWater.getText()));
                 int add = Integer.parseInt(String.valueOf(editWater.getText()));
                 int inf = Integer.parseInt(String.valueOf(infWater.getText()));
-                int circle=((progress+add)*100)/max;
+                int circle = ((progress + add) * 100) / max;
 
                 progressWater.setText(String.valueOf(progress + add));
-                infWater.setText(String.valueOf(inf+add));
+                infWater.setText(String.valueOf(inf + add));
                 waterWaveView.setProgress(circle);
                 editWater.setText("");
 
-                if((progress+add)>max) {
+                if ((progress + add) > max) {
                     int color = getColor(R.color.red);
                     progressWater.setTextColor(color);
                 }
                 setWater(progress + add);
             }
         });
+
 
         btn_minus50.setOnClickListener(new View.OnClickListener() {
             @Override

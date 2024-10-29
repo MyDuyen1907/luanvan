@@ -245,7 +245,7 @@
                         android:layout_height="30dp"
                         android:layout_margin="15dp"
                         android:background="#F2F2F2"
-                        android:hint="Thêm số Calories"
+                        android:hint="Thêm lượng nước uống"
                         android:paddingLeft="10dp"
                         android:textSize="11dp"
                         android:inputType="number"
