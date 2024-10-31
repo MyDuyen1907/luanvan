@@ -51,7 +51,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         Medication medication = medicationList.get(position);
 
         // Gán giá trị cho các TextView từ đối tượng Medication
-        holder.tvMedicineName.setText(medication.getmedicineName());
+        holder.tvMedicineName.setText(medication.getMedicineName());
         holder.tvDosage.setText(medication.getDosage());
         holder.tvTime.setText(medication.getTime());
         holder.tvReminder.setText(medication.getReminder());
@@ -132,7 +132,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         TextInputEditText etNote = dialogView.findViewById(R.id.et_note);
 
         // Hiển thị giá trị hiện tại vào các trường
-        etMedicineName.setText(medication.getmedicineName());
+        etMedicineName.setText(medication.getMedicineName());
         etDosage.setText(medication.getDosage());
         etTime.setText(medication.getTime());
         etReminder.setText(medication.getReminder());
@@ -148,7 +148,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             String newNote = etNote.getText().toString();
 
             // Kiểm tra thay đổi
-            boolean hasChanges = !newMedicineName.equals(medication.getmedicineName()) ||
+            boolean hasChanges = !newMedicineName.equals(medication.getMedicineName()) ||
                     !newDosage.equals(medication.getDosage()) ||
                     !newTime.equals(medication.getTime()) ||
                     !newReminder.equals(medication.getReminder()) ||
@@ -157,7 +157,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
             if (hasChanges) {
                 // Cập nhật đối tượng medication
-                medication.setmedicineName(newMedicineName);
+                medication.setMedicineName(newMedicineName);
                 medication.setDosage(newDosage);
                 medication.setTime(newTime);
                 medication.setReminder(newReminder);

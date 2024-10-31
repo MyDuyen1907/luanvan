@@ -1,37 +1,32 @@
 package com.example.project.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Account implements Serializable {
-    private String id;
     private String userID;
     private String userName;
     private String email;
     private String password;
     private String role;
-    private String recentActivity;
+    private Date createdDate; // Thời gian tạo tài khoản
 
     public Account() {
+        this.createdDate = new Date(); // Cập nhật thời gian tạo khi khởi tạo đối tượng
+        System.out.println("Account created on: " + createdDate);
     }
 
-    public Account(String id, String userID, String userName, String email, String password, String role, String recentActivity) {
-        this.id = id;
+    public Account(String userID, String userName, String email, String password, String role) {
         this.userID = userID;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.recentActivity = recentActivity;
+        this.createdDate = new Date(); // Cập nhật thời gian tạo khi khởi tạo đối tượng
+        System.out.println("Account created on: " + createdDate);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    // Getter và Setter
     public String getUserID() {
         return userID;
     }
@@ -71,10 +66,19 @@ public class Account implements Serializable {
     public void setRole(String role) {
         this.role = role;
     }
-    public String getRecentActivity() {
-        return recentActivity;
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
-    public void setRecentActivity(String recentActivity) {
-        this.recentActivity = recentActivity;
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "userID='" + userID + '\'' +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
     }
 }

@@ -6,9 +6,6 @@
         android:title="Trang chủ"
         />
 
-    <item android:title="Kế hoạch"
-        android:id="@+id/navplans"
-        android:icon="@drawable/plans"/>
 
     <item android:title="Theo dõi"
         android:id="@+id/navhealth"

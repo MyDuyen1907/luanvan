@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
             if (itemId == R.id.navHome) {
                 loadFragment(new HomeFragment(), false);
-            } else if (itemId == R.id.navplans) {
-                loadFragment(new plansFragment(), false);
             } else if (itemId == R.id.navhealth) {
                 loadFragment(new HealthFragment(), false);
             } else if (itemId == R.id.navManage) {
