@@ -141,6 +141,8 @@ public class LoginActivity extends AppCompatActivity {
                                                         DocumentSnapshot document = task.getResult();
                                                         if (document.exists()) {
                                                             String role = document.getString("role");
+                                                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
                                                             if ("admin".equals(role)) {
                                                                 Intent toAdmin = new Intent(getApplicationContext(), AdminActivity.class);
                                                                 startActivity(toAdmin);

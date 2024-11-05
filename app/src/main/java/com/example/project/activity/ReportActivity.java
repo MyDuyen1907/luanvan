@@ -52,7 +52,7 @@ public class ReportActivity extends AppCompatActivity {
 
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             HealthData healthData = document.toObject(HealthData.class);
-                            report.append("Ngày: ").append(healthData.getDate()).append(" - ").append(currentTime).append("\n")
+                            report.append("Ngày: ").append(healthData.getDate()).append("\n") // Chỉ hiển thị ngày
                                     .append("Huyết áp: ").append(healthData.getSystolic()).append("/").append(healthData.getDiastolic()).append("\n")
                                     .append("Đường huyết lúc đói: ").append(healthData.getBloodSugar()).append("\n")
                                     .append("Đường huyết lúc no: ").append(healthData.getBloodSugarPP()).append("\n")

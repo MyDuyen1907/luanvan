@@ -89,19 +89,33 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     private void deleteUser(User user) {
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        firestore.collection("account").document(user.getUserID())
-                .delete()
-                .addOnSuccessListener(aVoid -> {
-                    userList.remove(user);
-                    filteredUserList.remove(user); // Cập nhật danh sách lọc khi xóa
-                    notifyDataSetChanged();
-                    Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(context, "Lỗi khi xóa người dùng.", Toast.LENGTH_SHORT).show();
-                });
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Xác nhận xóa");
+        builder.setMessage("Bạn có chắc chắn muốn xóa tài khoản này không?");
+
+        builder.setPositiveButton("Có", (dialog, which) -> {
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            firestore.collection("account").document(user.getUserID())
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        userList.remove(user);
+                        filteredUserList.remove(user); // Cập nhật danh sách lọc khi xóa
+                        notifyDataSetChanged();
+                        Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(context, "Lỗi khi xóa người dùng.", Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+        builder.setNegativeButton("Không", (dialog, which) -> {
+            dialog.dismiss(); // Đóng hộp thoại nếu người dùng chọn "Không"
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show(); // Hiển thị hộp thoại xác nhận
     }
+
     private void showRoleChangeDialog(User user) {
         // Tạo dialog với các tùy chọn thay đổi role
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -117,12 +131,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
-                // Thực hiện thay đổi role
-                if (user.getRole().equals("user")) {
-                    updateRoleInFirestore(user, "admin");
-                } else {
-                    updateRoleInFirestore(user, "user");
-                }
+                // Thêm dialog xác nhận
+                AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(context);
+                confirmBuilder.setTitle("Xác nhận thay đổi phân quyền");
+                confirmBuilder.setMessage("Bạn có chắc chắn muốn thay đổi phân quyền của người dùng này không?");
+
+                confirmBuilder.setPositiveButton("Đồng ý", (confirmDialog, confirmWhich) -> {
+                    // Thực hiện thay đổi role sau khi xác nhận
+                    String newRole = user.getRole().equals("user") ? "admin" : "user";
+                    updateRoleInFirestore(user, newRole);
+
+                    // Hiển thị thông báo phân quyền thành công
+                    Toast.makeText(context, "Phân quyền thành công!", Toast.LENGTH_SHORT).show();
+                });
+
+                confirmBuilder.setNegativeButton("Hủy", (confirmDialog, confirmWhich) -> confirmDialog.dismiss());
+                confirmBuilder.create().show();
             }
         });
 
