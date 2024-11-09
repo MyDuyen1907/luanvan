@@ -118,28 +118,47 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                         btnSave.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if(edtCalo.getText().toString().isEmpty()){
+                                String timeInput = edtCalo.getText().toString();
+                                if (timeInput.isEmpty()) {
                                     edtCalo.setError("Vui lòng nhập thời gian");
-                                }
-                                else {
-                                    int calo = (int)caloriesPerHour * Integer.parseInt(edtCalo.getText().toString()) /60;
-                                    Log.d(TAG, calo + "");
-                                    setExercise(calo);
-                                    Toast.makeText(context,"Đã lưu", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        int time = Integer.parseInt(timeInput);
+                                        if (time <= 0) {
+                                            edtCalo.setError("Thời gian phải là số dương");
+                                        } else {
+                                            int calo = (int) caloriesPerHour * time / 60;
+                                            Log.d(TAG, calo + "");
+                                            setExercise(calo);
+                                            Toast.makeText(context, "Đã lưu", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        edtCalo.setError("Vui lòng nhập số hợp lệ");
+                                    }
                                 }
                                 dialogInterface.cancel();
                             }
                         });
 
+
                         btnCal.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if(edtCalo.getText().toString().isEmpty()){
+                                String timeInput = edtCalo.getText().toString();
+                                if (timeInput.isEmpty()) {
                                     edtCalo.setError("Vui lòng nhập thời gian");
-                                }
-                                else {
-                                    int calo = (int)caloriesPerHour * Integer.parseInt(edtCalo.getText().toString()) /60;
-                                    txvTotal.setText(String.format(Locale.getDefault(), "%d", calo));
+                                } else {
+                                    try {
+                                        int time = Integer.parseInt(timeInput);
+                                        if (time <= 0) {
+                                            edtCalo.setError("Thời gian phải là số dương");
+                                        } else {
+                                            int calo = (int) caloriesPerHour * time / 60;
+                                            txvTotal.setText(String.format(Locale.getDefault(), "%d", calo));
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        edtCalo.setError("Vui lòng nhập số hợp lệ");
+                                    }
                                 }
                             }
                         });

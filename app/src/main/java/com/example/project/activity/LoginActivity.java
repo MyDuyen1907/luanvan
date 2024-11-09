@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful())
                                 {
-                                    Toast.makeText(LoginActivity.this, "Gửi thành công", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Gửi thành công, vui lòng kiểm tra email", Toast.LENGTH_SHORT).show();
                                     txvOK.setVisibility(View.VISIBLE);
                                 }
                                 else {
