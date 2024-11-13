@@ -211,30 +211,34 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                             public void run() {
                                 tMilliSec = SystemClock.uptimeMillis() - tStart;
                                 tUpdate = tBuff + tMilliSec;
-                                sec = (int) tUpdate/1000;
-                                min = sec/60;
-                                sec = sec%60;
-                                hour = min/60;
-                                milliSec = (int) tUpdate%100;
+                                sec = (int) (tUpdate / 1000);
+                                min = sec / 60;
+                                sec = sec % 60;
+                                hour = min / 60;
+                                min = min % 60;
+                                milliSec = (int) (tUpdate % 1000);
 
                                 mainHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        txvCalorie.setText(Integer.toString( (int) caloriesPerHour * sec / 3600));
+                                        // Tính toán calories theo thời gian đã chạy
+                                        int totalSeconds = (int) (tUpdate / 1000);
+                                        int calo = (caloriesPerHour * totalSeconds) / 3600;
+                                        txvCalorie.setText(String.valueOf(calo));
+
+                                        // Định dạng hiển thị thời gian
                                         String time;
-                                        if(min < 1) time = String.format(Locale.ENGLISH,"%02d:%02d", sec ,milliSec);
-                                        else if(hour > 0) time =  String.format(Locale.ENGLISH,"%02:%02d:%02d:%02d",hour, min, sec ,milliSec);
-                                        else {
-                                            time = String.format(Locale.ENGLISH,"%02d:%02d:%02d", min, sec ,milliSec);
+                                        if (hour > 0) {
+                                            time = String.format(Locale.ENGLISH, "%02d:%02d:%02d", hour, min, sec);
+                                        } else {
+                                            time = String.format(Locale.ENGLISH, "%02d:%02d", min, sec);
                                         }
                                         chronometer.setText(time);
                                     }
                                 });
-                                handler.postDelayed(this, 60);
-
+                                handler.postDelayed(this, 100); // Cập nhật mỗi 100 mili giây
                             }
                         };
-
                         btnStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
