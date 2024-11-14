@@ -120,8 +120,6 @@ public class DistanceTrackingActivity extends AppCompatActivity implements OnMap
             startLocationUpdates();
         }
     }
-
-
     // Bắt đầu cập nhật vị trí
     private void startLocationUpdates() {
         locationCallback = new LocationCallback() {
@@ -129,24 +127,27 @@ public class DistanceTrackingActivity extends AppCompatActivity implements OnMap
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
                     if (lastLocation != null) {
+                        // Tính toán quãng đường
                         totalDistance += lastLocation.distanceTo(location) / 1000;
                         tvDistance.setText(String.format(Locale.getDefault(), "Quãng đường: %.2f km", totalDistance));
 
+                        // Tính toán lượng calo tiêu thụ
+                        caloriesBurned = totalDistance * 50; // 50 là lượng calo tiêu thụ trên mỗi km
+                        tvCalories.setText(String.format(Locale.getDefault(), "Calo tiêu thụ: %.2f cal", caloriesBurned));
+
+                        // Di chuyển camera đến vị trí hiện tại
                         LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        googleMap.addMarker(new MarkerOptions().position(currentLatLng).title("Bạn đang ở đây"));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
                     }
                     lastLocation = location;
                 }
             }
         };
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
         }
     }
-
     private void stopTracking() {
         isTracking = false;
         btnStartPause.setText("Bắt đầu");
