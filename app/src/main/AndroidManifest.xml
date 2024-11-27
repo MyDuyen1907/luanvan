@@ -28,10 +28,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.basicinfo.TargetActivity"
+            android:exported="false" />
+
         <service
             android:name=".activity.DistanceTrackingService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".activity.ScanBarcodeActivity"

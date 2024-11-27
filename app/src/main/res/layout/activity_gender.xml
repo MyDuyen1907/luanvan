@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         style="?android:attr/progressBarStyleHorizontal"
-        android:progress="25"
+        android:progress="0"
         android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
         />

@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".activity.UserActivity">
 
 
@@ -28,12 +27,12 @@
                 android:id="@+id/btn_back_user"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
                 android:text="Cá nhân"
                 android:textColor="#3C3C3E"
-                android:textSize="12sp"
                 android:textStyle="bold" />
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +42,7 @@
                 <ImageView
                     android:id="@+id/img_morning"
                     android:layout_width="35dp"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_margin="20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -53,9 +52,9 @@
                     android:id="@+id/txv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="MD"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:text="MD"
                     android:textColor="@color/black_word"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toRightOf="@+id/img_morning"
@@ -66,7 +65,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="300dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/green_main"
                 android:elevation="10dp"
@@ -74,31 +73,74 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="157dp"
+                    android:layout_height="match_parent"
                     android:layout_margin="20dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/card1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@drawable/text_view_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tva1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="Mục tiêu hiện tại"
+                            android:textColor="@color/black_word"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txv_aim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Giảm cân"
+                            android:textColor="@color/black_word"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tva1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="26dp"
+                            android:onClick="showAimPopup"
+                            android:text="Thay đổi"
+                            android:textColor="@color/green_main"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/tv3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:text="Lượng calo hàng ngày (kcal): "
+                        android:layout_marginTop="30dp"
+                        android:text="Để đạt được mục tiêu cần nạp: "
                         android:textColor="@color/white_word"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:ignore="MissingConstraints"
-                        tools:layout_editor_absoluteY="6dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/card1" />
 
                     <TextView
                         android:id="@+id/txv_max_calories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
                         android:text="1467"
                         android:textColor="@color/white_word"
                         android:textSize="17dp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/tv3"
-                        tools:ignore="MissingConstraints"
-                        tools:layout_editor_absoluteY="6dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/card1" />
 
                     <TextView
                         android:id="@+id/tv4"
@@ -145,6 +187,7 @@
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/tv5"
                         app:layout_constraintTop_toBottomOf="@+id/tv4" />
+
                     <TextView
                         android:id="@+id/tv6"
                         android:layout_width="wrap_content"
@@ -167,7 +210,6 @@
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/tv6"
                         app:layout_constraintTop_toBottomOf="@+id/tv5" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -226,155 +268,144 @@
                         />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-            <androidx.core.widget.NestedScrollView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="373dp">
+                android:layout_height="320dp"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="15dp">
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    app:cardCornerRadius="15dp">
+                    android:layout_height="match_parent"
+                    android:layout_margin="25dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvi"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="25dp">
+                        android:text="Thông tin cá nhân"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Thông tin cá nhân"
-                            android:textColor="@color/black_word"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/txv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Tuổi: "
+                        android:textColor="@color/black_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvi" />
 
-                        <TextView
-                            android:id="@+id/txv4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Tuổi: "
-                            android:textColor="@color/black_word"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvi" />
+                    <TextView
+                        android:id="@+id/txv_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="1950"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/txv4"
+                        app:layout_constraintTop_toBottomOf="@+id/tvi" />
 
-                        <TextView
-                            android:id="@+id/txv_age"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="1950"
-                            android:textColor="@color/black_word"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@+id/txv4"
-                            app:layout_constraintTop_toBottomOf="@+id/tvi" />
+                    <TextView
+                        android:id="@+id/txv5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Giới tính: "
+                        android:textColor="@color/black_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txv4" />
 
-                        <TextView
-                            android:id="@+id/txv5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Giới tính: "
-                            android:textColor="@color/black_word"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txv4" />
+                    <TextView
+                        android:id="@+id/txv_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Nam"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/txv5"
+                        app:layout_constraintTop_toBottomOf="@+id/txv4" />
 
-                        <TextView
-                            android:id="@+id/txv_gender"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Nam"
-                            android:textColor="@color/black_word"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@+id/txv5"
-                            app:layout_constraintTop_toBottomOf="@+id/txv4" />
+                    <TextView
+                        android:id="@+id/txv6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Chiều cao (cm): "
+                        android:textColor="@color/black_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txv5" />
 
-                        <TextView
-                            android:id="@+id/txv6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Chiều cao (cm): "
-                            android:textColor="@color/black_word"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txv5" />
+                    <TextView
+                        android:id="@+id/txv_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="160"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/txv6"
+                        app:layout_constraintTop_toBottomOf="@+id/txv5" />
 
-                        <TextView
-                            android:id="@+id/txv_height"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="160"
-                            android:textColor="@color/black_word"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@+id/txv6"
-                            app:layout_constraintTop_toBottomOf="@+id/txv5" />
+                    <TextView
+                        android:id="@+id/tv7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Cân nặng (kg): "
+                        android:textColor="@color/black_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txv6" />
 
-                        <TextView
-                            android:id="@+id/tv7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Cân nặng (kg): "
-                            android:textColor="@color/black_word"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txv6" />
+                    <TextView
+                        android:id="@+id/txv_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="60"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/tv7"
+                        app:layout_constraintTop_toBottomOf="@+id/txv6" />
 
-                        <TextView
-                            android:id="@+id/txv_weight"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="60"
-                            android:textColor="@color/black_word"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@+id/tv7"
-                            app:layout_constraintTop_toBottomOf="@+id/txv6" />
-                        <!-- Tiền sử bệnh tật -->
+                    <TextView
+                        android:id="@+id/tv8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Mức độ vận động: "
+                        android:textColor="@color/black_word"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv7" />
 
+                    <TextView
+                        android:id="@+id/txv_exercise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Vận động nhẹ (1-3 ngày/tuần)"
+                        android:textColor="@color/black_word"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/tv8"
+                        app:layout_constraintTop_toBottomOf="@+id/tv7" />
 
-                        <TextView
-                            android:id="@+id/txv8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Mức độ vận động: "
-                            android:textColor="@color/black_word"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txv_weight" />
-
-                        <TextView
-                            android:id="@+id/txv_exercise"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Vận động nhẹ (1-3 ngày/tuần)"
-                            android:textColor="@color/black_word"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@+id/txv8"
-                            app:layout_constraintTop_toBottomOf="@+id/txv_weight" />
-
-                        <!-- Cập nhật Button -->
-                        <Button
-                            android:id="@+id/btn_update"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="25dp"
-                            android:layout_marginBottom="25dp"
-                            android:background="@drawable/button_background"
-                            android:text="Cập nhật"
-                            android:textColor="@color/white_word"
-                            app:layout_constraintTop_toBottomOf="@id/txv8" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.core.widget.NestedScrollView>
-
+                    <Button
+                        android:id="@+id/btn_update"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
+                        android:background="@drawable/button_background"
+                        android:text="Cập nhật"
+                        android:textColor="@color/white_word"
+                        app:layout_constraintTop_toBottomOf="@+id/tv8" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 

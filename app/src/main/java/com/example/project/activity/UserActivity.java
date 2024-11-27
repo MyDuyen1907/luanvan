@@ -40,9 +40,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    TextView id,name, age, gender, height, weight,
+    TextView id,name, age,aim, gender, height, weight,
             exerciseFrequency,txv_bmi,ttde,bmi,maxWater,maxCalories;
-    ;
     ImageView imv_bmi;
     Button btnBackUser,btnUpdate ;
     FirebaseUser user;
@@ -61,6 +60,7 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         maxCalories = findViewById(R.id.txv_max_calories);
         maxWater = findViewById(R.id.txv_max_water);
         bmi = findViewById(R.id.txv_bmi);
+        aim = findViewById(R.id.txv_aim);
         age = findViewById(R.id.txv_age);
         ttde = findViewById(R.id.txv_ttde);
         gender = findViewById(R.id.txv_gender);
@@ -126,7 +126,20 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                                 bmi.setText(String.valueOf(p.BMICal())); // Use BMICal method
                                 maxWater.setText(String.valueOf(p.WaterCal())); // Use WaterCal method
                                 maxCalories.setText(String.valueOf(p.calculateMaxCalories()));
-
+                                switch (p.getAim()) {
+                                    case 2:
+                                        aim.setText("Tăng cân");
+                                        maxCalories.setText(String.valueOf(Math.round(p.TTDECal() * 1.1 )));
+                                        break;
+                                    case 1:
+                                        aim.setText("Giữ cân");
+                                        maxCalories.setText(String.valueOf(Math.round(p.TTDECal() * 1)));
+                                        break;
+                                    case 0:
+                                        aim.setText("Giảm cân");
+                                        maxCalories.setText(String.valueOf(Math.round(p.TTDECal() * 0.9 )));
+                                        break;
+                                }
                                 // Gender
                                 switch (p.getGender()) {
                                     case 0:
@@ -259,6 +272,12 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
+    public void showAimPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.aimm_menu);
+        popup.show();
+    }
 
     // Hàm kiểm tra kết nối internet
     private boolean isConnectedToInternet() {
@@ -266,10 +285,61 @@ public class UserActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        return false;
+        if (item.getItemId() == R.id.i1) {
+            db.collection("user").document(user.getUid())
+                    .update("aim", 2)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "Mục tiêu của bạn là tăng cân");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+            recreate();
+            return true;
+        } else if (item.getItemId() == R.id.i2) {
+            db.collection("user").document(user.getUid())
+                    .update("aim", 1)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "Mục tiêu của bạn là giữ cân");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+            recreate();
+            return true;
+        } else if (item.getItemId() == R.id.i3) {
+            db.collection("user").document(user.getUid())
+                    .update("aim", 0)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+            recreate();
+            return true;
+        } else {
+            return false;
+        }
     }
-
 }

@@ -11,6 +11,7 @@ public class User implements Serializable {
     private int height;
     private int weight;
     private int exerciseFrequency; // 0:Khong 1:Nhe 2:Vua 3:Nang
+    private int aim;
     private String email;
     private String role;
     private Date lastUpdated; // Thời gian cập nhật cuối cùng
@@ -22,6 +23,7 @@ public class User implements Serializable {
         this.age = 0;
         this.height = 0;
         this.weight = 0;
+        this.aim = 0;
         this.exerciseFrequency = 0;
         this.email = "";
         this.lastUpdated = new Date(); // Cập nhật lần đầu
@@ -32,16 +34,17 @@ public class User implements Serializable {
         this.email = email;
         this.id = userID;
         this.role = role;
-        this.lastUpdated = new Date(); // Cập nhật lần đầu
+        this.lastUpdated = new Date();
     }
 
-    public User(String id, String email, String name, int gender, int age, int height, int exerciseFrequency, int weight) {
+    public User(String id, String email, String name, int gender, int age, int height, int exerciseFrequency, int weight, int aim) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.age = age;
         this.height = height;
         this.weight = weight;
+        this.aim = aim;
         this.exerciseFrequency = exerciseFrequency;
         this.email = email;
         this.lastUpdated = new Date(); // Cập nhật lần đầu
@@ -121,6 +124,14 @@ public class User implements Serializable {
 
     public void setWeight(int weight) {
         this.weight = weight;
+        updateLastUpdated();
+    }
+    public int getAim() {
+        return aim;
+    }
+
+    public void setAim(int aim) {
+        this.aim = aim;
         updateLastUpdated();
     }
 
@@ -230,6 +241,7 @@ public class User implements Serializable {
                 ", age=" + age +
                 ", height=" + height +
                 ", weight=" + weight +
+                ", aim=" + aim +
                 ", exerciseFrequency=" + exerciseFrequency +
                 ", email='" + email + '\'' +
                 ", lastUpdated=" + lastUpdated +
